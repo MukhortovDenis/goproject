@@ -1,0 +1,15 @@
+name: Golang go.sum
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: paulvollmer/action-golang-gosum@v1.0.0
+
+      - name: Проверка go.sum
+
