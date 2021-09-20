@@ -6,10 +6,12 @@ import (
 	"net/http"
 )
 
+var dirWithHTML string = "./ui/html/index.html"
+
 func handl(w http.ResponseWriter, r *http.Request) {
-	tmp, err := template.ParseFiles("index.html") // разобраться потом, хтмл пока поваляется в этом каталоге
+	tmp, err := template.ParseFiles(dirWithHTML) // разобраться потом, хтмл пока поваляется в этом каталоге
 	if err != nil {
-		fmt.Println("хтмл не подхатился")
+		fmt.Println(err)
 	}
 	tmp.Execute(w, nil) // нил на энное время
 }
