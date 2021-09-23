@@ -1,8 +1,8 @@
 package pkg
 
 type User struct {
-	Name     string
-	ID       int
-	Login    string
-	Password string
+	Name     string `json:"name"`
+	ID       int    `json:"id"`
+	Login    string `json:"login"`
+	Password string `json:"password"`
 }
