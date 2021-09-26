@@ -9,7 +9,7 @@ import (
 var dirWithHTML string = "./ui/html/"
 
 func handl(w http.ResponseWriter, r *http.Request) {
-	tmp, err := template.ParseFiles(dirWithHTML + "index.html") // разобраться потом, хтмл пока поваляется в этом каталоге
+	tmp, err := template.ParseFiles(dirWithHTML + "index.html")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -19,11 +19,21 @@ func handl(w http.ResponseWriter, r *http.Request) {
 func mainHandle() {
 	http.HandleFunc("/signin",
 		func(w http.ResponseWriter, r *http.Request) {
+			tmp, err := template.ParseFiles(dirWithHTML + "signin.html")
+			if err != nil {
+				fmt.Println(err)
+			}
+			tmp.Execute(w, nil) // нил на энное время
 			fmt.Fprintln(w, "Здесь лога:", r.URL.String())
 		})
 
 	http.HandleFunc("/signup",
 		func(w http.ResponseWriter, r *http.Request) {
+			tmp, err := template.ParseFiles(dirWithHTML + "signup.html")
+			if err != nil {
+				fmt.Println(err)
+			}
+			tmp.Execute(w, nil) // нил на энное время
 			fmt.Fprintln(w, "Здесб рега:", r.URL.String())
 		})
 
