@@ -1,9 +1,12 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
 	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var dirWithHTML string = "./ui/html/"
@@ -24,7 +27,7 @@ func mainHandle() {
 				fmt.Println(err)
 			}
 			tmp.Execute(w, nil) // нил на энное время
-			fmt.Fprintln(w, "Здесь лога:", r.URL.String())
+
 		})
 
 	http.HandleFunc("/signup",
@@ -36,7 +39,22 @@ func mainHandle() {
 			tmp.Execute(w, nil) // нил на энное время
 			fmt.Fprintln(w, "Здесб рега:", r.URL.String())
 		})
-
+	http.HandleFunc("/save_user",
+		func(w http.ResponseWriter, r *http.Request) {
+			login := r.FormValue("login")
+			password := r.FormValue("password")
+			db, err := sql.Open("mysql", "mysql:123@tcp(127.0.0.1:3306)/stoneshop")
+			if err != nil {
+				panic(err)
+			}
+			insert, err := db.Query(fmt.Sprintf("INSERT INTO `users` (`login`, `password`) VALUES('%s', '%s')", login, password))
+			if err != nil {
+				panic(err)
+			}
+			defer insert.Close()
+			defer db.Close()
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+		})
 	http.HandleFunc("/", handl)
 
 	fmt.Println("starting server at :8080")
