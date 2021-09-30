@@ -10,6 +10,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+var user pkg.User
+
 // Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
 
@@ -18,7 +20,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 	if login == "" || password == "" {
-		fmt.Println("Не все данные введены")
+		fmt.Fprint(w, "Не все данные введены")
 	}
 	db, err := sql.Open("mysql", "mysql:123@tcp(127.0.0.1:3306)/stoneshop")
 	if err != nil {
@@ -38,7 +40,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 	if login == "" || password == "" {
-		fmt.Println("Не все данные введены")
+		fmt.Fprint(w, "Не все данные введены")
 	}
 	db, err := sql.Open("mysql", "mysql:123@tcp(127.0.0.1:3306)/stoneshop")
 	if err != nil {
@@ -46,16 +48,15 @@ func check(w http.ResponseWriter, r *http.Request) {
 	}
 	search, err := db.Query(fmt.Sprintf("SELECT * FROM `users` WHERE `login`='%s'", login))
 	if err != nil {
-		fmt.Println("Неправильный логин")
+		fmt.Fprint(w, "Неправильный логин")
 	}
-	var user pkg.User
 	for search.Next() {
 		err = search.Scan(&user.ID, &user.Login, &user.Password)
 		if err != nil {
 			panic(err)
 		}
 		if password != user.Password {
-			fmt.Println("Неправильный пароль")
+			fmt.Fprint(w, "Неправильный пароль")
 		}
 	}
 
@@ -74,7 +75,7 @@ func mainHandle() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			tmp.Execute(w, nil) // нил на энное время
+			tmp.Execute(w, user) // нил на энное время
 
 		})
 	//Вход
