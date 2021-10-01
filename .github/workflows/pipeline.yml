@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run golangci-lint
-        uses: action-contrib/golangci-lint@v2
+        uses: golangci/golangci-lint-action@v2
   
   deploy:
     name: Deploy on Heroku
