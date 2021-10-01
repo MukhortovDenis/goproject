@@ -115,10 +115,4 @@ func mainHandle() {
 	http.HandleFunc("/save_user", save)
 
 	http.HandleFunc("/check_user", check)
-
-	fmt.Println("starting server at :8080")
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		panic(err)
-	}
 }
