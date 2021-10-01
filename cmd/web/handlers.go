@@ -68,6 +68,12 @@ func check(w http.ResponseWriter, r *http.Request) {
 // Страницы, которые отображаются у пользователей
 // Пока нет готового дизайна, новые делать не буду((
 func mainHandle() {
+	// Отслеживание сервером статических файлов
+	fsForCss := http.FileServer(http.Dir("./ui/static/"))
+	http.Handle("/static/", http.StripPrefix("/static", fsForCss))
+	//
+	fsForImg := http.FileServer(http.Dir("./ui/img/"))
+	http.Handle("/img/", http.StripPrefix("/img", fsForImg))
 	// Регистрация
 	http.HandleFunc("/signin",
 		func(w http.ResponseWriter, r *http.Request) {
