@@ -94,7 +94,7 @@ func mainHandle() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			tmp.Execute(w, nil) // нил на энное время
+			err = tmp.Execute(w, nil) // нил на энное время
 			if err != nil {
 				fmt.Fprint(w, err)
 			}
@@ -106,7 +106,7 @@ func mainHandle() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			tmp.Execute(w, nil) // нил на энное время)
+			err = tmp.Execute(w, user) // нил на энное время)
 			if err != nil {
 				fmt.Fprint(w, err)
 			}
