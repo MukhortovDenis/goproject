@@ -81,7 +81,10 @@ func mainHandle() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			tmp.Execute(w, user) // нил на энное время
+			err = tmp.Execute(w, user) // нил на энное время
+			if err != nil {
+				fmt.Fprint(w, err)
+			}
 
 		})
 	//Вход
@@ -92,6 +95,9 @@ func mainHandle() {
 				fmt.Println(err)
 			}
 			tmp.Execute(w, nil) // нил на энное время
+			if err != nil {
+				fmt.Fprint(w, err)
+			}
 		})
 	// Главная
 	http.HandleFunc("/",
@@ -101,6 +107,9 @@ func mainHandle() {
 				fmt.Println(err)
 			}
 			tmp.Execute(w, nil) // нил на энное время)
+			if err != nil {
+				fmt.Fprint(w, err)
+			}
 		})
 	// То, что пользователь не увидит, пока только сохранение и проверка записи в бд
 	http.HandleFunc("/save_user", save)
@@ -108,5 +117,8 @@ func mainHandle() {
 	http.HandleFunc("/check_user", check)
 
 	fmt.Println("starting server at :8080")
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		panic(err)
+	}
 }
