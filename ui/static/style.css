@@ -1,0 +1,89 @@
+body {
+    font-family: 'Exo 2', sans-serif;
+    background-color: #D7D7D7;
+    color: #3A3A3A;
+}
+
+a {
+    text-decoration: none;
+    color: #3A3A3A;
+}
+
+.header {
+    background-color: #D0D0CC;
+}
+
+.wrapper {
+    max-width: 1454px;
+    margin: 0 auto;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.logo {
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo-icon {
+    margin-right: 20px;
+}
+
+.logo-name {
+    font-size: 48px;
+    font-weight: 500;
+    margin: auto;
+}
+
+.sign-in {
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    color: #000;
+}
+
+
+.sign-in_text {
+    margin: auto;
+}
+
+.log-in_icon {
+    margin-left: 20px;
+}
+
+
+span.bold {
+    font-weight: 700;
+}
+
+.sign-in {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.banner {
+    height: 870px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.tittle {
+    font-weight: 500;
+    font-size: 90px;
+    max-width: 870;
+}
+

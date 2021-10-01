@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  goproj:
+    build: ./
+    command: ./goproj
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=123
+  db:
+    restart: always
+    image: mysql:latest
