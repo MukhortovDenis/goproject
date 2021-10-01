@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/ilyakaznacheev/cleanenv"
 )
 
 var user pkg.User
@@ -68,6 +69,11 @@ func check(w http.ResponseWriter, r *http.Request) {
 // Страницы, которые отображаются у пользователей
 // Пока нет готового дизайна, новые делать не буду((
 func mainHandle() {
+	cfg := Server{}
+	err := cleanenv.ReadConfig("config.yml", &cfg)
+	if err != nil {
+		fmt.Println(err)
+	}
 	// Отслеживание сервером статических файлов
 	fsForCss := http.FileServer(http.Dir("./ui/static/"))
 	http.Handle("/static/", http.StripPrefix("/static", fsForCss))
@@ -115,4 +121,9 @@ func mainHandle() {
 	http.HandleFunc("/save_user", save)
 
 	http.HandleFunc("/check_user", check)
+	path := cfg.Host + ":" + cfg.Port
+	err = http.ListenAndServe(path, nil)
+	if err != nil {
+		panic(err)
+	}
 }
