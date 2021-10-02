@@ -7,7 +7,7 @@ import (
 	"html/template"
 	"net/http"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // смена бд
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
