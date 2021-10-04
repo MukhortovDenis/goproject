@@ -9,11 +9,11 @@ import (
 	"os"
 
 	"github.com/ilyakaznacheev/cleanenv"
-	"github.com/jackc/pgx/v4"
+	pgx "github.com/jackc/pgx/v4"
 )
 
 var user pkg.User
-var connStr string = "postgres://nigger:nigger@localhost:5432"
+var connStr string = "postgres://nigger:nigger@localhost:5432/stoneshop"
 
 // Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
@@ -30,15 +30,14 @@ func save(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	err := conn.QueryRow(context.Background(), "INSERT INTO users (login, password) VALUES ($1, $2)", login, password)
+	_, err = conn.Query(context.Background(), "INSERT INTO users (login, password) VALUES ($1, $2)", login, password)
 	if err != nil {
-		return err
+		fmt.Fprint(w, err)
 	}
 	defer conn.Close(context.Background())
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-//Проверка, есть ли запись пользователя в бд по логину и паролю(пока локально)
 func check(w http.ResponseWriter, r *http.Request) {
 	login := r.FormValue("login")
 	password := r.FormValue("password")
@@ -121,7 +120,7 @@ func mainHandle() {
 			}
 		})
 	// То, что пользователь не увидит, пока только сохранение и проверка записи в бд
-	http.HandleFunc("/save_user", save)
+	http.HandleFunc("/save", save)
 
 	http.HandleFunc("/check_user", check)
 	path := cfg.Host + ":" + cfg.Port
