@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+
 	"fmt"
 	"goproject/pkg"
 	"html/template"
@@ -20,6 +21,7 @@ var dirWithHTML string = "./ui/html/"
 
 // Подключение к локальной бд, где после регистрации новый пользователь добавляет новую запись
 func save(w http.ResponseWriter, r *http.Request) {
+	var connStr string = "postgres://nigger:nigger@localhost:5432/stoneshop"
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 	if login == "" || password == "" {
@@ -31,6 +33,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 		os.Exit(1)
 	}
 	_, err = conn.Query(context.Background(), "INSERT INTO users (login, password) VALUES ($1, $2)", login, password)
+
 	if err != nil {
 		fmt.Fprint(w, err)
 	}
