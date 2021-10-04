@@ -1,7 +1,7 @@
 package main
 
 import (
-	"context"
+	"database/sql"
 
 	"fmt"
 	"goproject/pkg"
@@ -10,7 +10,7 @@ import (
 	"os"
 
 	"github.com/ilyakaznacheev/cleanenv"
-	pgx "github.com/jackc/pgx/v4"
+	_ "github.com/lib/pq"
 )
 
 var user pkg.User
@@ -21,23 +21,24 @@ var dirWithHTML string = "./ui/html/"
 
 // Подключение к локальной бд, где после регистрации новый пользователь добавляет новую запись
 func save(w http.ResponseWriter, r *http.Request) {
-	var connStr string = "postgres://nigger:nigger@localhost:5432/stoneshop"
+	var connStr string = "postgres://nigger:nigger@localhost:5432/stoneshop?sslmode=disable"
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 	if login == "" || password == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
-	conn, err := pgx.Connect(context.Background(), connStr)
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	_, err = conn.Query(context.Background(), "INSERT INTO users (login, password) VALUES ($1, $2)", login, password)
+	var userid int
+	db.QueryRow(`INSERT INTO users (login, password) VALUES ($1, $2) RETURNING id`, login, password).Scan(&userid)
 
 	if err != nil {
 		fmt.Fprint(w, err)
 	}
-	defer conn.Close(context.Background())
+	defer db.Close()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
@@ -47,7 +48,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 	if login == "" || password == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
-	db, err := pgx.Connect(context.Background(), connStr)
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
@@ -67,7 +68,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	// defer search.Close()
-	defer db.Close(context.Background())
+	defer db.Close()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
