@@ -2,16 +2,19 @@ package main
 
 import (
 	"database/sql"
+
 	"fmt"
 	"goproject/pkg"
 	"html/template"
 	"net/http"
+	"os"
 
-	_ "github.com/go-sql-driver/mysql" // смена бд
 	"github.com/ilyakaznacheev/cleanenv"
+	_ "github.com/lib/pq"
 )
 
 var user pkg.User
+var connStr string = "postgres://postgres:123@localhost:5432/stone_shop?sslmode=disable"
 
 // Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
@@ -23,15 +26,17 @@ func save(w http.ResponseWriter, r *http.Request) {
 	if login == "" || password == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
-	db, err := sql.Open("mysql", "mysql:123@tcp(127.0.0.1:3306)/stoneshop")
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		panic(err)
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
 	}
-	insert, err := db.Query(fmt.Sprintf("INSERT INTO `users` (`login`, `password`) VALUES('%s', '%s')", login, password))
+	var newUser pkg.User
+	err = db.QueryRow(`INSERT INTO users (login, password) VALUES ($1, $2) RETURNING id`, login, password).Scan(&newUser.ID)
+
 	if err != nil {
-		panic(err)
+		fmt.Fprint(w, err)
 	}
-	defer insert.Close()
 	defer db.Close()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
@@ -43,25 +48,16 @@ func check(w http.ResponseWriter, r *http.Request) {
 	if login == "" || password == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
-	db, err := sql.Open("mysql", "mysql:123@tcp(127.0.0.1:3306)/stoneshop")
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		panic(err)
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
 	}
-	search, err := db.Query(fmt.Sprintf("SELECT * FROM `users` WHERE `login`='%s'", login))
+	var newUser pkg.User
+	err = db.QueryRow("SELECT * FROM users WHERE login = $1", login).Scan(&newUser.ID, &newUser.Login, &newUser.Password)
 	if err != nil {
-		fmt.Fprint(w, "Неправильный логин")
+		fmt.Fprint(w, "Неправильные данные")
 	}
-	for search.Next() {
-		err = search.Scan(&user.ID, &user.Login, &user.Password)
-		if err != nil {
-			panic(err)
-		}
-		if password != user.Password {
-			fmt.Fprint(w, "Неправильный пароль")
-		}
-	}
-
-	defer search.Close()
 	defer db.Close()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
