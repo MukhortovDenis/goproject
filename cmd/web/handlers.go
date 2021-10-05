@@ -14,14 +14,13 @@ import (
 )
 
 var user pkg.User
-var connStr string = "postgres://nigger:nigger@localhost:5432/stoneshop"
+var connStr string = "postgres://postgres:123@localhost:5432/stone_shop?sslmode=disable"
 
 // Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
 
 // Подключение к локальной бд, где после регистрации новый пользователь добавляет новую запись
 func save(w http.ResponseWriter, r *http.Request) {
-	var connStr string = "postgres://nigger:nigger@localhost:5432/stoneshop?sslmode=disable"
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 	if login == "" || password == "" {
@@ -32,8 +31,8 @@ func save(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	var userid int
-	db.QueryRow(`INSERT INTO users (login, password) VALUES ($1, $2) RETURNING id`, login, password).Scan(&userid)
+	var newUser pkg.User
+	err = db.QueryRow(`INSERT INTO users (login, password) VALUES ($1, $2) RETURNING id`, login, password).Scan(&newUser.ID)
 
 	if err != nil {
 		fmt.Fprint(w, err)
@@ -53,21 +52,11 @@ func check(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	// search, err := db.Query(fmt.Sprintf("SELECT * FROM `users` WHERE `login`='%s'", login))
-	// if err != nil {
-	// 	fmt.Fprint(w, "Неправильный логин")
-	// }
-	// for search.Next() {
-	// 	err = search.Scan(&user.ID, &user.Login, &user.Password)
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// 	if password != user.Password {
-	// 		fmt.Fprint(w, "Неправильный пароль")
-	// 	}
-	// }
-
-	// defer search.Close()
+	var newUser pkg.User
+	err = db.QueryRow("SELECT * FROM users WHERE login = $1", login).Scan(&newUser.ID, &newUser.Login, &newUser.Password)
+	if err != nil {
+		fmt.Fprint(w, "Неправильные данные")
+	}
 	defer db.Close()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
