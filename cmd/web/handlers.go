@@ -1,6 +1,6 @@
 package main
 
-// Отрефакторить
+// Отрефакторить, БЛЯТЬ ГИТХАБ ЛАГАЕТ
 import (
 	"database/sql"
 
@@ -37,6 +37,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprint(w, err)
 	}
+	fmt.Println(newUser.ID)
 	defer db.Close()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
