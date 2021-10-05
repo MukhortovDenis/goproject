@@ -1,42 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Логирование</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;600;700&display=swap" rel="stylesheet">
+  <title>Sign In</title>
+  <link rel="stylesheet" href="../static/signin.css">
 </head>
-<body class="text-center">
-    
-    <main class="form-signin">
-      <form action="/check_user">
-        <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">Залогинься лошок</h1>
-    
-        <div class="form-floating">
-          <input type="email" name="login" class="form-control" id="floatingInput" placeholder="name@example.com">
-          <label for="floatingInput">Email address</label>
+<body>
+  <div class="main-text">
+    <h1 class="main-title">
+      Lorem ipsum or smth idk i don’t speak latin
+    </h1>
+    <p class="main-description">
+      i don’t know what to write here. do not forget to fill this field
+    </p>
+  </div>
+  <div class="container">
+    <div class="wrap-content">
+      <h2 class="form-title">Sign In</h2>
+      <form action="#">
+        <div class="form-user-info">
+          <div class="form-user-input">
+            <input class="form-user-input-box" type="email" placeholder="Email adress" required>
+          </div>
+          <div class="form-user-input">
+            <input class="form-user-input-box" type="password" placeholder="Password" required>
+          </div>
         </div>
-        <div class="form-floating">
-          <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-          <label for="floatingPassword">Password</label>
-        </div>
-    
-        <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button onclick="document.location='signup.html'">Зарегаться</button> 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-muted">© 2017–2021</p>
       </form>
-    </main>
-    
-    
-        
-      
-    
-    </body>
+      <div class="register-btn">
+        <button class="btn" type="submit" value="Register">Log In</button>
+      </div>
+    </div>
+  </div>
+</body>
 </html>

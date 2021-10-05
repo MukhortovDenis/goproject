@@ -11,35 +11,41 @@
   <link rel="stylesheet" href="../static/signup.css">
 </head>
 <body> 
-  <h1 class="main-tittle">
-    ROck ‘em sock ‘em)
-  </h1>
-  <p class="description">
-    registrate your own account right now and get + 2 rocks for every ton of rubble
-  </p>
-
+  <div class="main-text">
+    <h1 class="main-title">
+      ROck ‘em sock ‘em)
+    </h1>
+    <p class="main-description">
+      registrate your own account right now and get + 2 rocks for every ton of rubble
+    </p>
+  </div>
   <div class="container">
-    <h2 class="form-tittle">Sign up for a free account</h2>
-    <form action="#">
-      <div class="form-user-info">
-        <div class="form-user-info-top">
-          <div>
-            <input class="input-box name-input-box" type="text" placeholder="First name" required>
+    <div class="wrap-content">
+      <h2 class="form-title">Sign Up for a free account</h2>
+      <form action="#">
+        <div class="form-user-info">
+          <div class="form-user-info-top form-user-input">
+            <div>
+              <input class="form-user-input-box name-input-box" type="text" placeholder="First name" required>
+            </div>
+            <div>
+              <input class="form-user-input-box lastname-input-box" type="text" placeholder="Last name" required>
+            </div>
           </div>
-          <div>
-            <input class="input-box lastname-input-box" type="text" placeholder="Last name" required>
+          <div class="form-user-input">
+            <input class="form-user-input-box" type="email" placeholder="Email adress" required>
+          </div>
+          <div class="form-user-input">
+            <input class="form-user-input-box" type="password" placeholder="Create password" required>
+          </div>
+          <div class="form-user-input">
+            <input class="form-user-input-box" type="password" placeholder="Confirm password" required>
           </div>
         </div>
-        <div>
-          <input class="input-box" type="email" placeholder="Email adress" required>
-        </div>
-        <div>
-          <input class="input-box" type="password" placeholder="Create password" required>
-        </div>
+      </form>
+      <div class="register-btn">
+        <button class="btn" type="submit" value="Register">Register</button>
       </div>
-    </form>
-    <div class="register-btn">
-      <button class="btn" type="submit" value="Register">Register</button>
     </div>
   </div>
 </body>
