@@ -1,5 +1,6 @@
 package main
 
+// Отрефакторить
 import (
 	"database/sql"
 
@@ -33,7 +34,6 @@ func save(w http.ResponseWriter, r *http.Request) {
 	}
 	var newUser pkg.User
 	err = db.QueryRow(`INSERT INTO users (login, password) VALUES ($1, $2) RETURNING id`, login, password).Scan(&newUser.ID)
-
 	if err != nil {
 		fmt.Fprint(w, err)
 	}
