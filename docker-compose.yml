@@ -1,8 +1,23 @@
+version: "3.9"
+
 services:
-  server:
+  postgres_database:
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}  
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+      - DATABASE_HOST=${DATABASE_HOST}
+    build: ./migrations/postgres
+    ports:
+      - 5432:5432
+  app:
+    container_name: goproj
     build:
       context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - api:/usr/src/app/
     ports:
-      - "8080:8080"
-    environment:
-      - PORT=8080
+      - "4000:4000"
+    depends_on:
+      - postgres_database
