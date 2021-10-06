@@ -8,48 +8,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;600;700&display=swap" rel="stylesheet">
     <title>StoneMarket</title>
+    <link rel="stylesheet" href="../static/normalize.css">
     <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
   <header class="header">
-    <div class="container">
-      <div class="header-wrap">
-        <a class="header-logo" href="#" alt="StoneMarket">
-          <span class="logo"></span>
-          <div class="site-name"><span class="bold">Stone</span>Market</div>
-        </a>
-        <nav class="nav-links">
-          <ul class="nav-links-list">
-            <li class="nav-links-item">
-              <a class="nav-link" href="">
-                Sign Up
-              </a>
-              <span></span>
-            </li>
-            <li class="nav-links-item">
-              <a class="nav-link" href="">
-                Sign In
-              </a> 
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <div class="container header-container">
+      <a class="logo" href="#">
+        <div class="logo-name"><b class="bold-text">Stone</b>Market</div>
+      </a>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a class="nav-item-link" href="/signup">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-item-link" href="/signin">Sign In</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </header>
-  <main class="main">
-    <section class="section-stone">
-      <div class="container">
-        <div class="section-stone-wrap">
-          <div class="section-stone-content">
-            <p class="section-stone-description">Everything started with<span class="bold">stone</span></p>
-            <img class="section-stone-img" src="../img/stone.png" alt="Камень)">
-          </div>
-          <div class="section-stone-scroll">
-            <span class="section-stone-scroll-text">Scroll Down</span>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+
+  <section class="section-hero">
+    <div class="container section-hero-container">
+      <p class="section-hero-text">Everything started with <b>stone</b></p>
+      <img class="section-hero-img" src="../img/stone.png" alt="">
+    </div>
+  </section>
 </body>
 </html>

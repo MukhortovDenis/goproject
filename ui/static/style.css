@@ -1,103 +1,96 @@
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Exo 2', sans-serif;
 }
 
-body {
-  height: 100vh;
-  background: radial-gradient(71.43% 85.97% at 71.43% 50%, #FFFFFF 0%, #C0C0C0 100%);
+html {
+  font-family: 'Exo 2', sans-serif;
 }
 
 a {
   text-decoration: none;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
 .container {
-  width: 1560px;
-  margin: 0 auto;
+  max-width: 1590px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
+
+/* Header */
 .header {
-  height: auto;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 0.5px 0.5px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(90.13deg, #BBBBBB 7.81%, rgba(187, 187, 187, 0.25) 25.75%, rgba(187, 187, 187, 0.25) 100%);
-  backdrop-filter: blur(20px);
+  height: 90px;
+  border-bottom: 1px solid rgba(58, 58, 58, 0.3);
 }
 
-.header-wrap {
+.header-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 5px 0;
+  height: 100%;
 }
 
-.nav-links-item {
-  display: inline-block;
-}
-
-.nav-links-item:not(:last-child) {
-  padding-right: 100px;
-}
-
-.nav-link {
-  font-size: 24px;
-  font-weight: 600;
-  color: #3A3A3A;
-}
-
-.nav-link:hover {
-  color: 2px#5B6871;
-  opacity: 0.7;
-}
-
-.site-name {
-  padding-left: 60px;
-  padding-bottom: 5px;
-  font-size: 48px;
-  font-weight: 500;
-  color: #3A3A3A;
+.logo {
+  margin-right: auto;
   background-image: url('../img/logo.png');
-  background-position-x: -19px;
+  background-position-x: -20px;
   background-position-y: center;
-  background-size: 80px 80px;
   background-repeat: no-repeat;
 }
 
-.bold {
-  font-weight: 700;
+.logo-name {
+  font-size: 48px;
+  color: #3A3A3A;
+  padding-left: 60px;
 }
 
-.section-stone-wrap {
-  height: 90vh;
+.nav-list {
   display: flex;
-  flex-direction: column;
-  justify-content: end;
 }
 
-.section-stone-content {
+.nav-item:not(:last-child) {
+  margin-right: 20px;
+}
+
+.nav-item-link {
+  padding: 10px 15px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  color: #5B6871;
+  border: 1px solid #5B6871;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.nav-item-link:hover {
+  background-color: #5B6871;
+  color: #fff;
+}
+
+/* Hero */
+.section-hero {
+  height: 900px;
+}
+
+.section-hero-container {
   display: flex;
   justify-content: center;
-  padding-bottom: 150px;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 100%;
 }
 
-.section-stone-description {
-  width: 800px;
+.section-hero-text {
   font-size: 90px;
-  font-weight: 500;
-  color: #3A3A3A;
-}
-
-.section-stone-scroll {
-  text-align: center;
-}
-
-.section-stone-scroll-text {
-  border-bottom: 1px solid #3A3A3A;
-  padding: 0 100px 25px  100px;
-  font-size: 30px;
-  font-weight: 300;
+  max-width: 50%;
   color: #3A3A3A;
 }
