@@ -22,24 +22,24 @@
   <div class="container">
     <div class="wrap-content">
       <h2 class="form-title">Sign Up for a free account</h2>
-      <form action="#">
+      <form action="/save_user">
         <div class="form-user-info">
           <div class="form-user-info-top form-user-input">
             <div>
-              <input class="form-user-input-box name-input-box" type="text" placeholder="First name" required>
+              <input class="form-user-input-box name-input-box" name="firstname" type="text" placeholder="First name" required>
             </div>
             <div>
-              <input class="form-user-input-box lastname-input-box" type="text" placeholder="Last name" required>
+              <input class="form-user-input-box lastname-input-box" name="lastname" type="text" placeholder="Last name" required>
             </div>
           </div>
           <div class="form-user-input">
-            <input class="form-user-input-box" type="email" placeholder="Email adress" required>
+            <input class="form-user-input-box" name="login" type="email" placeholder="Email adress" required>
           </div>
           <div class="form-user-input">
-            <input class="form-user-input-box" type="password" placeholder="Create password" required>
+            <input class="form-user-input-box" name="password" type="password" placeholder="Create password" required>
           </div>
           <div class="form-user-input">
-            <input class="form-user-input-box" type="password" placeholder="Confirm password" required>
+            <input class="form-user-input-box" name="password-check" type="password" placeholder="Confirm password" required>
           </div>
         </div>
       </form>
