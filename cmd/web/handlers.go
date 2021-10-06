@@ -1,67 +1,73 @@
 package main
 
+// Отрефакторить, БЛЯТЬ ГИТХАБ ЛАГАЕТ
 import (
 	"database/sql"
+
 	"fmt"
 	"goproject/pkg"
 	"html/template"
 	"net/http"
+	"os"
 
-	_ "github.com/go-sql-driver/mysql" // смена бд
 	"github.com/ilyakaznacheev/cleanenv"
+	_ "github.com/lib/pq"
 )
 
 var user pkg.User
+var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c91a8729b17a9791bea82c934ff095d4c@ec2-34-249-247-7.eu-west-1.compute.amazonaws.com:5432/d900njt9tj61n8"
 
 // Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
 
 // Подключение к локальной бд, где после регистрации новый пользователь добавляет новую запись
 func save(w http.ResponseWriter, r *http.Request) {
-	login := r.FormValue("login")
-	password := r.FormValue("password")
-	if login == "" || password == "" {
+	var newUser pkg.User
+	newUser.First_name = r.FormValue("firstname")
+	newUser.Last_name = r.FormValue("lastname")
+	newUser.Login = r.FormValue("login")
+	newUser.Password = r.FormValue("password")
+	passwordCheck := r.FormValue("password-check")
+	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" || newUser.Last_name == "" || passwordCheck == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
-	db, err := sql.Open("mysql", "mysql:123@tcp(127.0.0.1:3306)/stoneshop")
-	if err != nil {
-		panic(err)
+	if newUser.Password != passwordCheck {
+		fmt.Fprint(w, "Пароли не сходятся")
 	}
-	insert, err := db.Query(fmt.Sprintf("INSERT INTO `users` (`login`, `password`) VALUES('%s', '%s')", login, password))
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		panic(err)
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
 	}
-	defer insert.Close()
+	var userid int
+	err = db.QueryRow(`INSERT INTO users (firstname, lastname, login, password) VALUES ($1, $2, $3, $4) RETURNING id`, newUser.First_name, newUser.Last_name, newUser.Login, newUser.Password).Scan(&userid)
+	if err != nil {
+		fmt.Fprint(w, err)
+	}
 	defer db.Close()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 //Проверка, есть ли запись пользователя в бд по логину и паролю(пока локально)
 func check(w http.ResponseWriter, r *http.Request) {
+	var checkUser pkg.User
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 	if login == "" || password == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
-	db, err := sql.Open("mysql", "mysql:123@tcp(127.0.0.1:3306)/stoneshop")
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		panic(err)
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
 	}
-	search, err := db.Query(fmt.Sprintf("SELECT * FROM `users` WHERE `login`='%s'", login))
+	err = db.QueryRow("SELECT * FROM users WHERE login = $1", login).Scan(&checkUser.ID, &checkUser.Login, &checkUser.Password)
 	if err != nil {
-		fmt.Fprint(w, "Неправильный логин")
+		fmt.Fprint(w, "Неправильные данные")
 	}
-	for search.Next() {
-		err = search.Scan(&user.ID, &user.Login, &user.Password)
-		if err != nil {
-			panic(err)
-		}
-		if password != user.Password {
-			fmt.Fprint(w, "Неправильный пароль")
-		}
+	if password != checkUser.Password {
+		fmt.Fprint(w, "Пароль не верен")
 	}
-
-	defer search.Close()
 	defer db.Close()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
