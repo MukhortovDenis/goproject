@@ -22,7 +22,7 @@
   <div class="container">
     <div class="wrap-content">
       <h2 class="form-title">Sign In</h2>
-      <form action="/check_user">
+      <form id="auth" action="/check_user">
         <div class="form-user-info">
           <div class="form-user-input">
             <input class="form-user-input-box" name="login" type="email" placeholder="Email adress" required>
@@ -33,7 +33,7 @@
         </div>
       </form>
       <div class="register-btn">
-        <button class="btn" type="submit" value="Register">Log In</button>
+        <button class="btn" type="submit" value="Register" form="auth">Log In</button>
       </div>
     </div>
   </div>
