@@ -72,6 +72,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 		}
 		if password != checkUser.Password {
 			fmt.Fprint(w, "Неправильный пароль")
+			checkUser = pkg.User{}
 		}
 		defer rows.Close()
 		defer db.Close()
