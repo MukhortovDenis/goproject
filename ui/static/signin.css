@@ -43,10 +43,11 @@ body {
 }
 
 .wrap-content {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  height: 100%;
+  padding: 36px 0;
 }
 
 .form-title {
@@ -78,9 +79,8 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.6);
 }
 
-.form-user-info-top {
-  display: flex;
-  justify-content: space-between;
+.form-user-info {
+  padding-bottom: 107px;
 }
 
 .name-input-box,

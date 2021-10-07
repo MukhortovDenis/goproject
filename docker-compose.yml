@@ -1,23 +1,26 @@
 version: "3.9"
 
 services:
-  postgres_database:
+  goproj:
+    build: ./
+    command: ./goproj
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
     environment:
-      - POSTGRES_USER=${DATABASE_USER}  
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DATABASE_NAME}
-      - DATABASE_HOST=${DATABASE_HOST}
-    build: ./migrations/postgres
+    - DB_PASSWORD=123
+  
+
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+        POSTGRES_USER: "postgres"
+        POSTGRES_DB: "stoneshop"
+        POSTGRES_PASSWORD: "123"
+        PGDATA: "/var/lib/postgresql/data/pgdata"
     ports:
       - 5432:5432
-  app:
-    container_name: goproj
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - api:/usr/src/app/
-    ports:
-      - "4000:4000"
-    depends_on:
-      - postgres_database

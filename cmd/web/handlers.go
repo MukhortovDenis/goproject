@@ -1,5 +1,6 @@
 package main
 
+// Отрефакторить, БЛЯТЬ ГИТХАБ ЛАГАЕТ
 import (
 	"database/sql"
 
@@ -14,26 +15,32 @@ import (
 )
 
 var user pkg.User
-var connStr string = "postgres://postgres:123@localhost:5432/stone_shop?sslmode=disable"
+var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c91a8729b17a9791bea82c934ff095d4c@ec2-34-249-247-7.eu-west-1.compute.amazonaws.com:5432/d900njt9tj61n8?sslmode=require"
 
 // Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
 
 // Подключение к локальной бд, где после регистрации новый пользователь добавляет новую запись
 func save(w http.ResponseWriter, r *http.Request) {
-	login := r.FormValue("login")
-	password := r.FormValue("password")
-	if login == "" || password == "" {
+	var newUser pkg.User
+	newUser.First_name = r.FormValue("firstname")
+	newUser.Last_name = r.FormValue("lastname")
+	newUser.Login = r.FormValue("login")
+	newUser.Password = r.FormValue("password")
+	passwordCheck := r.FormValue("password-check")
+	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" || newUser.Last_name == "" || passwordCheck == "" {
 		fmt.Fprint(w, "Не все данные введены")
+	}
+	if newUser.Password != passwordCheck {
+		fmt.Fprint(w, "Пароли не сходятся")
 	}
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	var newUser pkg.User
-	err = db.QueryRow(`INSERT INTO users (login, password) VALUES ($1, $2) RETURNING id`, login, password).Scan(&newUser.ID)
-
+	var userid int
+	err = db.QueryRow(`INSERT INTO users (firstname, lastname, login, password) VALUES ($1, $2, $3, $4) RETURNING id`, newUser.First_name, newUser.Last_name, newUser.Login, newUser.Password).Scan(&userid)
 	if err != nil {
 		fmt.Fprint(w, err)
 	}
@@ -42,6 +49,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 }
 
 func check(w http.ResponseWriter, r *http.Request) {
+	var checkUser pkg.User
 	login := r.FormValue("login")
 	password := r.FormValue("password")
 	if login == "" || password == "" {
@@ -52,13 +60,23 @@ func check(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	var newUser pkg.User
-	err = db.QueryRow("SELECT * FROM users WHERE login = $1", login).Scan(&newUser.ID, &newUser.Login, &newUser.Password)
+	rows, err := db.Query("SELECT * FROM users WHERE login = $1", login)
 	if err != nil {
-		fmt.Fprint(w, "Неправильные данные")
+		fmt.Fprint(w, "Неправильный логин")
 	}
-	defer db.Close()
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	for rows.Next() {
+		err = rows.Scan(&checkUser.ID, &checkUser.First_name, &checkUser.Last_name, &checkUser.Login, &checkUser.Password)
+		if err != nil {
+			panic(err)
+		}
+		if password != checkUser.Password {
+			fmt.Fprint(w, "Неправильный пароль")
+			checkUser = pkg.User{}
+		}
+		defer rows.Close()
+		defer db.Close()
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}
 }
 
 // Страницы, которые отображаются у пользователей

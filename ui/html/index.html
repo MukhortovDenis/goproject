@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,36 +7,34 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../static/style.css">
     <title>StoneMarket</title>
+    <link rel="stylesheet" href="../static/normalize.css">
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-    <header>
-        <div class="header">
-            <div class="wrapper">
-                <div class="header-top">
+  <header class="header">
+    <div class="container header-container">
+      <a class="logo" href="#">
+        <div class="logo-name"><b class="bold-text">Stone</b>Market</div>
+      </a>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a class="nav-item-link" href="/signup">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-item-link" href="/signin">Sign In</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-                    <a class="logo" href="#">
-                        <img class="logo-icon" src="../img/logo.svg" alt="">
-                        <div class="logo-name"><span class="bold">Stone</span>Market</div>
-                    </a>
-                    <div class="sign-in" href="/signin">
-                        <a class="sign-in_text" href="/signin">Sign in</a>
-                        <a href="#"><img class="log-in_icon" src="../img/log-in_icon.svg" alt=""></img></a>
-                    </div>
-                </div> 
-            </div>
-        </div>
-    </header>
-    <section class="banner">
-        <div class="wrapper">
-            <div class="stone">
-                <p class="tittle">Everything started with <span class="bold">stone</p><span></h1>
-                <img src="../img/stone.png" alt="Stone">
-            </div>
-        </div>
-    </section>
-
+  <section class="section-hero">
+    <div class="container section-hero-container">
+      <p class="section-hero-text">Everything started with <b>stone</b></p>
+      <img class="section-hero-img" src="../img/stone.png" alt="">
+    </div>
+  </section>
 </body>
 </html>
