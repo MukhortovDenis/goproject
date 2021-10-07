@@ -61,15 +61,22 @@ func check(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	err = db.QueryRow("SELECT * FROM users WHERE login = $1", login).Scan(&checkUser.ID, &checkUser.Login, &checkUser.Password)
+	rows, err := db.Query("SELECT * FROM users WHERE login = $1", login)
 	if err != nil {
-		fmt.Fprint(w, "Неправильные данные")
+		fmt.Fprint(w, "Неправильный логин")
 	}
-	if password != checkUser.Password {
-		fmt.Fprint(w, "Пароль не верен")
+	for rows.Next() {
+		err = rows.Scan(&checkUser.ID, &checkUser.First_name, &checkUser.Last_name, &checkUser.Login, &checkUser.Password)
+		if err != nil {
+			panic(err)
+		}
+		if password != checkUser.Password {
+			fmt.Fprint(w, "Неправильный пароль")
+		}
+		defer rows.Close()
+		defer db.Close()
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
-	defer db.Close()
-	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 // Страницы, которые отображаются у пользователей
