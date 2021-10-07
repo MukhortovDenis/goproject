@@ -14,10 +14,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var user pkg.User
-
 // Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
+var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c91a8729b17a9791bea82c934ff095d4c@ec2-34-249-247-7.eu-west-1.compute.amazonaws.com:5432/d900njt9tj61n8?sslmode=require"
 
 // Подключение к локальной бд, где после регистрации новый пользователь добавляет новую запись
 func save(w http.ResponseWriter, r *http.Request) {
@@ -33,7 +32,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 	if newUser.Password != passwordCheck {
 		fmt.Fprint(w, "Пароли не сходятся")
 	}
-	db, err := sql.Open("postgres", os.Getenv("DATABASE_URI"))
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
@@ -54,7 +53,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 	if login == "" || password == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
-	db, err := sql.Open("postgres", os.Getenv("DATABASE_URI"))
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
@@ -99,7 +98,7 @@ func mainHandle() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			err = tmp.Execute(w, user) // нил на энное время
+			err = tmp.Execute(w, nil) // нил на энное время
 			if err != nil {
 				fmt.Fprint(w, err)
 			}
@@ -124,7 +123,7 @@ func mainHandle() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			err = tmp.Execute(w, user) // нил на энное время)
+			err = tmp.Execute(w, nil) // нил на энное время)
 			if err != nil {
 				fmt.Fprint(w, err)
 			}
