@@ -17,6 +17,7 @@ import (
 // Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
 var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c91a8729b17a9791bea82c934ff095d4c@ec2-34-249-247-7.eu-west-1.compute.amazonaws.com:5432/d900njt9tj61n8?sslmode=require"
+var userDefault pkg.User
 
 // Подключение к локальной бд, где после регистрации новый пользователь добавляет новую запись
 func save(w http.ResponseWriter, r *http.Request) {
@@ -46,7 +47,6 @@ func save(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-//Проверка, есть ли запись пользователя в бд по логину и паролю(пока локально)
 func check(w http.ResponseWriter, r *http.Request) {
 	var checkUser pkg.User
 	login := r.FormValue("login")
@@ -72,6 +72,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprint(w, "Неправильный пароль")
 			checkUser = pkg.User{}
 		}
+		userDefault = checkUser
 		defer rows.Close()
 		defer db.Close()
 		http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -124,13 +125,13 @@ func mainHandle() {
 			if err != nil {
 				fmt.Println(err)
 			}
-			err = tmp.Execute(w, nil) // нил на энное время)
+			err = tmp.Execute(w, userDefault) // нил на энное время)
 			if err != nil {
-				fmt.Fprint(w, err)
+				fmt.Fprint(w, userDefault)
 			}
 		})
 	// То, что пользователь не увидит, пока только сохранение и проверка записи в бд
-	http.HandleFunc("/save_user", save)
+	http.HandleFunc("/save", save)
 
 	http.HandleFunc("/check_user", check)
 	path := cfg.Host + ":" + cfg.Port

@@ -21,5 +21,6 @@ services:
         POSTGRES_USER: "postgres"
         POSTGRES_DB: "stoneshop"
         POSTGRES_PASSWORD: "123"
+        PGDATA: "/var/lib/postgresql/data/pgdata"
     ports:
       - 5432:5432

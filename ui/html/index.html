@@ -17,6 +17,8 @@
       <a class="logo" href="#">
         <div class="logo-name"><b class="bold-text">Stone</b>Market</div>
       </a>
+
+      {{ if eq .ID 0 }}
       <nav class="nav">
         <ul class="nav-list">
           <li class="nav-item">
@@ -27,6 +29,9 @@
           </li>
         </ul>
       </nav>
+      {{ else }}
+        <p>Hello, {{.First_name }}{{ .Last_name }}</p>
+      {{ end }}
     </div>
   </header>
 
