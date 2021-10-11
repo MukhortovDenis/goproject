@@ -1,6 +1,6 @@
 package main
 
-// Отрефакторить, БЛЯТЬ ГИТХАБ ЛАГАЕТ
+// Отрефакторить
 import (
 	"database/sql"
 
@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/ilyakaznacheev/cleanenv"
+	"github.com/go-chi/chi"
 	_ "github.com/lib/pq"
 )
 
@@ -81,20 +81,12 @@ func check(w http.ResponseWriter, r *http.Request) {
 
 // Страницы, которые отображаются у пользователей
 // Пока нет готового дизайна, новые делать не буду((
-func mainHandle() {
-	cfg := Server{}
-	err := cleanenv.ReadConfig("config.yml", &cfg)
-	if err != nil {
-		fmt.Println(err)
-	}
+func mainHandle() *chi.Mux {
+	router := NewRouter()
 	// Отслеживание сервером статических файлов
-	fsForCss := http.FileServer(http.Dir("./ui/static/"))
-	http.Handle("/static/", http.StripPrefix("/static", fsForCss))
-	//
-	fsForImg := http.FileServer(http.Dir("./ui/img/"))
-	http.Handle("/img/", http.StripPrefix("/img", fsForImg))
+	fileServer(router)
 	// Регистрация
-	http.HandleFunc("/signin",
+	router.Get("/signin",
 		func(w http.ResponseWriter, r *http.Request) {
 			tmp, err := template.ParseFiles(dirWithHTML + "signin.html")
 			if err != nil {
@@ -107,7 +99,7 @@ func mainHandle() {
 
 		})
 	//Вход
-	http.HandleFunc("/signup",
+	router.Get("/signup",
 		func(w http.ResponseWriter, r *http.Request) {
 			tmp, err := template.ParseFiles(dirWithHTML + "signup.html")
 			if err != nil {
@@ -119,7 +111,7 @@ func mainHandle() {
 			}
 		})
 	// Главная
-	http.HandleFunc("/",
+	router.Get("/",
 		func(w http.ResponseWriter, r *http.Request) {
 			tmp, err := template.ParseFiles(dirWithHTML + "index.html")
 			if err != nil {
@@ -131,12 +123,8 @@ func mainHandle() {
 			}
 		})
 	// То, что пользователь не увидит, пока только сохранение и проверка записи в бд
-	http.HandleFunc("/save", save)
+	router.Get("/save", save)
 
-	http.HandleFunc("/check_user", check)
-	path := cfg.Host + ":" + cfg.Port
-	err = http.ListenAndServe(path, nil)
-	if err != nil {
-		panic(err)
-	}
+	router.Get("/check_user", check)
+	return router
 }
