@@ -1,8 +1,6 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
@@ -15,7 +13,7 @@ func NewRouter() *chi.Mux {
 	return router
 }
 
-func NewHandler() http.Handler {
-	handler := chi.NewRouter()
-	return handler
-}
+// func NewHandler() http.Handler {
+// 	handler := chi.NewRouter()
+// 	return handler
+// }
