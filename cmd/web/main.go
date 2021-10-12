@@ -1,8 +1,11 @@
 package main
 
 import (
+	"goproject/pkg"
 	"log"
 	"net/http"
+
+	"github.com/ilyakaznacheev/cleanenv"
 )
 
 func main() {
@@ -12,8 +15,14 @@ func main() {
 	// 	Prompt:     autocert.AcceptTOS,
 	// 	HostPolicy: autocert.HostWhitelist("https://stoneshop.herokuapp.com", "stoneshop.herokuapp.com", "127.0.0.1:443"),
 	// }
+	cfg := pkg.Config{}
+	err := cleanenv.ReadConfig("config.yml", &cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+	path := cfg.Host + ":" + cfg.Port
 	server := &http.Server{
-		Addr:    "localhost:8080",
+		Addr:    path,
 		Handler: router,
 		// TLSConfig: m.TLSConfig(),
 	}

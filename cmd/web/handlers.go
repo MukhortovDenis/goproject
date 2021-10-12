@@ -3,9 +3,9 @@ package main
 // Отрефакторить
 import (
 	"database/sql"
+	"goproject/pkg"
 
 	"fmt"
-	"goproject/pkg"
 	"html/template"
 	"net/http"
 	"os"
