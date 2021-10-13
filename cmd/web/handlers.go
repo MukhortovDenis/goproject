@@ -154,7 +154,7 @@ func mainHandle() *chi.Mux {
 			}
 		})
 	// То, что пользователь не увидит, пока только сохранение и проверка записи в бд
-	router.Get("/save", save)
+	router.Get("/save_user", save)
 
 	router.Get("/check_user", check)
 	return router
