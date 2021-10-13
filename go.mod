@@ -4,6 +4,8 @@ go 1.17
 
 require (
 	github.com/go-chi/chi v1.5.4
+	github.com/gorilla/securecookie v1.1.1
+	github.com/gorilla/sessions v1.2.1
 	github.com/ilyakaznacheev/cleanenv v1.2.5
 	github.com/lib/pq v1.10.3
 )

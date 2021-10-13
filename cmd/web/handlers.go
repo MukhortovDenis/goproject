@@ -4,6 +4,7 @@ package main
 import (
 	"database/sql"
 	"goproject/pkg"
+	"log"
 
 	"fmt"
 	"html/template"
@@ -11,13 +12,16 @@ import (
 	"os"
 
 	"github.com/go-chi/chi"
+	"github.com/gorilla/securecookie"
+	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq"
 )
 
 // Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
 var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c91a8729b17a9791bea82c934ff095d4c@ec2-34-249-247-7.eu-west-1.compute.amazonaws.com:5432/d900njt9tj61n8?sslmode=require"
-var userDefault pkg.User
+
+var store = sessions.NewCookieStore([]byte(securecookie.GenerateRandomKey(32)))
 
 // Подключение к локальной бд, где после регистрации новый пользователь добавляет новую запись
 func save(w http.ResponseWriter, r *http.Request) {
@@ -68,15 +72,26 @@ func check(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(err)
 		}
-		if password != checkUser.Password {
-			fmt.Fprint(w, "Неправильный пароль")
-			checkUser = pkg.User{}
-		}
-		userDefault = checkUser
-		defer rows.Close()
-		defer db.Close()
-		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
+	if checkUser.Password == password {
+
+		session, err := store.Get(r, "session")
+		if err != nil {
+			log.Fatal(err)
+		}
+		session.Values["userID"] = checkUser.ID
+		session.Values["firstname"] = checkUser.First_name
+		session.Values["lastname"] = checkUser.Last_name
+		err = session.Save(r, w)
+		if err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		fmt.Fprint(w, "Неправильный пароль")
+	}
+	defer rows.Close()
+	defer db.Close()
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 // Страницы, которые отображаются у пользователей
@@ -113,13 +128,25 @@ func mainHandle() *chi.Mux {
 	// Главная
 	router.Get("/",
 		func(w http.ResponseWriter, r *http.Request) {
+			session, err := store.Get(r, "session")
+			if err != nil {
+				log.Fatal(err)
+			}
+			fmt.Println()
+			firstname := fmt.Sprintf("%v", session.Values["firstname"])
+			lastname := fmt.Sprintf("%v", session.Values["lastname"])
+			var user = pkg.User{
+				First_name: firstname,
+				Last_name:  lastname,
+			}
+			fmt.Println(user)
 			tmp, err := template.ParseFiles(dirWithHTML + "index.html")
 			if err != nil {
 				fmt.Println(err)
 			}
-			err = tmp.Execute(w, userDefault) // нил на энное время)
+			err = tmp.Execute(w, user) // нил на энное время)
 			if err != nil {
-				fmt.Fprint(w, userDefault)
+				log.Fatal(err)
 			}
 		})
 	// То, что пользователь не увидит, пока только сохранение и проверка записи в бд
