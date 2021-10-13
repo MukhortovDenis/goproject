@@ -133,18 +133,22 @@ func mainHandle() *chi.Mux {
 				log.Fatal(err)
 			}
 			fmt.Println()
-			firstname := fmt.Sprintf("%v", session.Values["firstname"])
-			lastname := fmt.Sprintf("%v", session.Values["lastname"])
-			var user = pkg.User{
-				First_name: firstname,
-				Last_name:  lastname,
+
+			firstname := session.Values["firstname"]
+			lastname := session.Values["lastname"]
+			block := map[string]interface{}{
+				"firstname":  firstname,
+				"lastname":   lastname,
+				"show_block": true,
 			}
-			fmt.Println(user)
+			if firstname == nil || lastname == nil {
+				block["show_block"] = false
+			}
 			tmp, err := template.ParseFiles(dirWithHTML + "index.html")
 			if err != nil {
 				fmt.Println(err)
 			}
-			err = tmp.Execute(w, user) // нил на энное время)
+			err = tmp.ExecuteTemplate(w, "index", block)
 			if err != nil {
 				log.Fatal(err)
 			}

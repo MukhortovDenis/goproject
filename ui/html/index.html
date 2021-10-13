@@ -1,3 +1,4 @@
+{{define "index"}}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -17,19 +18,19 @@
       <a class="logo" href="#">
         <div class="logo-name"><b class="bold-text">Stone</b>Market</div>
       </a>
-      {{ if ne .ID 0}}
-      <nav class="nav">
-        <ul class="nav-list">
-          <li class="nav-item">
-            <a class="nav-item-link" href="/signup">Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-item-link" href="/signin">Sign In</a>
-          </li>
-        </ul>
-      </nav>
+      {{ if .show_block }}
+      <p>Hello, {{ .firstname }} {{ .lastname }}</p>
       {{ else }}
-        <p>Hello, {{.First_name }} {{ .Last_name }}</p>
+        <nav class="nav">
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a class="nav-item-link" href="/signup">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-item-link" href="/signin">Sign In</a>
+            </li>
+          </ul>
+        </nav>
       {{ end }}
     </div>
   </header>
@@ -42,3 +43,4 @@
   </section>
 </body>
 </html>
+{{ end }}
