@@ -17,13 +17,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// Путь до шаблоном, мб быстрее на пару мгновений, если буду указывать не через переменную
 var dirWithHTML string = "./ui/html/"
 var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c91a8729b17a9791bea82c934ff095d4c@ec2-34-249-247-7.eu-west-1.compute.amazonaws.com:5432/d900njt9tj61n8?sslmode=require"
 
 var store = sessions.NewCookieStore([]byte(securecookie.GenerateRandomKey(32)))
 
-// Подключение к локальной бд, где после регистрации новый пользователь добавляет новую запись
 func save(w http.ResponseWriter, r *http.Request) {
 	var newUser pkg.User
 	newUser.First_name = r.FormValue("firstname")
@@ -94,8 +92,6 @@ func check(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-// Страницы, которые отображаются у пользователей
-// Пока нет готового дизайна, новые делать не буду((
 func mainHandle() *chi.Mux {
 	router := NewRouter()
 	// Отслеживание сервером статических файлов
