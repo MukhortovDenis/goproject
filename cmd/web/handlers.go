@@ -21,6 +21,7 @@ var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c
 
 var store = sessions.NewCookieStore([]byte(os.Getenv("KEY_STORE")))
 
+//Функция выхода
 func quit(w http.ResponseWriter, r *http.Request) {
 	session, err := store.Get(r, "session")
 	if err != nil {
