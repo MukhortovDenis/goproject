@@ -12,7 +12,6 @@ import (
 	"os"
 
 	"github.com/go-chi/chi"
-	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq"
 )
@@ -20,7 +19,7 @@ import (
 var dirWithHTML string = "./ui/html/"
 var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c91a8729b17a9791bea82c934ff095d4c@ec2-34-249-247-7.eu-west-1.compute.amazonaws.com:5432/d900njt9tj61n8?sslmode=require"
 
-var store = sessions.NewCookieStore([]byte(securecookie.GenerateRandomKey(32)))
+var store = sessions.NewCookieStore([]byte(os.Getenv("KEY_STORE")))
 
 func save(w http.ResponseWriter, r *http.Request) {
 	var newUser pkg.User
@@ -128,7 +127,6 @@ func mainHandle() *chi.Mux {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Println()
 
 			firstname := session.Values["firstname"]
 			lastname := session.Values["lastname"]

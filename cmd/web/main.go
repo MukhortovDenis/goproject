@@ -9,7 +9,6 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/gorilla/sessions"
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
@@ -37,11 +36,6 @@ func main() {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 	<-c
-	session := &sessions.Session{}
-	if session.Values != nil {
-		session.Options.MaxAge = 0
-		session.Values = nil
-	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	err = server.Shutdown(ctx)
