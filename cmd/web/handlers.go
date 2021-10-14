@@ -21,6 +21,18 @@ var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c
 
 var store = sessions.NewCookieStore([]byte(os.Getenv("KEY_STORE")))
 
+func quit(w http.ResponseWriter, r *http.Request) {
+	session, err := store.Get(r, "session")
+	if err != nil {
+		log.Fatal(err)
+	}
+	for i := range session.Values {
+		session.Values[i] = nil
+	}
+	fmt.Println(session.Values)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
 func save(w http.ResponseWriter, r *http.Request) {
 	var newUser pkg.User
 	newUser.First_name = r.FormValue("firstname")
@@ -149,7 +161,7 @@ func mainHandle() *chi.Mux {
 		})
 	// То, что пользователь не увидит, пока только сохранение и проверка записи в бд
 	router.Get("/save_user", save)
-
+	router.Get("/quit", quit)
 	router.Get("/check_user", check)
 	return router
 }
