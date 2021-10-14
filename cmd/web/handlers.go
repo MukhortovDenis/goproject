@@ -34,7 +34,6 @@ func quit(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(session.Values)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
@@ -147,8 +146,6 @@ func mainHandle() *chi.Mux {
 
 			firstname := session.Values["firstname"]
 			lastname := session.Values["lastname"]
-			fmt.Println(session.Values)
-			fmt.Println(firstname, lastname)
 			block := map[string]interface{}{
 				"firstname":  firstname,
 				"lastname":   lastname,
