@@ -25,7 +25,7 @@ var store = sessions.NewCookieStore([]byte(configEnv.KeyStore))
 func quit(w http.ResponseWriter, r *http.Request) {
 	session, err := store.Get(r, "session")
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 	for i := range session.Values {
 		session.Values[i] = nil
@@ -90,14 +90,14 @@ func check(w http.ResponseWriter, r *http.Request) {
 
 		session, err := store.Get(r, "session")
 		if err != nil {
-			log.Fatal(err)
+			log.Print(err)
 		}
 		session.Values["userID"] = checkUser.ID
 		session.Values["firstname"] = checkUser.First_name
 		session.Values["lastname"] = checkUser.Last_name
 		err = session.Save(r, w)
 		if err != nil {
-			log.Fatal(err)
+			log.Print(err)
 		}
 	} else {
 		fmt.Fprint(w, "Неправильный пароль")
@@ -141,10 +141,8 @@ func mainHandle() *chi.Mux {
 		func(w http.ResponseWriter, r *http.Request) {
 			session, err := store.Get(r, "session")
 			if err != nil {
-				log.Fatal(err)
+				log.Print(err)
 			}
-			fmt.Println(dbConn)
-
 			firstname := session.Values["firstname"]
 			lastname := session.Values["lastname"]
 			block := map[string]interface{}{
