@@ -28,6 +28,14 @@ ul {
   padding-right: 15px;
 }
 
+.section-heading {
+  font-size: 72px;
+  line-height: 1;
+  font-weight: 600;
+  color: #3A3A3A;
+  margin-bottom: 90px;
+}
+
 
 /* Header */
 .header {
@@ -161,4 +169,144 @@ ul {
   background-image: url('../img/scroll-arrow.png');
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+/* Cards */
+.section-cards {
+  padding-top: 30px;
+  padding-bottom: 90px;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-item {
+  width: 320px;
+  padding: 20px;
+  box-shadow: 0 0 20px 1px #3a3a3a2f;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: .3s;
+}
+
+.card-item:not(:nth-child(4n)) {
+  margin-right: 90px;
+}
+
+.card-item:not(:last-child) {
+  margin-bottom: 90px;
+}
+
+.card-item:hover {
+  box-shadow: 0 0 40px 1px #3a3a3a52;
+  transform: scale(1.1);
+}
+
+.side1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 260px;
+}
+
+.item-img {
+  max-width: 70%;
+}
+
+.item-name {
+  font-size: 26px;
+  font-weight: 600;
+  color: #303030;
+  margin-bottom: 10px;
+}
+
+.item-descr {
+  min-height: 60px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #30303088;
+  margin-bottom: 10px;
+}
+
+.info-link {
+  margin-left: 3px;
+}
+
+.descr-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url('../img/info.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  transform: translateY(3px);
+}
+
+.item-rare {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.ancient {
+  color: #EB4B4B;
+}
+
+.arcana {
+  color: #ade55c;
+}
+
+.immortal {
+  color: #b28a33;
+}
+
+.legendary {
+  color: #d32ce6;
+}
+
+.mythical {
+  color: #8847ff;
+}
+
+.rare {
+  color: #4b69ff;
+}
+
+.uncommon {
+  color: #5e98d9;
+}
+
+.common {
+  color: #b0c3d9;
+}
+
+.buy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 50px;
+  border: none;
+  border-radius: 3px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #636e729f;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.btn:hover {
+  opacity: 0.6;
+}
+
+.item-price {
+  font-size: 16px;
+  font-weight: 400;
+  color: #b2bec3;
 }
