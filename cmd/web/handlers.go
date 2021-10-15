@@ -12,6 +12,7 @@ import (
 	"os"
 
 	"github.com/go-chi/chi"
+	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq"
 )
@@ -19,7 +20,7 @@ import (
 var dirWithHTML string = "./ui/html/"
 var configEnv = init_env()
 var dbConn string = fmt.Sprintf("%s://%s:%s@%s:%s/%s?sslmode=require", configEnv.Dialect, configEnv.DataUser, configEnv.DataPass, configEnv.DataHost, configEnv.DataPort, configEnv.DataName)
-var store = sessions.NewCookieStore([]byte(configEnv.KeyStore))
+var store = sessions.NewCookieStore([]byte(securecookie.GenerateRandomKey(32)))
 
 //Функция выхода
 func quit(w http.ResponseWriter, r *http.Request) {

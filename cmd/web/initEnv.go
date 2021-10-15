@@ -12,7 +12,6 @@ func init_env() *pkg.ConfigEnv {
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
 	}
-	key, _ := os.LookupEnv("KEY_STORE")
 	dialect, _ := os.LookupEnv("DIALECT")
 	data_user, _ := os.LookupEnv("DATABASE_USER")
 	data_pass, _ := os.LookupEnv("DATABASE_PASSWORD")
@@ -21,7 +20,6 @@ func init_env() *pkg.ConfigEnv {
 	data_name, _ := os.LookupEnv("DATABASE_NAME")
 
 	configEnv := &pkg.ConfigEnv{
-		KeyStore: key,
 		Dialect:  dialect,
 		DataUser: data_user,
 		DataPass: data_pass,
