@@ -12,3 +12,12 @@ type Config struct {
 	Port string `yaml:"port" env:"PORT"`
 	Host string `yaml:"host" env:"HOST" env-default:"0.0.0.0"`
 }
+type ConfigEnv struct {
+	KeyStore string
+	Dialect  string
+	DataUser string
+	DataPass string
+	DataHost string
+	DataPort string
+	DataName string
+}

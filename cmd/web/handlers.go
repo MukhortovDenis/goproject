@@ -17,9 +17,9 @@ import (
 )
 
 var dirWithHTML string = "./ui/html/"
-var connStr string = "postgres://kfireyqrkgozaa:31b2140dfdba297c412bda66a9db337c91a8729b17a9791bea82c934ff095d4c@ec2-34-249-247-7.eu-west-1.compute.amazonaws.com:5432/d900njt9tj61n8?sslmode=require"
-
-var store = sessions.NewCookieStore([]byte(os.Getenv("KEY_STORE")))
+var configEnv = init_env()
+var dbConn string = fmt.Sprintf("%s://%s:%s@%s:%s/%s?sslmode=require", configEnv.Dialect, configEnv.DataUser, configEnv.DataPass, configEnv.DataHost, configEnv.DataPort, configEnv.DataName)
+var store = sessions.NewCookieStore([]byte(configEnv.KeyStore))
 
 //Функция выхода
 func quit(w http.ResponseWriter, r *http.Request) {
@@ -50,7 +50,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 	if newUser.Password != passwordCheck {
 		fmt.Fprint(w, "Пароли не сходятся")
 	}
-	db, err := sql.Open("postgres", connStr)
+	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
@@ -71,7 +71,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 	if login == "" || password == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
-	db, err := sql.Open("postgres", connStr)
+	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
@@ -143,6 +143,7 @@ func mainHandle() *chi.Mux {
 			if err != nil {
 				log.Fatal(err)
 			}
+			fmt.Println(dbConn)
 
 			firstname := session.Values["firstname"]
 			lastname := session.Values["lastname"]
