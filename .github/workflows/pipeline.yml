@@ -58,7 +58,7 @@ jobs:
     needs: 
       - lint
       - build
-      - env
+      - create-envfile
     steps:
       - uses: actions/checkout@v2
       - name: Login to Heroku Container registry
