@@ -51,6 +51,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 	if newUser.Password != passwordCheck {
 		fmt.Fprint(w, "Пароли не сходятся")
 	}
+	log.Print(dbConn)
 	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
@@ -72,6 +73,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 	if login == "" || password == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
+	log.Print(dbConn)
 	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
@@ -140,6 +142,7 @@ func mainHandle() *chi.Mux {
 	// Главная
 	router.Get("/",
 		func(w http.ResponseWriter, r *http.Request) {
+			log.Print(dbConn)
 			session, err := store.Get(r, "session")
 			if err != nil {
 				log.Print(err)
