@@ -12,6 +12,7 @@ import (
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
+// Настройки сервера и его прослушивание
 func main() {
 	router := mainHandle()
 	// m := &autocert.Manager{

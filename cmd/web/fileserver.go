@@ -7,6 +7,8 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// Функция подрезана с гитхаба go-chi
+// Нужна для отслеживания сервером статики сайта
 func fileServer(r chi.Router) {
 	root := "./ui/"
 	fs := http.FileServer(http.Dir(root))

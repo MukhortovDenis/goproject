@@ -1,15 +1,11 @@
 package main
 
-// Отрефакторить
 import (
-	"database/sql"
-	"goproject/pkg"
 	"log"
 
 	"fmt"
 	"html/template"
 	"net/http"
-	"os"
 
 	"github.com/go-chi/chi"
 	"github.com/gorilla/securecookie"
@@ -17,98 +13,21 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// Путь к статике для рендеринга html со стороны сервера
 var dirWithHTML string = "./ui/html/"
+
+// Создание структуры, в которой подбираются данные из окружения
 var configEnv = init_env()
+
+// URI к бд
 var dbConn string = fmt.Sprintf("%s://%s:%s@%s:%s/%s?sslmode=require", configEnv.Dialect, configEnv.DataUser, configEnv.DataPass, configEnv.DataHost, configEnv.DataPort, configEnv.DataName)
+
+//Создание хранилища куки с рандомным ключом
 var store = sessions.NewCookieStore([]byte(securecookie.GenerateRandomKey(32)))
 
-//Функция выхода
-func quit(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, "session")
-	if err != nil {
-		log.Print(err)
-	}
-	for i := range session.Values {
-		session.Values[i] = nil
-	}
-	err = session.Save(r, w)
-	if err != nil {
-		log.Fatal(err)
-	}
-	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
-func save(w http.ResponseWriter, r *http.Request) {
-	var newUser pkg.User
-	newUser.First_name = r.FormValue("firstname")
-	newUser.Last_name = r.FormValue("lastname")
-	newUser.Login = r.FormValue("login")
-	newUser.Password = r.FormValue("password")
-	passwordCheck := r.FormValue("password-check")
-	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" || newUser.Last_name == "" || passwordCheck == "" {
-		fmt.Fprint(w, "Не все данные введены")
-	}
-	if newUser.Password != passwordCheck {
-		fmt.Fprint(w, "Пароли не сходятся")
-	}
-	db, err := sql.Open("postgres", dbConn)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-	var userid int
-	err = db.QueryRow(`INSERT INTO users (firstname, lastname, login, password) VALUES ($1, $2, $3, $4) RETURNING id`, newUser.First_name, newUser.Last_name, newUser.Login, newUser.Password).Scan(&userid)
-	if err != nil {
-		fmt.Fprint(w, err)
-	}
-	defer db.Close()
-	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
-func check(w http.ResponseWriter, r *http.Request) {
-	var checkUser pkg.User
-	login := r.FormValue("login")
-	password := r.FormValue("password")
-	if login == "" || password == "" {
-		fmt.Fprint(w, "Не все данные введены")
-	}
-	db, err := sql.Open("postgres", dbConn)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-	rows, err := db.Query("SELECT * FROM users WHERE login = $1", login)
-	if err != nil {
-		fmt.Fprint(w, "Неправильный логин")
-	}
-	for rows.Next() {
-		err = rows.Scan(&checkUser.ID, &checkUser.First_name, &checkUser.Last_name, &checkUser.Login, &checkUser.Password)
-		if err != nil {
-			panic(err)
-		}
-	}
-	if checkUser.Password == password {
-
-		session, err := store.Get(r, "session")
-		if err != nil {
-			log.Print(err)
-		}
-		session.Values["userID"] = checkUser.ID
-		session.Values["firstname"] = checkUser.First_name
-		session.Values["lastname"] = checkUser.Last_name
-		err = session.Save(r, w)
-		if err != nil {
-			log.Print(err)
-		}
-	} else {
-		fmt.Fprint(w, "Неправильный пароль")
-	}
-	defer rows.Close()
-	defer db.Close()
-	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
+// Все основные обработчики сервера
 func mainHandle() *chi.Mux {
+	// Создание go-chi роутера с доп. логированием
 	router := NewRouter()
 	// Отслеживание сервером статических файлов
 	fileServer(router)
@@ -119,7 +38,7 @@ func mainHandle() *chi.Mux {
 			if err != nil {
 				fmt.Println(err)
 			}
-			err = tmp.Execute(w, nil) // нил на энное время
+			err = tmp.Execute(w, nil)
 			if err != nil {
 				fmt.Fprint(w, err)
 			}
@@ -132,7 +51,7 @@ func mainHandle() *chi.Mux {
 			if err != nil {
 				fmt.Println(err)
 			}
-			err = tmp.Execute(w, nil) // нил на энное время
+			err = tmp.Execute(w, nil)
 			if err != nil {
 				fmt.Fprint(w, err)
 			}
@@ -163,9 +82,15 @@ func mainHandle() *chi.Mux {
 				log.Fatal(err)
 			}
 		})
-	// То, что пользователь не увидит, пока только сохранение и проверка записи в бд
+	//Обработчики данных
+
+	// Регистрация нового пользователя
 	router.Get("/save_user", save)
+
+	// Выход из аккаунта(удаление данных из сессии)
 	router.Get("/quit", quit)
+
+	// Аутентификация
 	router.Get("/check_user", check)
 	return router
 }

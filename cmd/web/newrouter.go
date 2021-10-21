@@ -5,6 +5,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
+// Функция для работы с go-chi роутером
 func NewRouter() *chi.Mux {
 	router := chi.NewRouter()
 	router.Use(middleware.RequestID)

@@ -8,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// Работа с переменным окружением, а именно с файлом .env
 func init_env() *pkg.ConfigEnv {
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
