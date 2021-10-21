@@ -9,18 +9,45 @@ services:
     depends_on:
       - db
     environment:
-    - DB_PASSWORD=123
+    - DB_PASSWORD=12345
   
 
   db:
     restart: always
+    container_name: postgres_container
     image: postgres:latest
     volumes:
       - /var/lib/postgresql/data
     environment:
         POSTGRES_USER: "postgres"
         POSTGRES_DB: "stoneshop"
-        POSTGRES_PASSWORD: "123"
+        POSTGRES_PASSWORD: "12345"
         PGDATA: "/var/lib/postgresql/data/pgdata"
     ports:
-      - 5432:5432
+      - "5432:5432"
+    networks:
+      - postgres
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "muhortovdenis48@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "stoneshop"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+    networks:
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
