@@ -64,13 +64,11 @@ func mainHandle() *chi.Mux {
 				log.Print(err)
 			}
 			firstname := session.Values["firstname"]
-			lastname := session.Values["lastname"]
 			block := map[string]interface{}{
 				"firstname":  firstname,
-				"lastname":   lastname,
 				"show_block": true,
 			}
-			if firstname == nil || lastname == nil {
+			if firstname == nil {
 				block["show_block"] = false
 			}
 			tmp, err := template.ParseFiles(dirWithHTML + "index.html")

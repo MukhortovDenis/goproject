@@ -3,9 +3,16 @@ package pkg
 type User struct {
 	ID         int    `json:"id"`
 	First_name string `json:"firts_name"`
-	Last_name  string `json:"last_name"`
-	Login      string `json:"login"`
-	Password   string `json:"password"`
+	// Last_name  string `json:"last_name"`
+	Login    string `json:"login"`
+	Password string `json:"password"`
+}
+type Stone struct {
+	ID          int
+	Name        string
+	URL         string
+	Description string
+	Price       int
 }
 
 type Config struct {

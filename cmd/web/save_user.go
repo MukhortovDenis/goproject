@@ -12,11 +12,10 @@ import (
 func save(w http.ResponseWriter, r *http.Request) {
 	var newUser pkg.User
 	newUser.First_name = r.FormValue("firstname")
-	newUser.Last_name = r.FormValue("lastname")
 	newUser.Login = r.FormValue("login")
 	newUser.Password = r.FormValue("password")
 	passwordCheck := r.FormValue("password-check")
-	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" || newUser.Last_name == "" || passwordCheck == "" {
+	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" || passwordCheck == "" {
 		fmt.Fprint(w, "Не все данные введены")
 	}
 	if newUser.Password != passwordCheck {
@@ -28,7 +27,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 		os.Exit(1)
 	}
 	var userid int
-	err = db.QueryRow(`INSERT INTO users (firstname, lastname, login, password) VALUES ($1, $2, $3, $4) RETURNING id`, newUser.First_name, newUser.Last_name, newUser.Login, newUser.Password).Scan(&userid)
+	err = db.QueryRow(`INSERT INTO users (firstname, login, password) VALUES ($1, $2, $3) RETURNING id`, newUser.First_name, newUser.Login, newUser.Password).Scan(&userid)
 	if err != nil {
 		fmt.Fprint(w, err)
 	}

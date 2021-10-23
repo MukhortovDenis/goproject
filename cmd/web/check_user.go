@@ -28,11 +28,12 @@ func check(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "Неправильный логин")
 	}
 	for rows.Next() {
-		err = rows.Scan(&checkUser.ID, &checkUser.First_name, &checkUser.Last_name, &checkUser.Login, &checkUser.Password)
+		err = rows.Scan(&checkUser.ID, &checkUser.First_name, &checkUser.Login, &checkUser.Password)
 		if err != nil {
 			panic(err)
 		}
 	}
+	log.Print(checkUser.Password, password)
 	if checkUser.Password == password {
 
 		session, err := store.Get(r, "session")
@@ -41,7 +42,6 @@ func check(w http.ResponseWriter, r *http.Request) {
 		}
 		session.Values["userID"] = checkUser.ID
 		session.Values["firstname"] = checkUser.First_name
-		session.Values["lastname"] = checkUser.Last_name
 		err = session.Save(r, w)
 		if err != nil {
 			log.Print(err)
