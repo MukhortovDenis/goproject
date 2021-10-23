@@ -1,0 +1,422 @@
+/* Index */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.page {
+  font-family: 'Rubik', sans-serif;
+}
+
+.body {
+  background: var(--color-bg)
+}
+
+.btn-reset {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.list-reset {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  max-width: 1500px;
+}
+
+.description {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.title {
+  font-size: 40px;
+  color: var(--color-primary-dark);
+}
+
+/* Header */
+.header {
+  height: 80px;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.header__logo {
+  margin-right: 200px;
+}
+
+.logo__name {
+  letter-spacing: -5px;
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.header__menu {
+  margin-right: auto;
+}
+
+.menu-header__list {
+  display: flex;
+  align-items: center;
+}
+
+.menu-header__link {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-primary-dark);
+  transition-property: transform, color;
+  transition-duration: .3s;
+  transition-timing-function: ease;
+}
+
+.menu-header__link:not(:last-child) {
+  margin-right: 40px;
+}
+
+.menu-header__link:hover {
+  color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+.sign-in__link {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-primary-dark);
+  transition: color .3s ease;
+}
+
+.sign-in__link:hover {
+  color: var(--color-accent);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.user__name {
+  margin-right: 10px;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.user__avatar {
+  width: 40px;
+  margin-right: 10px;
+  height: 40px;
+  border: 2px solid var(--color-primary);
+  border-radius: 100%;
+}
+
+.burger {
+  width: 40px;
+  height: 50px;
+  background-image: url('../img/burger.svg');
+  background-size: cover;
+  background-position: center center;
+}
+
+.burger-open {
+  background-image: url('../img/burger-open.svg');
+}
+
+.user__menu {
+  position: absolute;
+  top: 60px;
+  right: 225px;
+  opacity: 0;
+  box-shadow: 0px 0px 20px 1px var(--color-primary-lighter);
+  transition: opacity .3s ease;
+}
+
+.user__menu_active {
+  opacity: 1;
+}
+
+.menu-user {
+  padding: 10px 10px 10px 15px;
+  border-radius: 10px;
+  background-color: var(--color-bg-dark);
+}
+
+.menu-user__list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.menu-user__item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.menu-user__item {
+  transition: transform .3s ease;
+}
+
+.menu-user__item:hover {
+  transform: translateX(-5px);
+}
+
+.menu-user__link {
+  font-size: 20px;
+  color: var(--color-primary-dark);
+  transition: color .3s ease;
+}
+
+.menu-user__item:hover .menu-user__link {
+  color: var(--color-accent);
+}
+
+/* Hero */
+.hero {
+  height: 90vh;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.hero__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero__left,
+.hero__right {
+  display: flex;
+  justify-content: space-between;
+  width: 49.2%;
+}
+
+.hero__left,
+.hero__right {
+  padding: 24px;
+  background-color: var(--color-bg-dark);
+  border-radius: 10px;
+}
+
+.hero__title {
+  margin-bottom: 16px;
+  font-size: 42px;
+  color: var(--color-primary-dark);
+}
+
+.hero__description {
+  color: var(--color-primary);
+}
+
+.hero__img {
+  max-width: 100%;
+  height: 430px;
+  border-radius: 5px;
+}
+
+.img_text {
+  padding: 20px;
+  color: var(--color-white);
+}
+
+.hero__left .hero__img {
+  background-color: var(--color-accent-dark);
+}
+
+.hero__right .hero__img {
+  background-color: var(--color-accent);
+}
+
+.hero__left .hero__description {
+  margin-bottom: 20px;
+}
+
+.hero__right .hero__title {
+  margin-top: 20px;
+}
+
+/* Cards */
+.cards {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.card__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.card {
+  width: 320px;
+  padding: 20px;
+  box-shadow: 0 0 20px 1px #bebebe2f;
+  background-color: var(--color-bg-dark);
+  border-radius: 10px;
+  transition-property: transform, box-shadow;
+  transition-duration: .5s;
+  transition-timing-function: ease;
+}
+
+.card:not(:nth-child(4n)) {
+  margin-right: 63px;
+}
+
+.card:not(:last-child) {
+  margin-bottom: 50px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.ancient:hover {
+  box-shadow: 0 0 32px 1px #eb4b4bdc;
+}
+
+.arcana:hover {
+  box-shadow: 0 0 26px 1px #ace55cb9;
+}
+
+.immortal:hover {
+  box-shadow: 0 0 24px 1px #b28a33;
+}
+
+.legendary:hover {
+  box-shadow: 0 0 22px 1px #d32ce6d0;
+}
+
+.mythical:hover {
+  box-shadow: 0 0 20px 1px #8847ff;
+}
+
+.rare:hover {
+  box-shadow: 0 0 18px 1px #4b69ff;
+}
+
+.uncommon:hover {
+  box-shadow: 0 0 16px 1px #5e98d9;
+}
+
+.common:hover {
+  box-shadow: 0 0 14px 1px #b0c3d9;
+}
+
+.side1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  height: 180px;
+  background-color: var(--color-white);
+  border-radius: 10px 10px 0px 0px;
+}
+
+.card__img {
+  max-width: 50%;
+}
+
+.card__name {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  margin-bottom: 10px;
+}
+
+.card__desc {
+  min-height: 60px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #30303088;
+  margin-bottom: 10px;
+}
+
+.card__rare {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.ancient {
+  color: #EB4B4B;
+}
+
+.arcana {
+  color: #ade55c;
+}
+
+.immortal {
+  color: #b28a33;
+}
+
+.legendary {
+  color: #d32ce6;
+}
+
+.mythical {
+  color: #8847ff;
+}
+
+.rare {
+  color: #4b69ff;
+}
+
+.uncommon {
+  color: #5e98d9;
+}
+
+.common {
+  color: #b0c3d9;
+}
+
+.buy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 50px;
+  border-radius: 3px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--color-accent);
+  transition: opacity .3s ease;
+}
+
+.btn:hover {
+  opacity: 0.6;
+}
+
+.item-price {
+  font-size: 16px;
+  font-weight: 400;
+  color: #b2bec3;
+}

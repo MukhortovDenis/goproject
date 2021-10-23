@@ -1,52 +1,65 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html class="page" lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;600;700&display=swap" rel="stylesheet">
   <title>Sign Up</title>
-  <link rel="stylesheet" href="../static/signup.css">
+  <link rel="stylesheet" href="../static/global.css">
+  <link rel="stylesheet" href="../static/auth.css">
 </head>
-<body> 
-  <div class="main-text">
-    <h1 class="main-title">
-      ROck ‘em sock ‘em)
-    </h1>
-    <p class="main-description">
-      registrate your own account right now and get + 2 rocks for every ton of rubble
-    </p>
-  </div>
-  <div class="container">
-    <div class="wrap-content">
-      <h2 class="form-title">Sign Up for a free account</h2>
-      <form id="reg" action="/save_user">
-        <div class="form-user-info">
-          <div class="form-user-info-top form-user-input">
-            <div>
-              <input class="form-user-input-box name-input-box" name="firstname" type="text" placeholder="First name" required>
-            </div>
-            <div>
-              <input class="form-user-input-box lastname-input-box" name="lastname" type="text" placeholder="Last name" required>
-            </div>
-          </div>
-          <div class="form-user-input">
-            <input class="form-user-input-box" name="login" type="email" placeholder="Email adress" required>
-          </div>
-          <div class="form-user-input">
-            <input class="form-user-input-box" name="password" type="password" placeholder="Create password" required>
-          </div>
-          <div class="form-user-input">
-            <input class="form-user-input-box" name="password-check" type="password" placeholder="Confirm password" required>
-          </div>
-        </div>
-      </form>
-      <div class="register-btn">
-        <button class="btn" type="submit" value="Register" form="reg">Register</button>
-      </div>
+
+<header class="header">
+  <div class="container header__container">
+    <div class="logo">
+      <a class="logo__name" href="#">
+        StoneMarket
+      </a>
     </div>
   </div>
+</header>
+
+<body class="body">
+  <main class="main">
+    <div class="container">
+      <div class="container__warapper">
+        <div class="auth-card">
+          <div class="auth-card__header">
+            <h2 class="auth-card__title">Создайте аккаунт</h2>
+          </div>
+          <div class="auth-card__content">
+            <form class="form" id="register" action="/save_user">
+              <div class="form-input__box">
+                <label class="form-input__label" for="name">Логин</label>
+                <input class="form-input__input" id="name" name="firstname" type="text" placeholder="Введите логин">
+              </div>
+              <div class="form-input__box">
+                <label class="form-input__label" for="email">Email</label>
+                <input class="form-input__input" id="email" name="login" type="email" placeholder="Введите e-mail">
+              </div>
+              <div class="form-input__box">
+                <label class="form-input__label" for="password">Пароль</label>
+                <input class="form-input__input" id="password" name="password" type="password" placeholder="Введите пароль">
+              </div>
+              <div class="form-input__box">
+                <label class="form-input__label" for="confirn-password">Подтверждение пароля</label>
+                <input class="form-input__input" id="confirn-password" name="password-check" type="password" placeholder="Подтвердите пароль">
+              </div>
+              <span class="stroke"></span>
+              <button class="form__btn btn-reset" type="submit" value="Register" form="register">Регистрация</button>
+            </form>
+          </div>
+          <div class="auth-card__footer">
+            <div class="sign-in-suggestion">
+              <span class="sign-in-suggestion__text">Уже есть аккаунт?</span>
+              <a class="sign-in-suggestion__link" href="/signin">Войдите</a>
+            </div>
+          </div>
+        </div>     
+      </div>
+    </div>
+  </main>
+
 </body>
+  
 </html>
