@@ -13,6 +13,7 @@ type Stone struct {
 	URL         string
 	Description string
 	Price       int
+	Rare        string
 }
 
 type Config struct {

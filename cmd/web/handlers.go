@@ -79,6 +79,11 @@ func mainHandle() *chi.Mux {
 			if err != nil {
 				log.Fatal(err)
 			}
+			stoneShop := stones()
+			err = tmp.ExecuteTemplate(w, "shop", stoneShop)
+			if err != nil {
+				log.Fatal(err)
+			}
 		})
 	//Обработчики данных
 
