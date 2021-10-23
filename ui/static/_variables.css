@@ -1,0 +1,21 @@
+/* Variables */
+
+:root {
+  --color-bg-darker: rgb(226, 227, 228);
+  --color-bg-dark: rgb(239, 240, 240);
+  --color-bg: rgb(255, 255, 255);
+  --color-bg-light: rgb(255, 255, 255);
+  --color-bg-lighter: rgb(255, 255, 255);
+
+  --color-primary-lighter: rgb(206, 203, 203);
+  --color-primary-light:rgb(143, 145, 145);
+  --color-primary: #606061;
+  --color-primary-dark: #444446;
+
+  --color-accent-lighter: #F0F0F0;
+  --color-accent-light: #C8CDD2;
+  --color-accent: #B4B9C3;
+  --color-accent-dark: #647387;
+
+  --color-white: #fff;
+}

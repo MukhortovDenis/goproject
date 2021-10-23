@@ -1,246 +1,291 @@
 {{define "index"}}
 <!DOCTYPE html>
-<html lang="ru">
+<html class="page" lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;600;700&display=swap" rel="stylesheet">
     <title>StoneMarket - Всё началось с камня</title>
-    <link rel="stylesheet" href="../static/normalize.css">
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/global.css">
+    <link rel="stylesheet" href="../static/index.css">
 </head>
-<body>
+<body class="body">
 
   <header class="header">
-    <div class="container header-container">
-      <a class="logo" href="#">
-        <span class="logo-icon"></span>
-        <div class="logo-name"><b class="bold-text">Stone</b>Market</div>
-      </a>
+    <div class="container header__container">
+      <div class="header__logo logo">
+        <a class="logo__name" href="#">
+          StoneMarket
+        </a>
+      </div>
+      <nav class="header__menu menu-header">
+        <ul class="menu-header__list list-reset">
+          <li class="menu-header__item">
+            <a class="menu-header__link" href="#">
+              Сундуки
+            </a>
+            <a class="menu-header__link" href="#">
+              Информация
+            </a>
+            <a class="menu-header__link" href="#">
+              Ещё что-то
+            </a>
+            <a class="menu-header__link" href="#">
+              Пока хз что
+            </a>
+          </li>  
+        </ul>
+      </nav>
       {{ if .show_block }}
-      <div class="greeting-text">Hello, {{ .firstname }} {{ .lastname }}</div>
-      <a class="logout-icon" href="/quit"></a>
-      {{ else }}
-        <nav class="nav">
-          <ul class="nav-list">
-            <li class="nav-item">
-              <a class="link" href="/signup">
-                <div class="link-name">Sign up</div>
-                <span class="link-icon"></span>
+        <div class="header__user user">
+          <div class="user__name">
+            Hello, {{ .firstname }} {{ .lastname }}
+          </div>
+          <div class="user__avatar">
+            <span class="user-img"></span>
+          </div>
+        </div>
+        <button class="burger btn-reset" id="burger"></button>
+        <nav class="user__menu menu-user" id="user__menu">
+          <ul class="menu-user__list list-reset">
+            <li class="menu-user__item">
+              <a class="menu-user__link" href="#">
+                Настройки
               </a>
             </li>
-            <li class="nav-item">
-              <a class="link" href="/signin">
-                <div class="link-name">Sign in</div>
-                <span class="link-icon"></span>
+            <li class="menu-user__item">
+              <a class="menu-user__link" href="#">
+                Личный кабинет
               </a>
+            </li>
+            <li class="menu-user__item">
+               <a class="menu-user__link" href="/quit">Выйти</a>
             </li>
           </ul>
         </nav>
+      {{ else }}
+        <div class="header__sign-in sign-in">
+          <a class="sign-in__link" href="#" >
+            Войти
+          </a>
+        </div>
       {{ end }}
     </div>
   </header>
 
   <main class="main">
 
-    <section class="section-hero">
-      <div class="container section-hero-container">
-        <div class="section-hero-content">
-          <p class="section-hero-text">
-            Everything started with <b> stone</b>
-          </p>
-          <img class="section-hero-image" src="../img/amethyst.png" alt="Аметист">
+    <section class="hero">
+      <div class="container hero__container">
+        <div class="hero__left">
+          <div class="hero__content">
+            <h2 class="hero__title">
+              Всё началось с камня
+            </h2>
+            <p class="hero__description description">
+              Далеко-далеко, за словесными горами в стране гласных и согласных живут рыбные тексты. Прямо своего оксмокс переписывается сих единственное? Над он свой вопрос раз путь рукопись семантика одна вдали всемогущая языкового? Необходимыми эта если реторический имеет.
+            </p>
+            <div class="hero__img">
+              <p class="img_text description">Здесь должны были быть крутые арты, но я не умею рисовать.</p>
+            </div>
+          </div> 
         </div>
-        <div class="section-hero-scroll">
-          <div class="scroll-text">Scroll down</div>
-          <span class="scroll-icon"></span>        
+        <div class="hero__right">
+          <div class="hero__content">
+            <div class="hero__img">
+              <p class="img_text description">Здесь должны были быть крутые арты, но я не умею рисовать.</p>
+            </div>
+            <h2 class="hero__title">
+              Какой-то заголовок
+            </h2>
+            <p class="hero__description description">
+              Далеко-далеко, за словесными горами в стране гласных и согласных живут рыбные тексты. Прямо своего оксмокс переписывается сих единственное? Над он свой вопрос раз путь рукопись семантика одна вдали всемогущая языкового? Необходимыми эта если реторический имеет.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section-cards">
-      <div class="container">
-        <h2 class="section-heading">Камни</h2>
-        <ul class="card-list">
-          <li class="card-item">
+    <section class="cards">
+      <div class="container cards__container">
+        <h2 class="section__title title">Камни</h2>
+        <ul class="card__list list-reset">
+          <li class="card ancient">
             <div class="side1">
-              <img class="item-img" src="/img/emerald.png" alt="Изумруд">
+              <img class="card__img" src="/img/emerald.png" alt="Изумруд">
             </div>
             <div class="side2">
-              <h3 class="item-name">
+              <h3 class="card__name">
                 Изумруд
               </h3>
-              <p class="item-descr">
-                Камень, способный перевернуть историю. <a class="info-link" href="#"><span class="descr-icon"></span></a>
+              <p class="card__desc">
+                Камень, способный перевернуть историю.
               </p>
-              <div class="item-rare ancient">
+              <div class="card__rare">
                 Ancient
               </div>
               <div class="buy">
-                <button class="btn">Buy</button>
+                <button class="btn btn-reset">Купить</button>
                 <div class="item-price">12.000.000 C</div>
               </div>
             </div>
           </li>
-          <li class="card-item">
+          <li class="card arcana">
             <div class="side1">
-              <img class="item-img" src="/img/ruby.png" alt="Рубин">
+              <img class="card__img" src="/img/ruby.png" alt="Рубин">
             </div>
             <div class="side2">
-              <h3 class="item-name">
+              <h3 class="card__name">
                 Рубин
               </h3>
-              <p class="item-descr">
-                Камень, способный перевернуть историю и жопу Антона. <a class="info-link" href="#"><span class="descr-icon"></span></a>
+              <p class="card__desc">
+                Камень, способный перевернуть историю и жопу Антона.
               </p>
-              <div class="item-rare arcana">
+              <div class="card__rare">
                 Arcana
               </div>
               <div class="buy">
-                <button class="btn">Buy</button>
+                <button class="btn btn-reset">Купить</button>
                 <div class="item-price">5.850.000 C</div>
               </div>
             </div>
           </li>
-          <li class="card-item">
+          <li class="card arcana">
             <div class="side1">
-              <img class="item-img" src="/img/sapphire.png" alt="Сапфир">
+              <img class="card__img" src="/img/sapphire.png" alt="Сапфир">
             </div>
             <div class="side2">
-              <h3 class="item-name">
+              <h3 class="card__name">
                 Сапфир
               </h3>
-              <p class="item-descr">
-                Поговаривают он может превратить воду в водку. <a class="info-link" href="#"><span class="descr-icon"></span></a>
+              <p class="card__desc">
+                Поговаривают он может превратить воду в водку.
               </p>
-              <div class="item-rare arcana">
+              <div class="card__rare">
                 Arcana
               </div>
               <div class="buy">
-                <button class="btn">Buy</button>
+                <button class="btn btn-reset">Купить</button>
                 <div class="item-price">6.220.000 C</div>
               </div>
             </div>
           </li>
-          <li class="card-item">
+          <li class="card immortal">
             <div class="side1">
-              <img class="item-img" src="/img/aquamarin.png" alt="Аквамарин">
+              <img class="card__img" src="/img/aquamarin.png" alt="Аквамарин">
             </div>
             <div class="side2">
-              <h3 class="item-name">
+              <h3 class="card__name">
                 Аквамарин
               </h3>
-              <p class="item-descr">
-                Сияет ярче утренней мочи. <a class="info-link" href="#"><span class="descr-icon"></span></a>
+              <p class="card__desc">
+                Сияет ярче утренней мочи.
               </p>
-              <div class="item-rare immortal">
+              <div class="card__rare">
                 Immortal
               </div>
               <div class="buy">
-                <button class="btn">Buy</button>
+                <button class="btn btn-reset">Купить</button>
                 <div class="item-price">3.624.040 C</div>
               </div>
             </div>
           </li>
-          <li class="card-item">
+          <li class="card legendary">
             <div class="side1">
-              <img class="item-img" src="/img/eremeevit.png" alt="Еремеевит">
+              <img class="card__img" src="/img/eremeevit.png" alt="Еремеевит">
             </div>
             <div class="side2">
-              <h3 class="item-name">
+              <h3 class="card__name">
                 Еремеевит
               </h3>
-              <p class="item-descr">
-                Из него можно сделать шаурму.<a class="info-link" href="#"><span class="descr-icon"></span></a>
+              <p class="card__desc">
+                Из него можно сделать шаурму.
               </p>
-              <div class="item-rare legendary">
+              <div class="card__rare">
                 Legendary
               </div>
               <div class="buy">
-                <button class="btn">Buy</button>
+                <button class="btn btn-reset">Купить</button>
                 <div class="item-price">2.750.300 C</div>
               </div>
             </div>
           </li>
-          <li class="card-item">
+          <li class="card mythical">
             <div class="side1">
-              <img class="item-img" src="/img/lapis-lazuli.png" alt="Лазурит">
+              <img class="card__img" src="/img/lapis-lazuli.png" alt="Лазурит">
             </div>
             <div class="side2">
-              <h3 class="item-name">
+              <h3 class="card__name">
                 Лазурит
               </h3>
-              <p class="item-descr">
-                Да это же... АЛМА!!!... ой, это всего лишь Лазурит.<a class="info-link" href="#"><span class="descr-icon"></span></a>
+              <p class="card__desc">
+                Да это же... АЛМА!!!... ой, это всего лишь Лазурит.
               </p>
-              <div class="item-rare mythical">
+              <div class="card__rare">
                 Mythical
               </div>
               <div class="buy">
-                <button class="btn">Buy</button>
+                <button class="btn btn-reset">Купить</button>
                 <div class="item-price">1.520.000 C</div>
               </div>
             </div>
           </li>
-          <li class="card-item">
+          <li class="card rare">
             <div class="side1">
-              <img class="item-img" src="/img/heliotrope.png" alt="Гелиотроп">
+              <img class="card__img" src="/img/heliotrope.png" alt="Гелиотроп">
             </div>
             <div class="side2">
-              <h3 class="item-name">
+              <h3 class="card__name">
                 Гелиотроп
               </h3>
-              <p class="item-descr">
-                Он появился откололся от Охоты Крепкое, когда в него попала гроза.<a class="info-link" href="#"><span class="descr-icon"></span></a>
+              <p class="card__desc">
+                Он появился откололся от Охоты Крепкое, когда в него попала гроза.
               </p>
-              <div class="item-rare rare">
+              <div class="card__rare">
                 Rare
               </div>
               <div class="buy">
-                <button class="btn">Buy</button>
+                <button class="btn btn-reset">Купить</button>
                 <div class="item-price">712.550 C</div>
               </div>
             </div>
           </li>
-          <li class="card-item">
+          <li class="card uncommon">
             <div class="side1">
-              <img class="item-img" src="/img/amber.png" alt="Янтарь">
+              <img class="card__img" src="/img/amber.png" alt="Янтарь">
             </div>
             <div class="side2">
-              <h3 class="item-name">
+              <h3 class="card__name">
                 Янтарь
               </h3>
-              <p class="item-descr">
-                Из него делают Жигулёвское.<a class="info-link" href="#"><span class="descr-icon"></span></a>
+              <p class="card__desc">
+                Из него делают Жигулёвское.
               </p>
-              <div class="item-rare uncommon">
+              <div class="card__rare">
                 Uncommon
               </div>
               <div class="buy">
-                <button class="btn">Buy</button>
+                <button class="btn btn-reset">Купить</button>
                 <div class="item-price">200.000 C</div>
               </div>
             </div>
           </li>
-          <li class="card-item">
+          <li class="card common">
             <div class="side1">
-              <img class="item-img" src="/img/hatat.png" alt="Гатат">
+              <img class="card__img" src="/img/hatat.png" alt="Гатат">
             </div>
             <div class="side2">
-              <h3 class="item-name">
+              <h3 class="card__name">
                 Гатат
               </h3>
-              <p class="item-descr">
-                Погаваривают, что этот камень ест в KFC и играет в баскетбол.<a class="info-link" href="#"><span class="descr-icon"></span></a>
+              <p class="card__desc">
+                Погаваривают, что этот камень любит есть в KFC и играет в баскетбол.
               </p>
-              <div class="item-rare common">
+              <div class="card__rare">
                 Common
               </div>
               <div class="buy">
-                <button class="btn">Buy</button>
+                <button class="btn btn-reset">Купить</button>
                 <div class="item-price">12.600 C</div>
               </div>
             </div>
@@ -251,6 +296,7 @@
 
   </main>
 
+  <script src="../script/script.js"></script>
 </body>
 </html>
 {{ end }}
