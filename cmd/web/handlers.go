@@ -75,12 +75,24 @@ func mainHandle() *chi.Mux {
 			if err != nil {
 				fmt.Println(err)
 			}
-			err = tmp.ExecuteTemplate(w, "index", block)
+			err = tmp.Execute(w, block)
 			if err != nil {
 				log.Fatal(err)
 			}
-			stoneShop := stones()
-			err = tmp.ExecuteTemplate(w, "shop", stoneShop)
+			// stoneShop := stones()
+			// err = tmp.ExecuteTemplate(w, "shop", stoneShop)
+			// if err != nil {
+			// 	log.Fatal(err)
+			// } Новый щаблон для камней
+
+		})
+	router.Get("/cabinet",
+		func(w http.ResponseWriter, r *http.Request) {
+			tmp, err := template.ParseFiles(dirWithHTML + "cabinet.html")
+			if err != nil {
+				fmt.Println(err)
+			}
+			err = tmp.Execute(w, nil)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -89,7 +101,7 @@ func mainHandle() *chi.Mux {
 
 	// Регистрация нового пользователя
 	router.Get("/save_user", save)
-
+	router.Get("/cabinet-info", info)
 	// Выход из аккаунта(удаление данных из сессии)
 	router.Get("/quit", quit)
 

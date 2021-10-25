@@ -33,7 +33,6 @@ func check(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 	}
-	log.Print(checkUser.Password, password)
 	if checkUser.Password == password {
 
 		session, err := store.Get(r, "session")
@@ -42,6 +41,7 @@ func check(w http.ResponseWriter, r *http.Request) {
 		}
 		session.Values["userID"] = checkUser.ID
 		session.Values["firstname"] = checkUser.First_name
+		session.Values["email"] = checkUser.Login
 		err = session.Save(r, w)
 		if err != nil {
 			log.Print(err)
