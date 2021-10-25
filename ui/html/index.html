@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StoneMarket - Всё началось с камня</title>
-    <link rel="stylesheet" href="../static/global.css">
-    <link rel="stylesheet" href="../static/index.css">
+    <link rel="stylesheet" href="../static/css/common/global.css">
+    <link rel="stylesheet" href="../static/css/index.css">
 </head>
 <body class="body">
 
   <header class="header">
     <div class="container header__container">
       <div class="header__logo logo">
-        <a class="logo__name" href="#">
+        <a class="logo__name" href="/">
           StoneMarket
         </a>
       </div>
@@ -45,8 +45,12 @@
             <span class="user-img"></span>
           </div>
         </div>
-        <button class="burger btn-reset" id="burger"></button>
-        <nav class="user__menu menu-user" id="user__menu">
+        <button class="burger btn-reset" id="burger">
+          <svg class="user__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+            <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><path d="M.5,3.85,6.65,10a.48.48,0,0,0,.7,0L13.5,3.85"></path></g>
+          </svg>
+        </button>
+        <nav class="user__menu user__menu_hidden menu-user" id="user__menu">
           <ul class="menu-user__list list-reset">
             <li class="menu-user__item">
               <a class="menu-user__link" href="#">
@@ -54,7 +58,7 @@
               </a>
             </li>
             <li class="menu-user__item">
-              <a class="menu-user__link" href="#">
+              <a class="menu-user__link" href="../static/css/cabinet.css">
                 Личный кабинет
               </a>
             </li>
@@ -112,7 +116,7 @@
         <ul class="card__list list-reset">
           <li class="card ancient">
             <div class="side1">
-              <img class="card__img" src="/img/emerald.png" alt="Изумруд">
+              <img class="card__img" src="../static/images/emerald.png" alt="Изумруд">
             </div>
             <div class="side2">
               <h3 class="card__name">
@@ -132,7 +136,7 @@
           </li>
           <li class="card arcana">
             <div class="side1">
-              <img class="card__img" src="/img/ruby.png" alt="Рубин">
+              <img class="card__img" src="../static/images/ruby.png" alt="Рубин">
             </div>
             <div class="side2">
               <h3 class="card__name">
@@ -152,7 +156,7 @@
           </li>
           <li class="card arcana">
             <div class="side1">
-              <img class="card__img" src="/img/sapphire.png" alt="Сапфир">
+              <img class="card__img" src="../static/images/sapphire.png" alt="Сапфир">
             </div>
             <div class="side2">
               <h3 class="card__name">
@@ -172,7 +176,7 @@
           </li>
           <li class="card immortal">
             <div class="side1">
-              <img class="card__img" src="/img/aquamarin.png" alt="Аквамарин">
+              <img class="card__img" src="../static/images/aquamarin.png" alt="Аквамарин">
             </div>
             <div class="side2">
               <h3 class="card__name">
@@ -192,7 +196,7 @@
           </li>
           <li class="card legendary">
             <div class="side1">
-              <img class="card__img" src="/img/eremeevit.png" alt="Еремеевит">
+              <img class="card__img" src="../static/images/eremeevit.png" alt="Еремеевит">
             </div>
             <div class="side2">
               <h3 class="card__name">
@@ -212,7 +216,7 @@
           </li>
           <li class="card mythical">
             <div class="side1">
-              <img class="card__img" src="/img/lapis-lazuli.png" alt="Лазурит">
+              <img class="card__img" src="../static/images/lapis-lazuli.png" alt="Лазурит">
             </div>
             <div class="side2">
               <h3 class="card__name">
@@ -232,7 +236,7 @@
           </li>
           <li class="card rare">
             <div class="side1">
-              <img class="card__img" src="/img/heliotrope.png" alt="Гелиотроп">
+              <img class="card__img" src="../static/images/heliotrope.png" alt="Гелиотроп">
             </div>
             <div class="side2">
               <h3 class="card__name">
@@ -252,7 +256,7 @@
           </li>
           <li class="card uncommon">
             <div class="side1">
-              <img class="card__img" src="/img/amber.png" alt="Янтарь">
+              <img class="card__img" src="../static/images/amber.png" alt="Янтарь">
             </div>
             <div class="side2">
               <h3 class="card__name">
@@ -272,7 +276,7 @@
           </li>
           <li class="card common">
             <div class="side1">
-              <img class="card__img" src="/img/hatat.png" alt="Гатат">
+              <img class="card__img" src="../static/images/hatat.png" alt="Гатат">
             </div>
             <div class="side2">
               <h3 class="card__name">
@@ -296,7 +300,7 @@
 
   </main>
 
-  <script src="../script/script.js"></script>
+  <script src="../static/js/main.js"></script>
 </body>
 </html>
 {{ end }}

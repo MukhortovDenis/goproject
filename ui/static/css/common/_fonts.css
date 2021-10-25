@@ -6,8 +6,8 @@
   font-style: normal;
   font-weight: 300;
   src: local('Rubik-Light'), local('Rubik-Light'),
-    url('../fonts/Rubik-Light.woff') format('woff'),
-    url('../fonts/Rubik-Light.woff2') format('woff2');
+    url('../../fonts/Rubik-Light.woff') format('woff'),
+    url('../../fonts/Rubik-Light.woff2') format('woff2');
 }
 
 @font-face {
@@ -16,8 +16,8 @@
   font-style: normal;
   font-weight: 400;
   src: local('MontserratRegular'), local('Montserrat-Regular'),
-    url('../fonts/Rubik-Regular.wofff') format('woff'),
-    url('../fonts/Rubik-Regular.woff2') format('woff2');
+    url('../../fonts/Rubik-Regular.woff') format('woff'),
+    url('../../fonts/Rubik-Regular.wof2') format('woff2');
 }
 
 @font-face {
@@ -26,8 +26,8 @@
   font-style: normal;
   font-weight: 500;
   src: local('MontserratSemibold'), local('Montserrat-Semibold'),
-    url('../fonts/Rubik-Medium.woff') format('woff'),
-    url('../fonts/Rubik-Medium.woff2') format('woff2');
+    url('../../fonts/Rubik-Medium.woff') format('woff'),
+    url('../../fonts/Rubik-Medium.woff2') format('woff2');
 }
 
 @font-face {
@@ -36,8 +36,8 @@
   font-style: normal;
   font-weight: 600;
   src: local('MontserratSemibold'), local('Montserrat-Semibold'),
-    url('../fonts/Rubik-SemiBold.woff') format('woff'),
-    url('../fonts/Rubik-SemiBold.woff2') format('woff2');
+    url('../../fonts/Rubik-SemiBold.woff') format('woff'),
+    url('../../fonts/Rubik-SemiBold.woff2') format('woff2');
 }
 
 @font-face {
@@ -46,8 +46,8 @@
   font-style: normal;
   font-weight: 700;
   src: local('MontserratBold'), local('Montserrat-Bold'),
-    url('../fonts/Rubik-Bold.woff') format('woff'),
-    url('../fonts/Rubik-Bold.woff2') format('woff2');
+    url('../../fonts/Rubik-Bold.woff') format('woff'),
+    url('../../fonts/Rubik-Bold.woff2') format('woff2');
 }
 
 @font-face {
@@ -56,6 +56,6 @@
   font-style: normal;
   font-weight: 800;
   src: local('MontserratExtrabold'), local('Montserrat-Extrabold'),
-    url('../fonts/Rubik-ExtraBold.woff') format('woff'),
-    url('../fonts/Rubik-ExtraBold.woff2') format('woff2');
+    url('../../fonts/Rubik-ExtraBold.woff') format('woff'),
+    url('../../fonts/Rubik-ExtraBold.woff2') format('woff2');
 }
