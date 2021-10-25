@@ -35,10 +35,10 @@
           </li>  
         </ul>
       </nav>
-      <!-- {{ if .show_block }} -->
+      {{ if .show_block }}
         <div class="header__user user">
           <div class="user__name">
-            Hello, <!-- {{ .firstname }} {{ .lastname }} -->
+            Hello, {{ .firstname }} {{ .lastname }}
           </div>
           <div class="user__avatar">
             <span class="user-img"></span>
@@ -66,13 +66,13 @@
             </li>
           </ul>
         </nav>
-      <!-- {{ else }}
+      {{ else }}
         <div class="header__sign-in sign-in">
           <a class="sign-in__link" href="/signin" >
             Войти
           </a>
         </div>
-      {{ end }} -->
+      {{ end }}
     </div>
   </header>
 
