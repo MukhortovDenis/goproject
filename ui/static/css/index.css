@@ -29,6 +29,7 @@ p {
 }
 
 .btn-reset {
+  padding: 0;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -64,6 +65,7 @@ p {
 }
 
 .header__container {
+  position: relative;
   display: flex;
   align-items: center;
   height: 100%;
@@ -126,8 +128,9 @@ p {
 
 .user__name {
   margin-right: 10px;
-  font-size: 24px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-primary-dark);
 }
 
 .user__avatar {
@@ -138,29 +141,46 @@ p {
   border-radius: 100%;
 }
 
-.burger {
+.user__btn {
   width: 40px;
-  height: 50px;
-  background-image: url('../img/burger.svg');
-  background-size: cover;
-  background-position: center center;
+  height: 20px;
+}
+
+.user__icon {
+  fill: none;
+  stroke: var(--color-primary-dark);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  width: 20px;
+  height: 20px;
+  transform: translateY(3px);
+  transition-property: stroke, transform;
+  transition-duration: .3s;
+  transition-timing-function: ease;
+}
+
+.rotate {
+  transform: rotate(90deg);
+}
+
+.user__icon:hover {
+  stroke: var(--color-accent);
 }
 
 .burger-open {
-  background-image: url('../img/burger-open.svg');
+  background-image: url('../static/img/burger-open.svg');
 }
 
 .user__menu {
   position: absolute;
   top: 60px;
-  right: 225px;
-  opacity: 0;
+  right: 180px;
+  display: none;
   box-shadow: 0px 0px 20px 1px var(--color-primary-lighter);
-  transition: opacity .3s ease;
 }
 
 .user__menu_active {
-  opacity: 1;
+  display: block;
 }
 
 .menu-user {
@@ -305,7 +325,7 @@ p {
 }
 
 .immortal:hover {
-  box-shadow: 0 0 24px 1px #b28a33;
+  box-shadow: 0 0 24px 1px #daaf55;
 }
 
 .legendary:hover {
@@ -372,7 +392,7 @@ p {
 }
 
 .immortal {
-  color: #b28a33;
+  color: #daaf55;
 }
 
 .legendary {
