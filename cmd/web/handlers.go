@@ -83,7 +83,7 @@ func mainHandle() *chi.Mux {
 			// err = tmp.ExecuteTemplate(w, "shop", stoneShop)
 			// if err != nil {
 			// 	log.Fatal(err)
-			// } Новый щаблон для камней
+			// }
 
 		})
 	router.Get("/cabinet",
