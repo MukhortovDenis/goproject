@@ -167,20 +167,23 @@ p {
   stroke: var(--color-accent);
 }
 
-.burger-open {
-  background-image: url('../static/img/burger-open.svg');
-}
-
 .user__menu {
   position: absolute;
   top: 60px;
-  right: 180px;
-  display: none;
-  box-shadow: 0px 0px 20px 1px var(--color-primary-lighter);
+  right: 20px;
+  height: 0px;
+  visibility: hidden;
+  opacity: 0;
+  box-shadow: 0px 0px 10px 1px var(--color-primary-lighter);
+  transition-property: height, opacity;
+  transition-duration: .3s;
+  transition-timing-function: ease;
 }
 
 .user__menu_active {
-  display: block;
+  height: 110px;
+  visibility: visible;
+  opacity: 1;
 }
 
 .menu-user {

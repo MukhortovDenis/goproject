@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StoneMarket - Всё началось с камня</title>
-    <link rel="stylesheet" href="../static/css/common/global.css">
-    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="static/css/common/global.css">
+    <link rel="stylesheet" href="static/css/index.css">
 </head>
 <body class="body">
 
@@ -35,21 +35,21 @@
           </li>  
         </ul>
       </nav>
-      {{ if .show_block }}
+      <!-- {{ if .show_block }} -->
         <div class="header__user user">
           <div class="user__name">
-            Hello, {{ .firstname }} {{ .lastname }}
+            Hello, <!-- {{ .firstname }} {{ .lastname }} -->
           </div>
           <div class="user__avatar">
             <span class="user-img"></span>
           </div>
         </div>
-        <button class="burger btn-reset" id="burger">
+        <button class="arrow btn-reset" id="arrow">
           <svg class="user__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
             <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><path d="M.5,3.85,6.65,10a.48.48,0,0,0,.7,0L13.5,3.85"></path></g>
           </svg>
         </button>
-        <nav class="user__menu user__menu_hidden menu-user" id="user__menu">
+        <nav class="user__menu menu-user" id="user__menu">
           <ul class="menu-user__list list-reset">
             <li class="menu-user__item">
               <a class="menu-user__link" href="#">
@@ -66,13 +66,13 @@
             </li>
           </ul>
         </nav>
-      {{ else }}
+      <!-- {{ else }}
         <div class="header__sign-in sign-in">
           <a class="sign-in__link" href="/signin" >
             Войти
           </a>
         </div>
-      {{ end }}
+      {{ end }} -->
     </div>
   </header>
 
@@ -113,7 +113,7 @@
       <div class="container cards__container">
         <h2 class="section__title title">Камни</h2>
         <ul class="card__list list-reset">
-          <li class="card ancient">
+          <li class="card {{.rare}}">
             <div class="side1">
               <img class="card__img" src="../static/images/emerald.png" alt="Изумруд">
             </div>
@@ -133,7 +133,7 @@
               </div>
             </div>
           </li>
-          <li class="card arcana">
+          <li class="card {{.rare}}">
             <div class="side1">
               <img class="card__img" src="../static/images/ruby.png" alt="Рубин">
             </div>
@@ -153,7 +153,7 @@
               </div>
             </div>
           </li>
-          <li class="card arcana">
+          <li class="card {{.rare}}">
             <div class="side1">
               <img class="card__img" src="../static/images/sapphire.png" alt="Сапфир">
             </div>
@@ -173,7 +173,7 @@
               </div>
             </div>
           </li>
-          <li class="card immortal">
+          <li class="card {{.rare}}">
             <div class="side1">
               <img class="card__img" src="../static/images/aquamarin.png" alt="Аквамарин">
             </div>
@@ -193,7 +193,7 @@
               </div>
             </div>
           </li>
-          <li class="card legendary">
+          <li class="card {{.rare}}">
             <div class="side1">
               <img class="card__img" src="../static/images/eremeevit.png" alt="Еремеевит">
             </div>
@@ -213,7 +213,7 @@
               </div>
             </div>
           </li>
-          <li class="card mythical">
+          <li class="card {{.rare}}">
             <div class="side1">
               <img class="card__img" src="../static/images/lapis-lazuli.png" alt="Лазурит">
             </div>
@@ -233,7 +233,7 @@
               </div>
             </div>
           </li>
-          <li class="card rare">
+          <li class="card {{.rare}}">
             <div class="side1">
               <img class="card__img" src="../static/images/heliotrope.png" alt="Гелиотроп">
             </div>
@@ -253,7 +253,7 @@
               </div>
             </div>
           </li>
-          <li class="card uncommon">
+          <li class="card {{.rare}}">
             <div class="side1">
               <img class="card__img" src="../static/images/amber.png" alt="Янтарь">
             </div>
@@ -273,7 +273,7 @@
               </div>
             </div>
           </li>
-          <li class="card common">
+          <li class="card {{.rare}}">
             <div class="side1">
               <img class="card__img" src="../static/images/hatat.png" alt="Гатат">
             </div>
@@ -299,6 +299,6 @@
 
   </main>
 
-  <script src="../static/js/main.js"></script>
+  <script src="static/js/main.js"></script>
 </body>
 </html>
