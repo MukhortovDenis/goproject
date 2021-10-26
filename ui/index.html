@@ -38,7 +38,7 @@
       {{ if .show_block }}
         <div class="header__user user">
           <div class="user__name">
-            Hello, {{ .firstname }} {{ .lastname }}
+            Hello, {{ .firstname }}
           </div>
           <div class="user__avatar">
             <span class="user-img"></span>
@@ -108,14 +108,14 @@
         </div>
       </div>
     </section>
-
     <section class="cards">
       <div class="container cards__container">
         <h2 class="section__title title">Камни</h2>
+        <ul class="card__list list-reset">
           {{template "stone"}}
+        </ul>
       </div>
     </section>
-
   </main>
 
   <script src="static/js/main.js"></script>

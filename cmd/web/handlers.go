@@ -34,11 +34,8 @@ func mainHandle() *chi.Mux {
 	// Регистрация
 	router.Get("/signin",
 		func(w http.ResponseWriter, r *http.Request) {
-			tmp, err := template.ParseFiles(dirWithHTML + "signin.html")
-			if err != nil {
-				fmt.Println(err)
-			}
-			err = tmp.Execute(w, nil)
+			tmp := template.Must(template.ParseFiles(dirWithHTML + "signin.html"))
+			err := tmp.Execute(w, nil)
 			if err != nil {
 				fmt.Fprint(w, err)
 			}
@@ -47,11 +44,8 @@ func mainHandle() *chi.Mux {
 	//Вход
 	router.Get("/signup",
 		func(w http.ResponseWriter, r *http.Request) {
-			tmp, err := template.ParseFiles(dirWithHTML + "signup.html")
-			if err != nil {
-				fmt.Println(err)
-			}
-			err = tmp.Execute(w, nil)
+			tmp := template.Must(template.ParseFiles(dirWithHTML + "signup.html"))
+			err := tmp.Execute(w, nil)
 			if err != nil {
 				fmt.Fprint(w, err)
 			}
@@ -75,15 +69,12 @@ func mainHandle() *chi.Mux {
 				dirWithHTML + "index.html",
 				dirWithHTML + "stone-temp.html",
 			}
-			tmp, err := template.ParseFiles(files...)
-			if err != nil {
-				fmt.Println(err)
-			}
+			tmp := template.Must(template.ParseFiles(files...))
+			stoneShop := stones()
 			err = tmp.Execute(w, block)
 			if err != nil {
 				log.Fatal(err)
 			}
-			stoneShop := stones()
 			err = tmp.ExecuteTemplate(w, "stone", stoneShop)
 			if err != nil {
 				log.Print(err)
@@ -92,11 +83,8 @@ func mainHandle() *chi.Mux {
 		})
 	router.Get("/cabinet",
 		func(w http.ResponseWriter, r *http.Request) {
-			tmp, err := template.ParseFiles(dirWithHTML + "cabinet.html")
-			if err != nil {
-				fmt.Println(err)
-			}
-			err = tmp.Execute(w, nil)
+			tmp := template.Must(template.ParseFiles(dirWithHTML + "cabinet.html"))
+			err := tmp.Execute(w, nil)
 			if err != nil {
 				log.Fatal(err)
 			}

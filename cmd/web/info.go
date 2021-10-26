@@ -18,10 +18,7 @@ func info(w http.ResponseWriter, r *http.Request) {
 		"firstname": firstname,
 		"email":     email,
 	}
-	tmp, err := template.ParseFiles(dirWithHTML + "cabinet-info.html")
-	if err != nil {
-		fmt.Println(err)
-	}
+	tmp := template.Must(template.ParseFiles(dirWithHTML + "cabinet-info.html"))
 	err = tmp.Execute(w, userInfo)
 	if err != nil {
 		fmt.Fprint(w, err)
