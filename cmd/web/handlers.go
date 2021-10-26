@@ -14,7 +14,7 @@ import (
 )
 
 // Путь к статике для рендеринга html со стороны сервера
-var dirWithHTML string = "./ui/html/"
+var dirWithHTML string = "./ui/"
 
 // Создание структуры, в которой подбираются данные из окружения
 var configEnv = init_env()
@@ -71,7 +71,11 @@ func mainHandle() *chi.Mux {
 			if firstname == nil {
 				block["show_block"] = false
 			}
-			tmp, err := template.ParseFiles(dirWithHTML + "index.html")
+			files := []string{
+				dirWithHTML + "index.html",
+				dirWithHTML + "stone-temp.html",
+			}
+			tmp, err := template.ParseFiles(files...)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -79,11 +83,11 @@ func mainHandle() *chi.Mux {
 			if err != nil {
 				log.Fatal(err)
 			}
-			// stoneShop := stones()
-			// err = tmp.ExecuteTemplate(w, "shop", stoneShop)
-			// if err != nil {
-			// 	log.Fatal(err)
-			// }
+			stoneShop := stones()
+			err = tmp.ExecuteTemplate(w, "stone", stoneShop)
+			if err != nil {
+				log.Print(err)
+			}
 
 		})
 	router.Get("/cabinet",
