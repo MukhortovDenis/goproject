@@ -338,6 +338,7 @@ template {
   display: none;
 }
 
+/* Styles */
 @font-face {
   font-family: "Rubik";
   src: url(../fonts/Rubik-Light.woff) format("woff"), url(../fonts/Rubik-Light.woff2) format("woff2");
