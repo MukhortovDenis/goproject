@@ -1,65 +1,109 @@
 <!DOCTYPE html>
-<html class="page" lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
-  <link rel="stylesheet" href="static/css/common/global.css">
-  <link rel="stylesheet" href="static/css/auth.css">
-</head>
-
-<header class="header">
-  <div class="container header__container">
-    <div class="logo">
-      <a class="logo__name" href="/">
-        StoneMarket
-      </a>
-    </div>
-  </div>
-</header>
-
-<body class="body">
-  <main class="main">
-    <div class="container">
-      <div class="container__warapper">
-        <div class="auth-card">
-          <div class="auth-card__header">
-            <h2 class="auth-card__title">Создайте аккаунт</h2>
-          </div>
-          <div class="auth-card__content">
-            <form class="form" id="register" action="/save_user">
-              <div class="form-input__box">
-                <label class="form-input__label" for="name">Логин</label>
-                <input class="form-input__input" id="name" name="firstname" type="text" placeholder="Введите логин">
-              </div>
-              <div class="form-input__box">
-                <label class="form-input__label" for="email">Email</label>
-                <input class="form-input__input" id="email" name="login" type="email" placeholder="Введите e-mail">
-              </div>
-              <div class="form-input__box">
-                <label class="form-input__label" for="password">Пароль</label>
-                <input class="form-input__input" id="password" name="password" type="password" placeholder="Введите пароль">
-              </div>
-              <div class="form-input__box">
-                <label class="form-input__label" for="confirn-password">Подтверждение пароля</label>
-                <input class="form-input__input" id="confirn-password" name="password-check" type="password" placeholder="Подтвердите пароль">
-              </div>
-              <span class="stroke"></span>
-              <button class="form__btn btn-reset" type="submit" value="Register" form="register">Регистрация</button>
-            </form>
-          </div>
-          <div class="auth-card__footer">
-            <div class="sign-in-suggestion">
-              <span class="sign-in-suggestion__text">Уже есть аккаунт?</span>
-              <a class="sign-in-suggestion__link" href="/signin">Войдите</a>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация | StoneMarket</title>
+    <link rel="icon" href="../../static/images/common/sm-icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="static/css/styles.css">
+  </head>
+  <body>
+    <header class="header">
+      <div class="container-xl header__container"><a class="header__logo logo" href="/">
+          <div class="logo__name"><span class="first-letter">S</span>tone<span class="first-letter">M</span>arket</div></a></div>
+    </header>
+    <main class="main">
+      <div class="container-xl">
+        <div class="container__wrapper">
+          <div class="auth-card">
+            <div class="auth-card__header">
+              <h2 class="auth-card__title">Создайте аккаунт</h2>
+            </div>
+            <div class="auth-card__content">
+              <form class="form" id="form-register" action="/save_user" novalidate>
+                <div class="form-input__box">
+                  <label class="form-input__label">Логин</label>
+                  <input class="form-input__input" id="name" name="firstname" type="text" placeholder="Введите логин">
+                  <svg class="valid-icon input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
+                    <path d="M4,8,6.05,9.64a.48.48,0,0,0,.4.1.5.5,0,0,0,.34-.24L10,4"></path>
+                    <circle cx="7" cy="7" r="6.5"></circle>
+                    </g></g>
+                  </svg>
+                  <svg class="invalid-icon input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
+                    <circle cx="7" cy="7" r="6.5"></circle>
+                    <line x1="7" y1="7" x2="7" y2="10.5"></line>
+                    <circle cx="7" cy="4.5" r="0.5"></circle>
+                    </g></g>
+                  </svg>
+                  <span class="error__msg"> </span>
+                </div>
+                <div class="form-input__box">
+                  <label class="form-input__label">Email</label>
+                  <input class="form-input__input" id="email" name="login" type="email" placeholder="Введите e-mail">
+                  <svg class="valid-icon input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
+                    <path d="M4,8,6.05,9.64a.48.48,0,0,0,.4.1.5.5,0,0,0,.34-.24L10,4"></path>
+                    <circle cx="7" cy="7" r="6.5"></circle>
+                    </g></g>
+                  </svg>
+                  <svg class="invalid-icon input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
+                    <circle cx="7" cy="7" r="6.5"></circle>
+                    <line x1="7" y1="7" x2="7" y2="10.5"></line>
+                    <circle cx="7" cy="4.5" r="0.5"></circle>
+                    </g></g>
+                  </svg>
+                  <span class="error__msg"></span>
+                </div>
+                <div class="form-input__box">
+                  <label class="form-input__label">Пароль</label>
+                  <input class="form-input__input" id="password" name="password" type="password" placeholder="Введите пароль">
+                  <svg class="valid-icon input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
+                    <path d="M4,8,6.05,9.64a.48.48,0,0,0,.4.1.5.5,0,0,0,.34-.24L10,4"></path>
+                    <circle cx="7" cy="7" r="6.5"></circle>
+                    </g></g>
+                    </svg>
+                  <svg class="invalid-icon input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
+                    <circle cx="7" cy="7" r="6.5"></circle>
+                    <line x1="7" y1="7" x2="7" y2="10.5"></line>
+                    <circle cx="7" cy="4.5" r="0.5"></circle>
+                    </g></g>
+                  </svg>
+                  <span class="error__msg"></span>
+                </div>
+                <div class="form-input__box">
+                  <label class="form-input__label">Подтверждение пароля</label>
+                  <input class="form-input__input" id="confirn-password" name="password-check" type="password" placeholder="Подтвердите пароль">
+                  <svg class="valid-icon input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
+                    <path d="M4,8,6.05,9.64a.48.48,0,0,0,.4.1.5.5,0,0,0,.34-.24L10,4"></path>
+                    <circle cx="7" cy="7" r="6.5"></circle>
+                    </g></g>
+                  </svg>
+                  <svg class="invalid-icon input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
+                    <circle cx="7" cy="7" r="6.5"></circle>
+                    <line x1="7" y1="7" x2="7" y2="10.5"></line>
+                    <circle cx="7" cy="4.5" r="0.5"></circle>
+                    </g></g>
+                  </svg>
+                  <span class="error__msg"></span>
+                </div><span class="stroke"></span>
+                <button class="form__btn btn-reset" type="submit" value="Register" form="form-register">Регистрация</button>
+              </form>
+            </div>
+            <div class="auth-card__footer">
+              <div class="sign-in-suggestion"><span class="sign-in-suggestion__text">Уже есть аккаунт?</span><a class="sign-in-suggestion__link" href="/signin">Войти</a></div>
             </div>
           </div>
-        </div>     
+        </div>
       </div>
-    </div>
-  </main>
-
-</body>
-  
+    </main>
+    <script src="static/js/validation.js"></script>
+  </body>
 </html>

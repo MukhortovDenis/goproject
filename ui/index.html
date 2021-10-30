@@ -1,123 +1,199 @@
 <!DOCTYPE html>
-<html class="page" lang="ru">
-<head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StoneMarket - Всё началось с камня</title>
-    <link rel="stylesheet" href="static/css/common/global.css">
-    <link rel="stylesheet" href="static/css/index.css">
-</head>
-<body class="body">
-
-  <header class="header">
-    <div class="container header__container">
-      <div class="header__logo logo">
-        <a class="logo__name" href="/">
-          StoneMarket
+    <link rel="icon" href="static/images/common/sm-icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="static/css/styles.css">
+  </head>
+  <body>
+    <header class="header">
+      <div class="container-xl header__container">
+        <a class="header__logo logo" href="/">
+          <div class="logo__name"><span class="first-letter">S</span>tone<span class="first-letter">M</span>arket</div>
         </a>
-      </div>
-      <nav class="header__menu menu-header">
-        <ul class="menu-header__list list-reset">
-          <li class="menu-header__item">
-            <a class="menu-header__link" href="#">
-              Сундуки
-            </a>
-            <a class="menu-header__link" href="#">
-              Информация
-            </a>
-            <a class="menu-header__link" href="#">
-              Ещё что-то
-            </a>
-            <a class="menu-header__link" href="#">
-              Пока хз что
-            </a>
-          </li>  
-        </ul>
-      </nav>
-      {{ if .show_block }}
-        <div class="header__user user">
-          <div class="user__name">
-            Hello, {{ .firstname }} {{ .lastname }}
-          </div>
-          <div class="user__avatar">
-            <span class="user-img"></span>
-          </div>
-        </div>
-        <button class="arrow btn-reset" id="arrow">
-          <svg class="user__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-            <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><path d="M.5,3.85,6.65,10a.48.48,0,0,0,.7,0L13.5,3.85"></path></g>
-          </svg>
-        </button>
-        <nav class="user__menu menu-user" id="user__menu">
-          <ul class="menu-user__list list-reset">
-            <li class="menu-user__item">
-              <a class="menu-user__link" href="#">
-                Настройки
-              </a>
-            </li>
-            <li class="menu-user__item">
-              <a class="menu-user__link" href="/cabinet">
-                Личный кабинет
-              </a>
-            </li>
-            <li class="menu-user__item">
-               <a class="menu-user__link" href="/quit">Выйти</a>
-            </li>
+        <nav class="header__nav nav">
+          <ul class="nav__list list-reset">
+            <li class="nav__item"><a class="nav__link" href="#">Сундуки</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">Информация</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">Ещё что-то</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">Пока хз что</a></li>
           </ul>
         </nav>
-      {{ else }}
-        <div class="header__sign-in sign-in">
-          <a class="sign-in__link" href="/signin" >
-            Войти
-          </a>
-        </div>
-      {{ end }}
-    </div>
-  </header>
-
-  <main class="main">
-
-    <section class="hero">
-      <div class="container hero__container">
-        <div class="hero__left">
-          <div class="hero__content">
-            <h2 class="hero__title">
-              Всё началось с камня
-            </h2>
-            <p class="hero__description description">
-              Далеко-далеко, за словесными горами в стране гласных и согласных живут рыбные тексты. Прямо своего оксмокс переписывается сих единственное? Над он свой вопрос раз путь рукопись семантика одна вдали всемогущая языкового? Необходимыми эта если реторический имеет.
-            </p>
-            <div class="hero__img">
-              <p class="img_text description">Здесь должны были быть крутые арты, но я не умею рисовать.</p>
+        {{ if .show_block }}
+          <div class="header__user user">
+            <div class="user__name">Привет, {{ .firstname }}!</div>
+            <div class="user__avatar avatar">
+              <span class="avatar__img"></span>
             </div>
-          </div> 
-        </div>
-        <div class="hero__right">
+          </div>
+          <button class="arrow btn-reset">
+            <svg class=arrow__icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+              <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)">
+                <path d="M.5,3.85,6.65,10a.48.48,0,0,0,.7,0L13.5,3.85"></path>
+              </g>
+            </svg>
+          </button>
+          <nav class="user__menu menu-user">
+            <ul class="menu-user__list list-reset">
+              <li class="menu-user__item"><a class="menu-user__link" href="#">Настройки</a></li>
+              <li class="menu-user__item"><a class="menu-user__link" href="/cabinet">Личный кабинет</a></li>
+              <li class="menu-user__item"><a class="menu-user__link" href="/quit">Выйти</a></li>
+            </ul>
+          </nav>
+        {{ else }}
+          <div class="header__sign-in sign-in">
+            <a class="sign-in__link" href="/signin">Войти</a>
+          </div>
+        {{ end }}
+      </div>
+    </header>
+    <main class="main">
+      <section class="hero">
+        <div class="container-xl hero__container">
           <div class="hero__content">
-            <div class="hero__img">
-              <p class="img_text description">Здесь должны были быть крутые арты, но я не умею рисовать.</p>
+            <div class="hero__left">
+              <h1 class="hero__title">Всё началось с камня</h1>
+              <p class="hero__desc">Далеко-далеко за словесными горами в стране гласных, и согласных живут рыбные тексты. Сих то текста, семь, себя текст свою приставка однажды она, языкового свое буквоград пор которой! Вершину которое по всей текстами языком домах алфавит повстречался даже прямо скатился подпоясал страну собрал если, рекламных взгляд правилами реторический свое использовало, рыбными, маленький подзаголовок гор несколько! Алфавит скатился, последний переулка буквоград бросил на берегу безопасную, она путь текст родного то, большого повстречался своих не напоивший силуэт. Города, живет взобравшись мир жизни залетают возвращайся буквоград которое переулка, языком раз семь подпоясал свой, там меня грустный путь диких. Осталось встретил приставка, она семь предупредила маленькая несколько если вопрос. Города, живет взобравшись мир жизни залетают возвращайся буквоград которое переулка, языком раз семь подпоясал свой, там меня грустный путь диких. Осталось встретил приставка, она семь предупредила маленькая несколько если вопрос. Осталось встретил приставка, она семь предупредила маленькая несколько если вопрос.</p>
             </div>
-            <h2 class="hero__title">
-              Какой-то заголовок
-            </h2>
-            <p class="hero__description description">
-              Далеко-далеко, за словесными горами в стране гласных и согласных живут рыбные тексты. Прямо своего оксмокс переписывается сих единственное? Над он свой вопрос раз путь рукопись семантика одна вдали всемогущая языкового? Необходимыми эта если реторический имеет.
-            </p>
+            <div class="hero__right">
+              <div class="hero__img">
+                <p class="text">Здесь должны были быть крутые арты, но я не умею рисовать.</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="cards">
-      <div class="container cards__container">
-        <h2 class="section__title title">Камни</h2>
-          {{template "stone"}}
-      </div>
-    </section>
-
-  </main>
-
-  <script src="static/js/main.js"></script>
-</body>
+      </section>
+      <section class="cards">
+        <div class="container-xl cards__container">
+          <h2 class="cards__title title">Камни</h2>
+          <ul class="cards__list list-reset">
+            <li class="card dead-inside">
+              <div class="card__top"><img class="card__img" src="static/images/common/sony-ericsson.png" alt="Сони Эрикссон"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Сони Эрикссон</h3>
+                <p class="card__desc">Он старше вселенной.</p>
+                <div class="card__rare">Dead Inside</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">1.000.000.000 C</div>
+                </div>
+              </div>
+            </li>
+            <li class="card ancient">
+              <div class="card__top"><img class="card__img" src="static/images/common/emerald.png" alt="Изумруд"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Изумруд</h3>
+                <p class="card__desc">Камень, способный перевернуть историю.</p>
+                <div class="card__rare">Ancient</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">12.000.000 C</div>
+                </div>
+              </div>
+            </li>
+            <li class="card arcana">
+              <div class="card__top"><img class="card__img" src="static/images/common/ruby.png" alt="Рубин"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Рубин</h3>
+                <p class="card__desc">Камень, способный перевернуть историю и жопу Антона.</p>
+                <div class="card__rare">Arcana</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">5.850.000 C</div>
+                </div>
+              </div>
+            </li>
+            <li class="card arcana">
+              <div class="card__top"><img class="card__img" src="static/images/common/sapphire.png" alt="Сапфир"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Сапфир</h3>
+                <p class="card__desc">Поговаривают он может превратить воду в водку.</p>
+                <div class="card__rare">Arcana</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">6.220.000 C</div>
+                </div>
+              </div>
+            </li>
+            <li class="card immortal">
+              <div class="card__top"><img class="card__img" src="static/images/common/aquamarin.png" alt="Аквамарин"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Аквамарин</h3>
+                <p class="card__desc">Сияет ярче утренней мочи.</p>
+                <div class="card__rare">Immortal</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">3.624.040 C</div>
+                </div>
+              </div>
+            </li>
+            <li class="card legendary">
+              <div class="card__top"><img class="card__img" src="static/images/common/eremeevit.png" alt="Еремеевит"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Еремеевит</h3>
+                <p class="card__desc">Из него можно сделать шаурму.</p>
+                <div class="card__rare">Legendary</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">2.750.300 C</div>
+                </div>
+              </div>
+            </li>
+            <li class="card mythical">
+              <div class="card__top"><img class="card__img" src="static/images/common/lapis-lazuli.png" alt="Лазурит"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Лазурит</h3>
+                <p class="card__desc">Да это же... АЛМА!!!... ой, это всего лишь Лазурит.</p>
+                <div class="card__rare">Mythical</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">1.520.000 C</div>
+                </div>
+              </div>
+            </li>
+            <li class="card rare">
+              <div class="card__top"><img class="card__img" src="static/images/common/heliotrope.png" alt="Гелиотроп"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Гелиотроп</h3>
+                <p class="card__desc">Он откололся от Охоты Крепкое, когда в него попала гроза.</p>
+                <div class="card__rare">Rare</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">712.550 C</div>
+                </div>
+              </div>
+            </li>
+            <li class="card uncommon">
+              <div class="card__top"><img class="card__img" src="static/images/common/amber.png" alt="Янтарь"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Янтарь</h3>
+                <p class="card__desc">Из него делают Жигулёвское.</p>
+                <div class="card__rare">Uncommon</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">200.000 C</div>
+                </div>
+              </div>
+            </li>
+            <li class="card common">
+              <div class="card__top"><img class="card__img" src="static/images/common/hatat.png" alt="Гатат"/></div>
+              <div class="card__bottom">
+                <h3 class="card__name">Гатат</h3>
+                <p class="card__desc">Погаваривают, что этот камень любит есть в KFC и играет в баскетбол.</p>
+                <div class="card__rare">Common</div>
+                <div class="buy">
+                  <button class="card__btn btn-reset">Купить</button>
+                  <div class="card__price">12.600 C</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+    <script src="../static/js/index.js"></script>
+  </body>
 </html>
