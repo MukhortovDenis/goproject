@@ -10,71 +10,7 @@
 </head>
 <body class="body">
 
-  <header class="header">
-    <div class="container header__container">
-      <div class="header__logo logo">
-        <a class="logo__name" href="/">
-          StoneMarket
-        </a>
-      </div>
-      <nav class="header__menu menu-header">
-        <ul class="menu-header__list list-reset">
-          <li class="menu-header__item">
-            <a class="menu-header__link" href="#">
-              Сундуки
-            </a>
-            <a class="menu-header__link" href="#">
-              Информация
-            </a>
-            <a class="menu-header__link" href="#">
-              Ещё что-то
-            </a>
-            <a class="menu-header__link" href="#">
-              Пока хз что
-            </a>
-          </li>  
-        </ul>
-      </nav>
-      {{ if .show_block }}
-        <div class="header__user user">
-          <div class="user__name">
-            Hello, {{ .firstname }}
-          </div>
-          <div class="user__avatar">
-            <span class="user-img"></span>
-          </div>
-        </div>
-        <button class="arrow btn-reset" id="arrow">
-          <svg class="user__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-            <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><path d="M.5,3.85,6.65,10a.48.48,0,0,0,.7,0L13.5,3.85"></path></g>
-          </svg>
-        </button>
-        <nav class="user__menu menu-user" id="user__menu">
-          <ul class="menu-user__list list-reset">
-            <li class="menu-user__item">
-              <a class="menu-user__link" href="#">
-                Настройки
-              </a>
-            </li>
-            <li class="menu-user__item">
-              <a class="menu-user__link" href="/cabinet">
-                Личный кабинет
-              </a>
-            </li>
-            <li class="menu-user__item">
-               <a class="menu-user__link" href="/quit">Выйти</a>
-            </li>
-          </ul>
-        </nav>
-      {{ else }}
-        <div class="header__sign-in sign-in">
-          <a class="sign-in__link" href="/signin" >
-            Войти
-          </a>
-        </div>
-      {{ end }}
-    </div>
-  </header>
+  {{template "header"}}
 
   <main class="main">
 

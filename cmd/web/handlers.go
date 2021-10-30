@@ -67,11 +67,16 @@ func mainHandle() *chi.Mux {
 			}
 			files := []string{
 				dirWithHTML + "index.html",
+				dirWithHTML + "header-temp.html",
 				dirWithHTML + "stone-temp.html",
 			}
-			tmp := template.Must(template.ParseFiles(files...))
+			tmp, _ := template.ParseFiles(files...)
 			stoneShop := stones()
-			err = tmp.Execute(w, block)
+			err = tmp.Execute(w, nil)
+			if err != nil {
+				log.Fatal(err)
+			}
+			err = tmp.ExecuteTemplate(w, "header", block)
 			if err != nil {
 				log.Fatal(err)
 			}
