@@ -73,7 +73,6 @@ func mainHandle() *chi.Mux {
 			}
 			files := []string{
 				dirWithHTML + "index.html",
-				dirWithHTML + "stone-temp.html",
 			}
 			tmp, err := template.ParseFiles(files...)
 			if err != nil {
@@ -83,11 +82,11 @@ func mainHandle() *chi.Mux {
 			if err != nil {
 				log.Fatal(err)
 			}
-			stoneShop := stones()
-			err = tmp.ExecuteTemplate(w, "stone", stoneShop)
-			if err != nil {
-				log.Print(err)
-			}
+			// stoneShop := stones()
+			// err = tmp.ExecuteTemplate(w, "stone", stoneShop)
+			// if err != nil {
+			// 	log.Print(err)
+			// }
 
 		})
 	router.Get("/cabinet",
