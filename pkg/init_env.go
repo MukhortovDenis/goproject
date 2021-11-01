@@ -1,7 +1,6 @@
-package main
+package pkg
 
 import (
-	"goproject/pkg"
 	"log"
 	"os"
 
@@ -9,7 +8,7 @@ import (
 )
 
 // Работа с переменным окружением, а именно с файлом .env
-func init_env() *pkg.ConfigEnv {
+func init_env() ConfigEnv {
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
 	}
@@ -20,7 +19,7 @@ func init_env() *pkg.ConfigEnv {
 	data_port, _ := os.LookupEnv("DATABASE_PORT")
 	data_name, _ := os.LookupEnv("DATABASE_NAME")
 
-	configEnv := &pkg.ConfigEnv{
+	configEnv := ConfigEnv{
 		Dialect:  dialect,
 		DataUser: data_user,
 		DataPass: data_pass,

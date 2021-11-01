@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"github.com/go-chi/chi"
@@ -13,8 +13,3 @@ func NewRouter() *chi.Mux {
 	router.Use(middleware.Recoverer)
 	return router
 }
-
-// func NewHandler() http.Handler {
-// 	handler := chi.NewRouter()
-// 	return handler
-// }
