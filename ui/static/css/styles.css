@@ -586,6 +586,7 @@ img {
   margin-bottom: 20px;
 }
 .auth-card__title {
+  margin: 0 12px;
   font-size: 40px;
   font-weight: 500;
   color: #606060;
@@ -629,7 +630,7 @@ img {
   outline: 2px solid #cecbcb;
 }
 .form-input__input:focus {
-  outline: 2px solid #8f9191;
+  outline: 2px solid #647387;
 }
 
 .success .form-input__input {
@@ -1134,6 +1135,14 @@ img {
   font-weight: 500;
   color: #444;
   transition: color 0.3s ease;
+}
+
+.nav-cabinet__item_active .nav-cabinet__link {
+  color: #647387;
+}
+
+.nav-cabinet__icon_active {
+  stroke: #647387;
 }
 
 .nav-cabinet__link:hover .nav-cabinet__icon {
