@@ -1,0 +1,24 @@
+{{define "stone"}}
+{{range .}}
+<li class="card {{.Rare}}">
+  <div class="side1">
+    <img class="card__img" src="{{.URL}}" alt="{{.Name}}">
+  </div>
+  <div class="side2">
+    <h3 class="card__name">
+      {{.Name}}
+    </h3>
+    <p class="card__desc">
+      {{.Description}}
+    </p>
+    <div class="card__rare">
+      {{.Rare}}
+    </div>
+    <div class="buy">
+      <button class="btn btn-reset">Купить</button>
+      <div class="item-price">{{.Price}} C</div>
+    </div>
+  </div>
+</li>
+{{end}}
+{{end}}
