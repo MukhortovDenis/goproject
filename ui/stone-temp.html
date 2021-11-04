@@ -1,24 +1,29 @@
 {{define "stone"}}
+<div class="container-xl cards__container">
+  <h2 class="cards__title title">Камни</h2>
+  <ul class="cards__list list-reset">
 {{range .}}
-<li class="card {{.Rare}}">
-  <div class="side1">
-    <img class="card__img" src="{{.URL}}" alt="{{.Name}}">
-  </div>
-  <div class="side2">
-    <h3 class="card__name">
-      {{.Name}}
-    </h3>
-    <p class="card__desc">
-      {{.Description}}
-    </p>
-    <div class="card__rare">
-      {{.Rare}}
-    </div>
-    <div class="buy">
-      <button class="btn btn-reset">Купить</button>
-      <div class="item-price">{{.Price}} C</div>
-    </div>
-  </div>
-</li>
+    <li class="card {{.RareCss}}">
+      <div class="card__top">
+        <img class="card__img" src="{{.URL}}" alt="{{.Name}}">
+      </div>
+      <div class="card__bottom">
+        <h3 class="card__name">
+          {{.Name}}
+        </h3>
+        <p class="card__desc">
+          {{.Description}}
+        </p>
+        <div class="card__rare">
+          {{.Rare}}
+        </div>
+        <div class="buy">
+          <button class="card__btn btn-reset">Купить</button>
+          <div class="card__price">{{.Price}} C</div>
+        </div>
+      </div>
+    </li>
 {{end}}
+  </ul>
+</div>
 {{end}}

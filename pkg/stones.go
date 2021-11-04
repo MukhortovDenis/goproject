@@ -13,6 +13,7 @@ func stones() []struct {
 	URL         string
 	Description string
 	Price       int
+	RareCss     string
 	Rare        string
 } {
 	db, err := sql.Open("postgres", dbConn)
@@ -20,7 +21,7 @@ func stones() []struct {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	rows, err := db.Query("SELECT * FROM stones ORDER BY id ASC")
+	rows, err := db.Query("SELECT * FROM stones ORDER BY price DESC")
 	if err != nil {
 		log.Print(err)
 	}
@@ -30,6 +31,7 @@ func stones() []struct {
 		URL         string
 		Description string
 		Price       int
+		RareCss     string
 		Rare        string
 	}, 0, 10)
 	for rows.Next() {
@@ -39,9 +41,10 @@ func stones() []struct {
 			URL         string
 			Description string
 			Price       int
+			RareCss     string
 			Rare        string
 		}
-		err = rows.Scan(&stone.ID, &stone.Name, &stone.URL, &stone.Description, &stone.Price, &stone.Rare)
+		err = rows.Scan(&stone.ID, &stone.Name, &stone.URL, &stone.Description, &stone.Price, &stone.RareCss, &stone.Rare)
 		if err != nil {
 			panic(err)
 		}
