@@ -1,55 +1,44 @@
 <!DOCTYPE html>
-<html class="page" lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In</title>
-  <link rel="stylesheet" href="static/css/common/global.css">
-  <link rel="stylesheet" href="static/css/auth.css">
-</head>
-
-<header class="header">
-  <div class="container header__container">
-    <div class="logo">
-      <a class="logo__name" href="/">
-        StoneMarket
-      </a>
-    </div>
-  </div>
-</header>
-
-<body class="body">
-  <main class="main">
-      <div class="container">
-        <div class="container__warapper">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация | StoneMarket</title>
+    <link rel="icon" href="../../static/images/common/sm-icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="static/css/styles.css">
+  </head>
+  <body>
+    <header class="header">
+      <div class="container-xl header__container"><a class="header__logo logo" href="/">
+          <div class="logo__name"><span class="first-letter">S</span>tone<span class="first-letter">M</span>arket</div></a></div>
+    </header>
+    <main class="main">
+      <div class="container-xl">
+        <div class="container__wrapper">
           <div class="auth-card">
             <div class="auth-card__header">
               <h2 class="auth-card__title">Войдите в аккаунт</h2>
             </div>
             <div class="auth-card__content">
-              <form class="form" id="login" action="/check_user">
+              <form class="form" id="form-login" action="/check_user" novalidate>
                 <div class="form-input__box">
-                  <label class="form-input__label" for="email">Email</label>
+                  <label class="form-input__label">Email</label>
                   <input class="form-input__input" id="email" name="login" type="email" placeholder="Введите e-mail">
                 </div>
                 <div class="form-input__box">
-                  <label class="form-input__label" for="password">Пароль</label>
+                  <label class="form-input__label">Пароль</label>
                   <input class="form-input__input" id="password" name="password" type="password" placeholder="Введите пароль">
-                </div>
-                <span class="stroke"></span>
-                <button class="form__btn btn-reset" type="submit" value="Login" form="login">Войти</button>
+                </div><span class="stroke"></span>
+                <button class="form__btn btn-reset" type="submit" value="Login" form="form-login">Войти</button>
               </form>
             </div>
             <div class="auth-card__footer">
-              <div class="sign-in-suggestion">
-                <span class="sign-in-suggestion__text">Ещё нет аккаунта?</span>
-                <a class="sign-in-suggestion__link" href="/signup">Зарегистрируйтесь</a>
-              </div>
+              <div class="sign-in-suggestion"><span class="sign-in-suggestion__text">Ещё нет аккаунта?</span><a class="sign-in-suggestion__link" href="/signup">Зарегистрируйтесь</a></div>
             </div>
-          </div>     
+          </div>
         </div>
       </div>
-  </main>
-</body>
+    </main>
+  </body>
 </html>
