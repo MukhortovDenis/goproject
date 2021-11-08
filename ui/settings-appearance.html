@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Настройки | StoneMarket</title>
+  <link rel="icon" href="static/images/common/sm-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body class="page__body page__body_theme_light">
+  <header class="header">
+    <div class="container-m header__container">
+      <a class="header__logo logo" href="/">
+        <div class="logo__name"><span class="first-letter">S</span>tone<span class="first-letter">M</span>arket</div>
+      </a>
+    </div>
+  </header>
+  <main class="main">
+    <section class="settings">
+      <div class="container-m settings__container">
+        <div class="page__title">
+          Настройки
+        </div>
+        <div class="settings__wrapper">
+          <nav class="settings__nav">
+            <div class="nav-settings">
+              <ul class="nav-settings__list list-reset">
+                <li class="nav-settings__item nav-settings__item_active">
+                  <a class="nav-settings__link" href="#">
+                    <svg class="nav-settings__icon nav-settings__icon_active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                      <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
+                        <path d="M11.5,8.5h-9l-.76,3.8a1,1,0,0,0,.21.83,1,1,0,0,0,.77.37h8.56a1,1,0,0,0,.77-.37,1,1,0,0,0,.21-.83Z"></path>
+                        <path d="M11.5,5.5a1,1,0,0,1,1,1v2H1.5v-2a1,1,0,0,1,1-1H4a1,1,0,0,0,1-1v-2a2,2,0,0,1,4,0v2a1,1,0,0,0,1,1Z"></path>
+                        <line x1="8.5" y1="13.5" x2="8.5" y2="11"></line>
+                      </g></g>
+                    </svg>
+                    Оформление
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div class="settings__content">
+            <div class="setting__block block">
+              <h3 class="block__title">Выбор темы</h3>
+              <form class="form-radio" action="">
+                <div class="form-radio__content">
+                  <div class="theme-preview theme-preview_light"></div>
+                  <div class="form-radio__box">
+                    <input class="form-radio__option" type="radio" id="lightThemeOption" name="theme" checked>
+                    <label class="form-radio__desc" for="defaultLightTheme">Светлая тема</label>
+                  </div>
+                </div>
+                <div class="form-radio__content">
+                  <div class="theme-preview theme-preview_dark"></div>
+                  <div class="form-radio__box">
+                    <input class="form-radio__option" type="radio" id="darkThemeOption" name="theme">
+                    <label class="form-radio__desc" for="DarkTheme">Тёмная тема</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="static/js/theme-toggle.js"></script>
+</body>
+</html>
