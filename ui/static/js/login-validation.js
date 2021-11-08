@@ -1,13 +1,15 @@
 window.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('form-register');
-  const userName = document.getElementById('name');
+  const form = document.getElementById('form-login');
   const userEmail = document.getElementById('email');
   const userPassword = document.getElementById('password');
-  const userConfPassword = document.getElementById('confirn-password');
+
+  console.log( form );
+  console.log( userEmail );
+  console.log( userPassword );
 
   form.addEventListener('submit', formSend);
 
-  const requestURL = '/save_user';
+  const requestURL = '/check_user';
 
   async function formSend(e) {
     e.preventDefault();
@@ -16,12 +18,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const formData = new FormData(form);
 
-    formData.delete('password-check');
-
     const plainFormData = Object.fromEntries(formData.entries())
     const formDataJSON = JSON.stringify(plainFormData);
 
-    if (successCount === 4) {
+    if (successCount === 2) {
       window.location.href = '/';
 
       return new Promise( (resolve, reject) => {
@@ -51,23 +51,10 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function checkInputs() {
-    const userNameValue = userName.value.trim();
     const userEmailValue = userEmail.value.trim();
     const userPasswordValue = userPassword.value.trim();
-    const userConfPasswordValue = userConfPassword.value.trim();
 
     let success = 0;
-
-    if (userNameValue === '') {
-      setErrorFor(userName, 'Это поле не должно быть пустым');
-    } else if (userNameValue.length < 5 || userNameValue.length > 20) {
-        setErrorFor(userName, 'Длина логина должна быть от 5 до 20 символов');
-    } else if (!isName(userNameValue)) {
-        setErrorFor(userName, 'Введены некорректные символы');
-    } else {
-        setSuccessFor(userName)
-        success++;
-    }
 
     if (userEmailValue === '') {
       setErrorFor(userEmail, 'Это поле не должно быть пустым');
@@ -75,8 +62,6 @@ window.addEventListener('DOMContentLoaded', () => {
         setErrorFor(userEmail, 'Email слишком короткий');
     } else if (userEmailValue.length > 32) {
         setErrorFor(userEmail, 'Email слишком длинный');
-    } else if (!isEmail(userEmailValue)) {
-        setErrorFor(userEmail, 'Email введён некоректно');
     } else {
         setSuccessFor(userEmail);
         success++;
@@ -86,25 +71,8 @@ window.addEventListener('DOMContentLoaded', () => {
       setErrorFor(userPassword, 'Это поле не должно быть пустым');
     } else if (userPasswordValue.length < 6 || userPasswordValue.length > 32) {
         setErrorFor(userPassword, 'Длина пароля должна быть от 6 до 32 символов');
-    } else if (!isPassword(userPasswordValue)) {
-        setErrorFor(userPassword, 'Пароль введён некоректно');
-    } else if (userPasswordValue !== userConfPasswordValue) {
-        setErrorFor(userPassword, 'Пароли не совпадают');
     } else {
         setSuccessFor(userPassword);
-        success++;
-    }
-
-    if (userConfPasswordValue === '') {
-      setErrorFor(userConfPassword, 'Это поле не должно быть пустым');
-    } else if (userConfPasswordValue.length < 6 || userConfPasswordValue.length > 32) {
-        setErrorFor(userConfPassword, 'Длина пароля должна быть от 6 до 32 символов');
-    } else if (!isPassword(userConfPasswordValue)) {
-        setErrorFor(userConfPassword, 'Пароль введён некоректно');
-    } else if (userConfPasswordValue !== userPasswordValue) {
-        setErrorFor(userConfPassword, 'Пароли не совпадают');
-    } else {
-        setSuccessFor(userConfPassword);
         success++;
     }
 
@@ -125,16 +93,4 @@ window.addEventListener('DOMContentLoaded', () => {
 
     inputBox.className = 'form-input__box success';
   }
-
-  function isName(name) {
-    return /^[a-zA-Z0-9]{5,20}$/.test(name);
-  }
-
-  function isEmail(email) {
-    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,4}))$/.test(email);
-  }
-
-  function isPassword(password) {
-    return /^(?=.*[a-zA-Z0-9]).{6,32}$/.test(password);
-  }
-})
+});

@@ -25,11 +25,14 @@
                 <div class="form-input__box">
                   <label class="form-input__label">Email</label>
                   <input class="form-input__input" id="email" name="login" type="email" placeholder="Введите e-mail">
+                  <span class="error__msg"></span>
                 </div>
                 <div class="form-input__box">
                   <label class="form-input__label">Пароль</label>
                   <input class="form-input__input" id="password" name="password" type="password" placeholder="Введите пароль">
-                </div><span class="stroke"></span>
+                  <span class="error__msg"></span>
+                </div>
+                <span class="stroke"></span>
                 <button class="form__btn btn-reset" type="submit" value="Login" form="form-login">Войти</button>
               </form>
             </div>
@@ -40,6 +43,7 @@
         </div>
       </div>
     </main>
+    <script src="static/js/login-validation.js"></script>
     <script src="static/js/theme-toggle.js"></script>
   </body>
 </html>
