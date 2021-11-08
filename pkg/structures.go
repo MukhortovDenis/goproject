@@ -1,11 +1,18 @@
 package pkg
 
 type User struct {
-	ID         int    `json:"id"`
-	First_name string `json:"firts_name"`
+	ID         int    `json:"-"`
+	First_name string `json:"firstname"`
 	// Last_name  string `json:"last_name"`
 	Login    string `json:"login"`
 	Password string `json:"password"`
+}
+type UserDB struct {
+	ID         int
+	First_name string
+	// Last_name  string `json:"last_name"`
+	Login    string
+	Password string
 }
 type Stone struct {
 	ID          int

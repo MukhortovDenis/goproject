@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,15 +13,12 @@ import (
 
 func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 	var newUser User
-	newUser.First_name = r.FormValue("firstname")
-	newUser.Login = r.FormValue("login")
-	newUser.Password = r.FormValue("password")
-	passwordCheck := r.FormValue("password-check")
-	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" || passwordCheck == "" {
-		fmt.Fprint(w, "Не все данные введены")
+	err := json.NewDecoder(r.Body).Decode(&newUser)
+	if err != nil {
+		log.Print(err)
 	}
-	if newUser.Password != passwordCheck {
-		fmt.Fprint(w, "Пароли не сходятся")
+	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" {
+		fmt.Fprint(w, "Не все данные введены")
 	}
 	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
@@ -33,40 +31,38 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, err)
 	}
 	defer db.Close()
-	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 	var checkUser User
-	login := r.FormValue("login")
-	password := r.FormValue("password")
-	if login == "" || password == "" {
-		fmt.Fprint(w, "Не все данные введены")
+	err := json.NewDecoder(r.Body).Decode(&checkUser)
+	if err != nil {
+		log.Print(err)
 	}
 	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	rows, err := db.Query("SELECT * FROM users WHERE login = $1", login)
+	rows, err := db.Query("SELECT * FROM users WHERE login = $1", checkUser.Login)
 	if err != nil {
 		fmt.Fprint(w, "Неправильный логин")
 	}
+	var user UserDB
 	for rows.Next() {
-		err = rows.Scan(&checkUser.ID, &checkUser.First_name, &checkUser.Login, &checkUser.Password)
+		err = rows.Scan(&user.ID, &user.First_name, &user.Login, &user.Password)
 		if err != nil {
 			panic(err)
 		}
 	}
-	if checkUser.Password == password {
-
+	if checkUser.Password == user.Password {
 		session, err := store.Get(r, "session")
 		if err != nil {
 			log.Print(err)
 		}
-		session.Values["userID"] = checkUser.ID
-		session.Values["firstname"] = checkUser.First_name
-		session.Values["email"] = checkUser.Login
+		session.Values["userID"] = user.ID
+		session.Values["firstname"] = user.First_name
+		session.Values["email"] = user.Login
 		err = session.Save(r, w)
 		if err != nil {
 			log.Print(err)
