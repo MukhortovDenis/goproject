@@ -8,7 +8,7 @@
   <link rel="icon" href="static/images/common/sm-icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="static/css/styles.css">
 </head>
-<body>
+<body class="page__body page__body_theme_light">
   <header class="header">
     <div class="container-m header__container">
       <a class="header__logo logo" href="/">
@@ -48,14 +48,14 @@
                 <div class="form-radio__content">
                   <div class="theme-preview theme-preview_light"></div>
                   <div class="form-radio__box">
-                    <input class="form-radio__option" type="radio" id="defaultLightTheme" name="theme" checked>
+                    <input class="form-radio__option" type="radio" id="lightThemeOption" name="theme" checked>
                     <label class="form-radio__desc" for="defaultLightTheme">Светлая тема</label>
                   </div>
                 </div>
                 <div class="form-radio__content">
                   <div class="theme-preview theme-preview_dark"></div>
                   <div class="form-radio__box">
-                    <input class="form-radio__option" type="radio" id="DarkTheme" name="theme">
+                    <input class="form-radio__option" type="radio" id="darkThemeOption" name="theme">
                     <label class="form-radio__desc" for="DarkTheme">Тёмная тема</label>
                   </div>
                 </div>
@@ -66,5 +66,6 @@
       </div>
     </section>
   </main>
+  <script src="static/js/theme-toggle.js"></script>
 </body>
 </html>
