@@ -2,7 +2,7 @@ package pkg
 
 type User struct {
 	ID         int    `json:"-"`
-	First_name string `json:"firstname"`
+	First_name string `json:"-"`
 	// Last_name  string `json:"last_name"`
 	Login    string `json:"login"`
 	Password string `json:"password"`

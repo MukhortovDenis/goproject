@@ -22,11 +22,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const formDataJSON = JSON.stringify(plainFormData);
 
     if (successCount === 4) {
-      window.location.href = '/';
-<<<<<<< HEAD
-
-=======
->>>>>>> 42dc7eaf5c05af1af34e4fd2beadd1a8713e2773
       return new Promise( (resolve, reject) => {
         const xhr = new XMLHttpRequest();
 

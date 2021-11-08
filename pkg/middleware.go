@@ -72,7 +72,6 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 	defer db.Close()
-	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
@@ -89,3 +88,18 @@ func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
+
+// func (h *Handler) checkPost(w http.ResponseWriter, r *http.Request) {
+// 	session, err := store.Get(r, "session")
+// 	if err != nil {
+// 		log.Print(err)
+// 	}
+// 	for {
+// 		login := session.Values["userID"]
+// 		if login != nil {
+// 			break
+// 		}
+// 		http.Redirect(w, r, "/", http.StatusSeeOther)
+
+// 	}
+// }
