@@ -29,6 +29,8 @@ func (h *Handler) MainHandle() *chi.Mux {
 	router.Get("/signin", h.signin)
 	router.Get("/signup", h.signup)
 	router.Get("/", h.index)
+	router.Get("/settings", h.settings)
+	router.Get("/settings-appearance", h.settingsAppearance)
 	router.Get("/cabinet", h.cabinet)
 	router.Post("/save_user", h.save)
 	router.Get("/cabinet-info", h.cabinetInfo)

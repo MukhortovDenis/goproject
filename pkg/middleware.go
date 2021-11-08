@@ -13,10 +13,6 @@ import (
 
 func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 	var newUser User
-	// newUser.First_name = r.FormValue("firstname")
-	// newUser.Login = r.FormValue("login")
-	// newUser.Password = r.FormValue("password")
-	// passwordCheck := r.FormValue("password-check")
 	err := json.NewDecoder(r.Body).Decode(&newUser)
 	if err != nil {
 		log.Print(err)
@@ -35,7 +31,6 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, err)
 	}
 	defer db.Close()
-	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
