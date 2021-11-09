@@ -4,12 +4,9 @@ window.addEventListener('DOMContentLoaded', () => {
   const userEmail = document.getElementById('email');
   const userPassword = document.getElementById('password');
   const userConfPassword = document.getElementById('confirn-password');
-
-  form.addEventListener('submit', formSend);
-
   const requestURL = '/save_user';
 
-  async function formSend(e) {
+  form.onsubmit = async (e) => {
     e.preventDefault();
 
     const successCount = checkInputs();
@@ -18,38 +15,25 @@ window.addEventListener('DOMContentLoaded', () => {
 
     formData.delete('password-check');
 
-    const plainFormData = Object.fromEntries(formData.entries())
-    const formDataJSON = JSON.stringify(plainFormData);
+    const plainFormData = Object.fromEntries(formData.entries());
+    const fromDataJSON = JSON.stringify(plainFormData);
 
     if (successCount === 4) {
+      let response = await fetch(requestURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: fromDataJSON
+        });
+       
+      let result = await response.json();
+  
+      form.reset();
+  
       window.location.href = '/';
-<<<<<<< HEAD
 
-=======
->>>>>>> 42dc7eaf5c05af1af34e4fd2beadd1a8713e2773
-      return new Promise( (resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-
-        xhr.open('POST', requestURL);
-
-        xhr.responseType = 'json';
-        
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.onload = () => {
-          if (xhr.status >= 400) {
-            reject( xhr.response );
-          } else {
-            resolve( xhr.response );
-          }
-        };
-
-        xhr.onerror = () => {
-          console.log( xhr.response );
-        };
-
-        xhr.send(formDataJSON);
-      });
+      // setTimeout(() => window.location.href = '/', 500); на случай "медленных интернетов"
     }
   }
 
