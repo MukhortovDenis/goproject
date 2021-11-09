@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('form-login');
   const userEmail = document.getElementById('email');
   const userPassword = document.getElementById('password');
-  const requestURL = '/check_user';
+  const requestURL = 'http://127.0.0.1:8080/check_user';
 
 
   form.onsubmit = async (e) => {
@@ -15,21 +15,20 @@ window.addEventListener('DOMContentLoaded', () => {
     const fromDataJSON = JSON.stringify(plainFormData);
 
     if (successCount === 2) {
-      let response = await fetch(requestURL, {
+      let response = fetch(requestURL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        // headers: {
+        //   'Content-Type': 'application/json'
+        // },
         body: fromDataJSON
         });
 
-      let result = await response.json();
+      // let result =  response.json();
 
       form.reset();
 
-      window.location.href = '/';
 
-      // setTimeout(() => window.location.href = '/', 500); на случай "медленных интернетов"
+      setTimeout(() => window.location.href = '/', 1000);
     }
 
     function checkInputs() {

@@ -31,20 +31,24 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, err)
 	}
 	defer db.Close()
+	defer r.Body.Close()
 }
 
 func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
-	var checkUser User
-	err := json.NewDecoder(r.Body).Decode(&checkUser)
+	var CheckUser User
+	w.Header().Set("Content-Type", "application/json")
+	err := json.NewDecoder(r.Body).Decode(&CheckUser)
 	if err != nil {
-		log.Print(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
+
 	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	rows, err := db.Query("SELECT * FROM users WHERE login = $1", checkUser.Login)
+	rows, err := db.Query("SELECT * FROM users WHERE login = $1", CheckUser.Login)
 	if err != nil {
 		fmt.Fprint(w, "Неправильный логин")
 	}
@@ -55,7 +59,7 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 	}
-	if checkUser.Password == user.Password {
+	if CheckUser.Password == user.Password {
 		session, err := store.Get(r, "session")
 		if err != nil {
 			log.Print(err)

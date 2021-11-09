@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const fromDataJSON = JSON.stringify(plainFormData);
 
     if (successCount === 4) {
-      let response = await fetch(requestURL, {
+      let response = fetch(requestURL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -27,13 +27,13 @@ window.addEventListener('DOMContentLoaded', () => {
         body: fromDataJSON
         });
        
-      let result = await response.json();
+      // let result = response.json();
   
       form.reset();
   
-      window.location.href = '/';
+      // window.location.href = '/';
 
-      // setTimeout(() => window.location.href = '/', 500); на случай "медленных интернетов"
+      setTimeout(() => window.location.href = '/', 1000);
     }
   }
 
