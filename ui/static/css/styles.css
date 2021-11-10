@@ -695,6 +695,11 @@ img {
   color: #C0392Bd0;
 }
 
+.empty .form-input__input {
+  outline: none;
+  color: none;
+}
+
 .input-icon {
   position: absolute;
   top: 39px;
@@ -723,12 +728,14 @@ img {
 }
 
 .error__msg {
+  opacity: 0;
   display: none;
   margin-top: 10px;
   font-size: 16px;
 }
 
 .error .error__msg {
+  opacity: 1;
   display: block;
   font-weight: 500;
   color: #C0392Bd0;
@@ -774,8 +781,8 @@ img {
 }
 
 .hero {
-  padding-top: 140px;
-  padding-bottom: 140px;
+  padding-top: 150px;
+  padding-bottom: 150px;
 }
 
 .hero__left,

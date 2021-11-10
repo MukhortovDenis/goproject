@@ -1,5 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
   
+  let resultJSON;
+
   const sendData = async (url, data) => {
     const response = await fetch(url, {
       method: 'POST',
@@ -13,9 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
       throw new Error( `Ошибка по даресу ${url}, статус ошибки: ${response.status}` )
     }
 
-    let resultJSON = await response.json();
-
-    // console.log( resultJSON );
+    resultJSON = await response.json();
 
     return resultJSON;
   };
@@ -37,7 +37,14 @@ window.addEventListener('DOMContentLoaded', () => {
       if (successCount == 2) {
         sendData('/check_user', JSON.stringify(data))
           .then(() => {
-            window.location.href = '/';
+            if (resultJSON.error == "Ты лох") {
+              setErrorFor(userPassword, 'Неверный логин или пароль')
+              setErrorFor(userEmail, '');
+            } else {
+                setSuccessFor(userPassword);
+                setSuccessFor(userEmail);
+                window.location.href = '/';
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -45,6 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
   };
+
 
   function checkInputs() {
     const userEmailValue = userEmail.value.trim();
@@ -59,7 +67,7 @@ window.addEventListener('DOMContentLoaded', () => {
     } else if (userEmailValue.length > 32) {
         setErrorFor(userEmail, 'Email слишком длинный');
     } else {
-        setSuccessFor(userEmail);
+        setEmptyFor(userEmail);
         success++;
     }
 
@@ -68,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
     } else if (userPasswordValue.length < 6 || userPasswordValue.length > 32) {
         setErrorFor(userPassword, 'Длина пароля должна быть от 6 до 32 символов');
     } else {
-        setSuccessFor(userPassword);
+        setEmptyFor(userPassword);
         success++;
     }
 
@@ -88,6 +96,12 @@ window.addEventListener('DOMContentLoaded', () => {
     const inputBox = input.parentElement;
 
     inputBox.className = 'form-input__box success';
+  }
+
+  function setEmptyFor(input) {
+    const inputBox = input.parentElement;
+
+    inputBox.className = 'form-input__box empty';
   }
 
 
