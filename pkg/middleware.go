@@ -103,8 +103,8 @@ func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) async(w http.ResponseWriter, r *http.Request) {
 	for {
 		if <-done {
-			http.Redirect(w, r, "/", http.StatusSeeOther)
 			break
 		}
 	}
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
