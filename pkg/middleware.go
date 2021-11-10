@@ -14,13 +14,21 @@ import (
 
 func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 	var newUser User
+	w.Header().Set("Content-Type", "application/json")
 	err := json.NewDecoder(r.Body).Decode(&newUser)
 	if err != nil {
 		log.Print(err)
 	}
 	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" {
-		fmt.Fprint(w, "Не все данные введены")
+		Error := NewError("Ты лох")
+		body := new(bytes.Buffer)
+		err = json.NewEncoder(body).Encode(Error)
+		if err != nil {
+			log.Print(err)
+		}
+		fmt.Fprint(w, body)
 	}
+	fmt.Fprint(w, "{}")
 	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
@@ -37,7 +45,7 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 	var CheckUser User
-	// w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	err := json.NewDecoder(r.Body).Decode(&CheckUser)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -86,6 +94,7 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 	defer db.Close()
+	defer r.Body.Close()
 }
 
 func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
