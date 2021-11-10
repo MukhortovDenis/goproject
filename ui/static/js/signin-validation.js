@@ -1,13 +1,23 @@
 window.addEventListener('DOMContentLoaded', () => {
   
-  const sendData = (url, data) => {
-    fetch(url, {
+  const sendData = async (url, data) => {
+    const response = await fetch(url, {
       method: 'POST',
       body: data,
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
         },
     });
+
+    if (!response.ok) {
+      throw new Error( `Ошибка по даресу ${url}, статус ошибки: ${response.status}` )
+    }
+
+    let resultJSON = await response.json();
+
+    // console.log( resultJSON );
+
+    return resultJSON;
   };
 
   const sendForm = () => {

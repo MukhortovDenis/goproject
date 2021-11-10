@@ -1,41 +1,52 @@
 window.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('form-register');
-  const userName = document.getElementById('name');
-  const userEmail = document.getElementById('email');
-  const userPassword = document.getElementById('password');
-  const userConfPassword = document.getElementById('confirn-password');
-  const requestURL = '/save_user';
 
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-
-    const successCount = checkInputs();
-
-    const formData = new FormData(form);
-
-    formData.delete('password-check');
-
-    const plainFormData = Object.fromEntries(formData.entries());
-    const fromDataJSON = JSON.stringify(plainFormData);
-
-    if (successCount === 4) {
-      let response = fetch(requestURL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
+  const sendData = async (url, data) => {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
         },
-        body: fromDataJSON
-        });
-       
-      // let result = response.json();
-  
-      form.reset();
-  
-      // window.location.href = '/';
+    });
 
-      setTimeout(() => window.location.href = '/', 1000);
+    if (!response.ok) {
+      throw new Error( `Ошибка по даресу ${url}, статус ошибки: ${response.status}` )
     }
-  }
+
+    let resultJSON = await response.json();
+
+    // console.log( resultJSON );
+
+    return resultJSON;
+  };
+
+  const sendForm = () => {
+    const form = document.getElementById('form-register');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const successCount = checkInputs();
+      const formData = new FormData(form);
+      const data = {};
+
+      formData.delete('password-check');
+
+      for (const [key, value] of formData) {
+        data[key] = value;
+      }
+
+      if (successCount == 4) {
+        sendData('/save_user', JSON.stringify(data))
+          .then(() => {
+            window.location.href = '/';
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
+    });
+  };
 
   function checkInputs() {
     const userNameValue = userName.value.trim();
@@ -124,4 +135,12 @@ window.addEventListener('DOMContentLoaded', () => {
   function isPassword(password) {
     return /^(?=.*[a-zA-Z0-9]).{6,32}$/.test(password);
   }
-})
+
+
+  const userName = document.getElementById('name');
+  const userEmail = document.getElementById('email');
+  const userPassword = document.getElementById('password');
+  const userConfPassword = document.getElementById('confirn-password');
+
+  sendForm();
+});
