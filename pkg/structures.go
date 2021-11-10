@@ -1,5 +1,15 @@
 package pkg
 
+type Error struct {
+	Error string `json:"error"`
+}
+
+func NewError(msg string) *Error {
+	return &Error{
+		Error: msg,
+	}
+}
+
 type User struct {
 	ID         int    `json:"-"`
 	First_name string `json:"firstname"`

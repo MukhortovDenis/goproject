@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -36,13 +37,12 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 	var CheckUser User
-	w.Header().Set("Content-Type", "application/json")
+	// w.Header().Set("Content-Type", "application/json")
 	err := json.NewDecoder(r.Body).Decode(&CheckUser)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
 	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
@@ -71,8 +71,18 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Print(err)
 		}
+		if err != nil {
+			log.Print(err)
+		}
+		fmt.Fprint(w, "{}")
 	} else {
-		fmt.Fprint(w, "Неправильный пароль")
+		Error := NewError("Ты лох")
+		body := new(bytes.Buffer)
+		err = json.NewEncoder(body).Encode(Error)
+		if err != nil {
+			log.Print(err)
+		}
+		fmt.Fprint(w, body)
 	}
 	defer rows.Close()
 	defer db.Close()
@@ -92,18 +102,3 @@ func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
-
-// func (h *Handler) checkPost(w http.ResponseWriter, r *http.Request) {
-// 	session, err := store.Get(r, "session")
-// 	if err != nil {
-// 		log.Print(err)
-// 	}
-// 	for {
-// 		login := session.Values["userID"]
-// 		if login != nil {
-// 			break
-// 		}
-// 		http.Redirect(w, r, "/", http.StatusSeeOther)
-
-// 	}
-// }

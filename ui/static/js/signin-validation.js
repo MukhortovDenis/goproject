@@ -4,6 +4,9 @@ window.addEventListener('DOMContentLoaded', () => {
     fetch(url, {
       method: 'POST',
       body: data,
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+        },
     });
   };
 
@@ -22,9 +25,14 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (successCount == 2) {
-          sendData('/check_user', JSON.stringify(data));
-          window.location.href = '/';
-      }
+        sendData('/check_user', JSON.stringify(data))
+          .then(() => {
+            window.location.href = '/';
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
     });
   };
 
