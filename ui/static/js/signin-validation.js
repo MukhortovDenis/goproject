@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (successCount == 2) {
         sendData('/check_user', JSON.stringify(data))
           .then(() => {
-            window.location.href = '/';
+            window.location.href = '/check';
             // setTimeout(() => window.location.href = '/', 2000); // на случай "медленных интернетов"
             form.reset();
           })

@@ -11,6 +11,8 @@ import (
 	_ "github.com/lib/pq"
 )
 
+var done = make(chan bool, 1)
+
 func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 	var newUser User
 	err := json.NewDecoder(r.Body).Decode(&newUser)
@@ -71,6 +73,11 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Print(err)
 		}
+		done := make(chan bool, 1)
+		go func(out chan<- bool) {
+			out <- true
+			log.Print("done")
+		}(done)
 	} else {
 		fmt.Fprint(w, "Неправильный пароль")
 	}
@@ -93,17 +100,11 @@ func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-// func (h *Handler) checkPost(w http.ResponseWriter, r *http.Request) {
-// 	session, err := store.Get(r, "session")
-// 	if err != nil {
-// 		log.Print(err)
-// 	}
-// 	for {
-// 		login := session.Values["userID"]
-// 		if login != nil {
-// 			break
-// 		}
-// 		http.Redirect(w, r, "/", http.StatusSeeOther)
-
-// 	}
-// }
+func (h *Handler) async(w http.ResponseWriter, r *http.Request) {
+	for {
+		if <-done {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			break
+		}
+	}
+}
