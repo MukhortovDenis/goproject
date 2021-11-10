@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (successCount == 2) {
         sendData('/check_user', JSON.stringify(data))
           .then(() => {
-            window.location.href = '/';
+            // window.location.href = '/';
           })
           .catch((err) => {
             console.log(err);
