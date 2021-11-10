@@ -1,10 +1,16 @@
 window.addEventListener('DOMContentLoaded', () => {
   
   const sendData = async (url, data) => {
-    fetch(url, {
+    const response = await fetch(url, {
       method: 'POST',
       body: data,
     });
+
+    if (!response.ok) {
+      throw new Error( `Ошибка по даресу ${url}, статус ошибки: ${response.status}` )
+    }
+
+    return await response.json();
   };
 
   const sendForm = () => {
@@ -22,11 +28,50 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (successCount == 2) {
-          sendData('/check_user', JSON.stringify(data));
-          window.location.href = '/';
-      }
+        sendData('/check_user', JSON.stringify(data))
+          .then(() => {
+            window.location.href = '/';
+            // setTimeout(() => window.location.href = '/', 2000); // на случай "медленных интернетов"
+            form.reset();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
     });
   };
+
+  // form.onsubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const successCount = checkInputs();
+
+  //   const formData = new FormData(form);
+  //   const plainFormData = Object.fromEntries(formData.entries());
+
+  //   if (successCount === 2) {
+  //     let response = await fetch(requestURL, {
+  //       method: 'POST',
+  //       // headers: {
+  //       //   'Content-Type': 'application/json'
+  //       // },
+  //       body: JSON.stringify(plainFormData)
+  //     });
+
+  //     let formDataJSON = JSON.stringify(plainFormData);
+
+  //     console.log( plainFormData );
+  //     console.log( formDataJSON );
+
+  //     // form.reset();
+
+  //     // window.location.href = '/';
+
+  //     setTimeout(() => window.location.href = '/', 10000); // на случай "медленных интернетов"
+
+  //     return await response.json();
+  //   }
+  // };
 
   function checkInputs() {
     const userEmailValue = userEmail.value.trim();
