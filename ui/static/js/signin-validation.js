@@ -4,6 +4,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const response = await fetch(url, {
       method: 'POST',
       body: data,
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+        },
     });
 
     if (!response.ok) {
@@ -32,9 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (successCount == 2) {
         sendData('/check_user', JSON.stringify(data))
           .then(() => {
-            window.location.href = '/check';
-            // setTimeout(() => window.location.href = '/', 2000); // на случай "медленных интернетов"
-            form.reset();
+            // window.location.href = '/';
           })
           .catch((err) => {
             console.log(err);

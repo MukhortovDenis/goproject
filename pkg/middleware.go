@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -10,8 +11,6 @@ import (
 
 	_ "github.com/lib/pq"
 )
-
-var done = make(chan bool, 1)
 
 func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 	var newUser User
@@ -38,13 +37,12 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 	var CheckUser User
-	w.Header().Set("Content-Type", "application/json")
+	// w.Header().Set("Content-Type", "application/json")
 	err := json.NewDecoder(r.Body).Decode(&CheckUser)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
 	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
@@ -73,13 +71,18 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Print(err)
 		}
-		done := make(chan bool, 1)
-		go func(out chan<- bool) {
-			out <- true
-			log.Print("done")
-		}(done)
+		if err != nil {
+			log.Print(err)
+		}
+		fmt.Fprint(w, "{}")
 	} else {
-		fmt.Fprint(w, "Неправильный пароль")
+		Error := NewError("Ты лох")
+		body := new(bytes.Buffer)
+		err = json.NewEncoder(body).Encode(Error)
+		if err != nil {
+			log.Print(err)
+		}
+		fmt.Fprint(w, body)
 	}
 	defer rows.Close()
 	defer db.Close()
@@ -96,15 +99,6 @@ func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
 	err = session.Save(r, w)
 	if err != nil {
 		log.Fatal(err)
-	}
-	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
-func (h *Handler) async(w http.ResponseWriter, r *http.Request) {
-	for {
-		if <-done {
-			break
-		}
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
