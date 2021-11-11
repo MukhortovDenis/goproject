@@ -20,11 +20,10 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" {
-		parse := Error{
-			Message: "поле пустое",
-		}
+		Error := new(Error)
+		Error.NewErrorMessage("Пустые поля")
 		body := new(bytes.Buffer)
-		err = json.NewEncoder(body).Encode(parse)
+		err = json.NewEncoder(body).Encode(Error)
 		if err != nil {
 			log.Print(err)
 		}
@@ -47,11 +46,10 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if newUser.Login == checkLogin {
-		parse := Error{
-			CheckEmail: true,
-		}
+		Error := new(Error)
+		Error.NewErrorEmail(true)
 		body := new(bytes.Buffer)
-		err = json.NewEncoder(body).Encode(parse)
+		err = json.NewEncoder(body).Encode(Error)
 		if err != nil {
 			log.Print(err)
 		}
@@ -112,11 +110,10 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprint(w, "{}")
 	} else {
-		parse := Error{
-			CheckPass: true,
-		}
+		Error := new(Error)
+		Error.NewErrorPass(true)
 		body := new(bytes.Buffer)
-		err = json.NewEncoder(body).Encode(parse)
+		err = json.NewEncoder(body).Encode(Error)
 		if err != nil {
 			log.Print(err)
 		}

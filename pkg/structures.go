@@ -6,21 +6,15 @@ type Error struct {
 	CheckPass  bool   `json:"checkPass,omitempty"`
 }
 
-// func (e Error) NewErrorPass(status bool) *Error {
-// 	return &Error{
-// 		CheckPass: false,
-// 	}
-// }
-// func (e Error) NewErrorEmail(status bool) *Error {
-// 	return &Error{
-// 		CheckEmail: false,
-// 	}
-// }
-// func (e Error) NewErrorMessage(msg string) *Error {
-// 	return &Error{
-// 		Message: msg,
-// 	}
-// }
+func (e *Error) NewErrorPass(status bool) {
+	e.CheckPass = status
+}
+func (e *Error) NewErrorEmail(status bool) {
+	e.CheckEmail = status
+}
+func (e *Error) NewErrorMessage(msg string) {
+	e.Message = msg
+}
 
 type User struct {
 	ID         int    `json:"-"`
