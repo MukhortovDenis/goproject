@@ -1,5 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
 
+  let resultJSON;
+
   const sendData = async (url, data) => {
     const response = await fetch(url, {
       method: 'POST',
@@ -13,9 +15,9 @@ window.addEventListener('DOMContentLoaded', () => {
       throw new Error( `Ошибка по даресу ${url}, статус ошибки: ${response.status}` )
     }
 
-    let resultJSON = await response.json();
+    resultJSON = await response.json();
 
-    // console.log( resultJSON );
+    console.log( resultJSON );
 
     return resultJSON;
   };
@@ -39,7 +41,15 @@ window.addEventListener('DOMContentLoaded', () => {
       if (successCount == 4) {
         sendData('/save_user', JSON.stringify(data))
           .then(() => {
-            window.location.href = '/';
+            if (resultJSON.checkEmail == true) {
+              setErrorFor(userEmail, 'Этот Email уже занят');
+            } else {
+                setSuccessFor(userName);
+                setSuccessFor(userEmail);
+                setSuccessFor(userPassword);
+                setSuccessFor(userConfPassword);
+                window.location.href = '/';
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -76,7 +86,7 @@ window.addEventListener('DOMContentLoaded', () => {
     } else if (!isEmail(userEmailValue)) {
         setErrorFor(userEmail, 'Email введён некоректно');
     } else {
-        setSuccessFor(userEmail);
+        setEmptyFor(userEmail);
         success++;
     }
 
@@ -122,6 +132,12 @@ window.addEventListener('DOMContentLoaded', () => {
     const inputBox = input.parentElement;
 
     inputBox.className = 'form-input__box success';
+  }
+
+  function setEmptyFor(input) {
+    const inputBox = input.parentElement;
+
+    inputBox.className = 'form-input__box empty';
   }
 
   function isName(name) {

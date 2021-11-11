@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (successCount == 2) {
         sendData('/check_user', JSON.stringify(data))
           .then(() => {
-            if (resultJSON.error == "Ты лох") {
+            if (resultJSON.checkPass == true) {
               setErrorFor(userPassword, 'Неверный логин или пароль')
               setErrorFor(userEmail, '');
             } else {
