@@ -508,6 +508,60 @@ img {
   color: var(--color-primary-dark);
 }
 
+.player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  width: 260px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--color-bg-lighter);
+}
+
+.player__song-name {
+  margin-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-primary-dark);
+}
+
+.player__btns {
+  display:  flex;
+  transform: translateY(2px);
+}
+
+.player_btn {
+  background: none;
+}
+
+.player__control {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-primary-dark);
+  transition: fill .3s ease;
+  cursor: pointer;
+}
+.player__control:hover {
+  fill: var(--color-primary);
+}
+.player__control:active {
+  fill: var(--color-primary-darker);
+}
+
+.player__control_play,
+.player__control_pause {
+  margin: 0px 8px;
+}
+
+.control__hidden {
+  display: none;
+}
+
+
 .nav__list {
   display: flex;
 }
