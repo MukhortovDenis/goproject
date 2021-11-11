@@ -56,8 +56,6 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, body)
 
 	} else {
-		defer row.Close()
-		fmt.Fprint(w, "false")
 		var userid int
 		err = db.QueryRow(`INSERT INTO users (firstname, login, password) VALUES ($1, $2, $3) RETURNING id`, newUser.First_name, newUser.Login, newUser.Password).Scan(&userid)
 		if err != nil {
@@ -137,4 +135,59 @@ func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func (h *Handler) resetCabinetInfo(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	session, err := store.Get(r, "session")
+	if err != nil {
+		log.Print(err)
+	}
+	var data newData
+	err = json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	var checkLogin string
+	db, err := sql.Open("postgres", dbConn)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+	row, err := db.Query("SELECT login FROM users WHERE login = $1", data.NewEmail)
+	if err != nil {
+		fmt.Fprint(w, err)
+	}
+	for row.Next() {
+		err = row.Scan(&checkLogin)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	if data.NewEmail == checkLogin {
+		Error := new(Error)
+		Error.NewErrorEmail(true)
+		body := new(bytes.Buffer)
+		err = json.NewEncoder(body).Encode(Error)
+		if err != nil {
+			log.Print(err)
+		}
+		fmt.Fprint(w, body)
+
+	} else {
+		row, err = db.Query("UPDATE users SET firstname = $1 , login = $2 WHERE login = $3", data.NewFirstName, data.NewEmail, session.Values["email"])
+		if err != nil {
+			log.Println(err)
+		}
+		for row.Next() {
+			err = row.Scan(session.Values["firstname"], session.Values["email"])
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+		fmt.Fprint(w, "{}")
+		defer db.Close()
+		defer row.Close()
+	}
 }

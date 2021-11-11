@@ -30,6 +30,10 @@ type UserDB struct {
 	Login    string
 	Password string
 }
+type newData struct {
+	NewFirstName string `json:"firstname"`
+	NewEmail     string `json:"login"`
+}
 type Stone struct {
 	ID          int
 	Name        string

@@ -26,16 +26,20 @@ type Handler struct {
 func (h *Handler) MainHandle() *chi.Mux {
 	router := NewRouter()
 	fileServer(router)
+
 	router.Get("/signin", h.signin)
 	router.Get("/signup", h.signup)
 	router.Get("/", h.index)
 	router.Get("/settings", h.settings)
 	router.Get("/settings-appearance", h.settingsAppearance)
 	router.Get("/cabinet", h.cabinet)
-	router.Post("/save_user", h.save)
 	router.Get("/cabinet-info", h.cabinetInfo)
-	router.Get("/quit", h.quit)
-	router.Post("/check_user", h.check)
 	router.Get("/cabinet-password", h.cabinetPassword)
+	router.Get("/quit", h.quit)
+
+	router.Post("/save_user", h.save)
+	router.Post("/check_user", h.check)
+
+	router.Patch("/cabinet-info-reset", h.resetCabinetInfo)
 	return router
 }
