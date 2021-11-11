@@ -62,21 +62,24 @@
           </div>
           <div class="cabinet__content">
             <p class="cabinet__tagline">Личная информация</p>
-            <form class="form" id="form-save-password" novalidate>
-              <div class="class form-input__box">
+            <form class="form" id="form-user-info" action="/cabinet-info-reset" novalidate>
+              <div class="form-input__box">
                 <label class="form-input__label" for="name">Логин</label>
                 <input class="form-input__input" id="name" name="firstname" type="text" value="{{.firstname}}" placeholder="Введите логин">
+                <span class="error__msg"></span>
               </div>
-              <div class="class form-input__box">
+              <div class="form-input__box">
                 <label class="form-input__label" for="email">Email</label>
                 <input class="form-input__input" id="email" name="login" type="email" value="{{.email}}" placeholder="Введите e-mail">
+                <span class="error__msg"></span>
               </div>
-              <button class="form__btn btn-reset" type="submit" value="save-changes" form="form-save-password">Сохранить изменения</button>
+              <button class="form__btn btn-reset" type="submit" value="save-changes" form="form-user-info">Сохранить изменения</button>
             </form>
           </div>
         </div>
       </div>
     </div>
+    <script src="static/js/user-info-update.js"></script>
     <script src="static/js/theme-toggle.js"></script>
   </body>
 </html>
