@@ -20,9 +20,11 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 	if newUser.Login == "" || newUser.Password == "" || newUser.First_name == "" {
-		Error := NewError("Поле пустое")
+		parse := Error{
+			Message: "поле пустое",
+		}
 		body := new(bytes.Buffer)
-		err = json.NewEncoder(body).Encode(Error)
+		err = json.NewEncoder(body).Encode(parse)
 		if err != nil {
 			log.Print(err)
 		}
@@ -45,9 +47,11 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if newUser.Login == checkLogin {
-		Error := NewError("Аккаунт с таким email уже существует")
+		parse := Error{
+			CheckEmail: true,
+		}
 		body := new(bytes.Buffer)
-		err = json.NewEncoder(body).Encode(Error)
+		err = json.NewEncoder(body).Encode(parse)
 		if err != nil {
 			log.Print(err)
 		}
@@ -55,7 +59,7 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 
 	} else {
 		defer row.Close()
-		fmt.Fprint(w, "{}")
+		fmt.Fprint(w, "false")
 		var userid int
 		err = db.QueryRow(`INSERT INTO users (firstname, login, password) VALUES ($1, $2, $3) RETURNING id`, newUser.First_name, newUser.Login, newUser.Password).Scan(&userid)
 		if err != nil {
@@ -108,9 +112,11 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprint(w, "{}")
 	} else {
-		Error := NewError("Ты лох")
+		parse := Error{
+			CheckPass: true,
+		}
 		body := new(bytes.Buffer)
-		err = json.NewEncoder(body).Encode(Error)
+		err = json.NewEncoder(body).Encode(parse)
 		if err != nil {
 			log.Print(err)
 		}

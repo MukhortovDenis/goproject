@@ -1,14 +1,26 @@
 package pkg
 
 type Error struct {
-	Error string `json:"error"`
+	Message    string `json:"msg,omitempty"`
+	CheckEmail bool   `json:"checkEmail,omitempty"`
+	CheckPass  bool   `json:"checkPass,omitempty"`
 }
 
-func NewError(msg string) *Error {
-	return &Error{
-		Error: msg,
-	}
-}
+// func (e Error) NewErrorPass(status bool) *Error {
+// 	return &Error{
+// 		CheckPass: false,
+// 	}
+// }
+// func (e Error) NewErrorEmail(status bool) *Error {
+// 	return &Error{
+// 		CheckEmail: false,
+// 	}
+// }
+// func (e Error) NewErrorMessage(msg string) *Error {
+// 	return &Error{
+// 		Message: msg,
+// 	}
+// }
 
 type User struct {
 	ID         int    `json:"-"`
