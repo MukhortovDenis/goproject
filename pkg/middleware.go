@@ -177,15 +177,19 @@ func (h *Handler) resetCabinetInfo(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, body)
 
 	} else {
-		row, err = db.Query("UPDATE users SET firstname = $1 , login = $2 WHERE login = $3", data.NewFirstName, data.NewEmail, session.Values["email"])
+		oldEmail := session.Values["email"]
+		log.Println(oldEmail)
+		row, err = db.Query("UPDATE users SET firstname = $1 , login = $2 WHERE login = $3", data.NewFirstName, data.NewEmail, oldEmail)
 		if err != nil {
 			log.Println(err)
 		}
-		for row.Next() {
-			err = row.Scan(session.Values["firstname"], session.Values["email"])
-			if err != nil {
-				log.Fatal(err)
-			}
+		log.Println(session.Values["firstname"], session.Values["email"])
+		session.Values["firstname"] = data.NewFirstName
+		session.Values["email"] = data.NewEmail
+		log.Println(session.Values["firstname"], session.Values["email"])
+		err = session.Save(r, w)
+		if err != nil {
+			log.Println(err)
 		}
 		fmt.Fprint(w, "{}")
 		defer db.Close()
