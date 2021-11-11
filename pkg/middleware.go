@@ -61,6 +61,7 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Fprint(w, err)
 		}
+		fmt.Fprint(w, "{}")
 	}
 	defer row.Close()
 	defer db.Close()
@@ -189,5 +190,6 @@ func (h *Handler) resetCabinetInfo(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "{}")
 		defer db.Close()
 		defer row.Close()
+		defer r.Body.Close()
 	}
 }
