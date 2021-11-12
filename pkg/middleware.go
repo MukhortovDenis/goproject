@@ -138,7 +138,7 @@ func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-func (h *Handler) resetCabinetInfo(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) changeCabinetInfo(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	session, err := store.Get(r, "session")
 	if err != nil {
@@ -211,4 +211,55 @@ func (h *Handler) resetCabinetInfo(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		return
 	}
+}
+
+func (h *Handler) changeCabinetPassword(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	session, err := store.Get(r, "session")
+	if err != nil {
+		log.Print(err)
+	}
+	var passwords NewPasswords
+	err = json.NewDecoder(r.Body).Decode(&passwords)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	db, err := sql.Open("postgres", dbConn)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+	email := session.Values["email"]
+	row, err := db.Query("SELECT password FROM users WHERE login = $1", email)
+	if err != nil {
+		fmt.Fprint(w, err)
+	}
+	var password string
+	for row.Next() {
+		err = row.Scan(&password)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	if password == passwords.OldPassword {
+		row, err = db.Query("UPDATE users SET password = $1 WHERE login = $2", passwords.NewPassword, email)
+		if err != nil {
+			log.Println(err)
+		}
+		fmt.Fprint(w, "{}")
+	} else {
+		Error := new(Error)
+		Error.NewErrorPass(true)
+		body := new(bytes.Buffer)
+		err = json.NewEncoder(body).Encode(Error)
+		if err != nil {
+			log.Print(err)
+		}
+		fmt.Fprint(w, body)
+		return
+	}
+	defer row.Close()
+	defer db.Close()
+
 }

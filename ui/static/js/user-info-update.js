@@ -37,14 +37,14 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (successCount == 2) {
-        sendData('/cabinet-info-reset', JSON.stringify(data))
+        sendData('/cabinet-info-change', JSON.stringify(data))
           .then(() => {
             if (resultJSON.checkEmail == true) {
               setErrorFor(userEmail, 'Этот email уже занят');
             } else {
                 setSuccessFor(userName);
                 setSuccessFor(userEmail);
-                window.location.href = '/cabinet-info';
+                window.location.href = '/cabinet-info-change';
             }
           })
           .catch((err) => {

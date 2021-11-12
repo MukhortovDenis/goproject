@@ -40,6 +40,7 @@ func (h *Handler) MainHandle() *chi.Mux {
 	router.Post("/save_user", h.save)
 	router.Post("/check_user", h.check)
 
-	router.Patch("/cabinet-info-reset", h.resetCabinetInfo)
+	router.Patch("/cabinet-info-change", h.changeCabinetInfo)
+	router.Patch("/cabinet-password-change", h.changeCabinetPassword)
 	return router
 }

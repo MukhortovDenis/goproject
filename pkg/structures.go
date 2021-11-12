@@ -16,6 +16,11 @@ func (e *Error) NewErrorMessage(msg string) {
 	e.Message = msg
 }
 
+type NewPasswords struct {
+	OldPassword string `json:"password"`
+	NewPassword string `json:"new-password"`
+}
+
 type User struct {
 	ID         int    `json:"-"`
 	First_name string `json:"firstname"`
