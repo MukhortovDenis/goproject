@@ -11,7 +11,6 @@ window.addEventListener('DOMContentLoaded', () => {
       },
     })
   
-
     if (!response.ok) {
       throw new Error( `Ошибка по даресу ${url}, статус ошибки: ${response.status}` )
     }

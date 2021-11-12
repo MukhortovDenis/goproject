@@ -18,13 +18,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (songIndex > songs.length - 1) {
       songIndex = 0;
-    }
+    } 
 
     getSong(songs[songIndex]);
 
-    playSong();
+    if (songIndex != 0) {
+      playBtn.classList.add('control__hidden');
+      pauseBtn.classList.remove('control__hidden');
+    }
 
-    playBtn.classList.add('control__hidden');
+    playSong(); 
   }
 
   function prevSong() {
@@ -36,9 +39,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     getSong(songs[songIndex]);
 
-    playSong();
+    if (songIndex != 0) {
+      playBtn.classList.add('control__hidden');
+      pauseBtn.classList.remove('control__hidden');
+    }
 
-    playBtn.classList.add('control__hidden');
+    playSong();
   }
 
   const playBtn = document.querySelector('.player__control_play');
@@ -57,9 +63,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   let songIndex = 0;
 
-
-  getSong(songs[songIndex]);
-
   playBtn.addEventListener('click', () => {
     playBtn.classList.add('control__hidden');
     pauseBtn.classList.remove('control__hidden');
@@ -77,5 +80,4 @@ window.addEventListener('DOMContentLoaded', () => {
   prevBtn.addEventListener('click', prevSong);
 
   audio.addEventListener('ended', nextSong);
-
 });
