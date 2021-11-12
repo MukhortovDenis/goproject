@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
             } else {
                 setSuccessFor(userPassword);
                 setSuccessFor(userNewPassword);
-                window.location.href = '/cabinet-info';
+                window.location.href = '/cabinet-password';
             }
           })
           .catch((err) => {
