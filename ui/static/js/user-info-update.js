@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
       body: data,
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
-        },
+      },
     });
 
     if (!response.ok) {
