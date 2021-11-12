@@ -156,26 +156,43 @@ func (h *Handler) resetCabinetInfo(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	row, err := db.Query("SELECT login FROM users WHERE login = $1", data.NewEmail)
+	row, err := db.Query("SELECT login, id FROM users WHERE login = $1", data.NewEmail)
 	if err != nil {
 		fmt.Fprint(w, err)
 	}
+	var id int
 	for row.Next() {
-		err = row.Scan(&checkLogin)
+		err = row.Scan(&checkLogin, &id)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
 	if data.NewEmail == checkLogin {
-		Error := new(Error)
-		Error.NewErrorEmail(true)
-		body := new(bytes.Buffer)
-		err = json.NewEncoder(body).Encode(Error)
-		if err != nil {
-			log.Print(err)
+		if id == session.Values["userID"] {
+			oldEmail := session.Values["email"]
+			row, err = db.Query("UPDATE users SET firstname = $1 WHERE login = $2", data.NewFirstName, oldEmail)
+			if err != nil {
+				log.Println(err)
+			}
+			session.Values["firstname"] = data.NewFirstName
+			err = session.Save(r, w)
+			if err != nil {
+				log.Println(err)
+			}
+			fmt.Fprint(w, "{}")
+			defer row.Close()
+			return
+		} else {
+			Error := new(Error)
+			Error.NewErrorEmail(true)
+			body := new(bytes.Buffer)
+			err = json.NewEncoder(body).Encode(Error)
+			if err != nil {
+				log.Print(err)
+			}
+			fmt.Fprint(w, body)
+			return
 		}
-		fmt.Fprint(w, body)
-
 	} else {
 		oldEmail := session.Values["email"]
 		row, err = db.Query("UPDATE users SET firstname = $1 , login = $2 WHERE login = $3", data.NewFirstName, data.NewEmail, oldEmail)
@@ -192,5 +209,6 @@ func (h *Handler) resetCabinetInfo(w http.ResponseWriter, r *http.Request) {
 		defer db.Close()
 		defer row.Close()
 		defer r.Body.Close()
+		return
 	}
 }
