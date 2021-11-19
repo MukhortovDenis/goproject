@@ -412,6 +412,9 @@ body {
   --color-placeholder: #cecbcb;
 
   --color-stroke: #e2e3e4;
+
+  --color-show-hide-btn: #ececec;
+  --color-shoe-hide-btn-hover: #bebebe;
 }
 
 .page__body_theme_dark {
@@ -435,6 +438,9 @@ body {
   --color-placeholder: #606060;
 
   --color-stroke: #2b2b2b;
+
+  --color-show-hide-btn: rgb(49, 49, 49);
+  --color-shoe-hide-btn-hover: rgb(43, 43, 43);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -739,6 +745,42 @@ img {
   outline: 2px solid var(--color-accent-dark);
 }
 
+.form__show-hide-password {
+  position: absolute;
+  top: 35px;
+  right: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.show-password__icon {
+  fill: none;
+  stroke: var(--color-show-hide-btn);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  transition: stroke .1s ease;
+  cursor: pointer;
+}
+.show-password__icon:hover {
+  stroke: var(--color-shoe-hide-btn-hover);
+}
+
+.visually-hidden {
+  opacity: 0;
+}
+
 .success .form-input__input {
   outline: 2px solid #27ae5fd0;
   color: #27ae5fd0;
@@ -816,6 +858,14 @@ img {
 }
 .form__btn:active {
   background-color: var(--color-accent-darker);
+}
+.form__btn:disabled {
+  background-color: #64738738;
+  color: rgba(255, 255, 255, 0.322);
+  cursor: not-allowed;
+}
+.form__btn[disabled]:hover {
+  opacity: 1;
 }
 
 .sign-in-suggestion {
