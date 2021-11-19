@@ -44,7 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
             } else {
                 setSuccessFor(userName);
                 setSuccessFor(userEmail);
-                window.location.href = '/cabinet-info-change';
+                window.location.href = '/cabinet-info';
             }
           })
           .catch((err) => {

@@ -104,9 +104,6 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Print(err)
 		}
-		if err != nil {
-			log.Print(err)
-		}
 		fmt.Fprint(w, "{}")
 	} else {
 		Error := new(Error)
