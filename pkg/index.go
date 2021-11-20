@@ -66,11 +66,23 @@ func (h *Handler) index(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) chests(w http.ResponseWriter, r *http.Request){
+	session, err := store.Get(r, "session")
+	if err != nil {
+		log.Print(err)
+	}
+	firstname := session.Values["firstname"]
+	block := map[string]interface{}{
+		"Firstname":  firstname,
+		"Show_block": true,
+	}
+	if firstname == nil {
+		block["Show_block"] = false
+	}
 	tmp, err := template.ParseFiles(dirWithHTML + "chests.html")
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = tmp.Execute(w, nil)
+	err = tmp.Execute(w, block)
 	if err != nil {
 		fmt.Fprint(w, err)
 	}
