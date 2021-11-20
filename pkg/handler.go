@@ -36,7 +36,7 @@ func (h *Handler) MainHandle() *chi.Mux {
 	router.Get("/cabinet-info", h.cabinetInfo)
 	router.Get("/cabinet-password", h.cabinetPassword)
 	router.Get("/quit", h.quit)
-
+	router.Get("/chests", h.chests)
 	router.Post("/save_user", h.save)
 	router.Post("/check_user", h.check)
 

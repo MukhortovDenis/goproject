@@ -64,3 +64,14 @@ func (h *Handler) index(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 }
+
+func (h *Handler) chests(w http.ResponseWriter, r *http.Request){
+	tmp, err := template.ParseFiles(dirWithHTML + "chests.html")
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = tmp.Execute(w, nil)
+	if err != nil {
+		fmt.Fprint(w, err)
+	}
+}
