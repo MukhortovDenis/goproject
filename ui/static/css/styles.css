@@ -1501,3 +1501,56 @@ img {
   font-weight: 500;
   color: var(--color-primary-dark);
 }
+
+/* Chests */
+.chests {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.chests__title {
+  margin-bottom: 20px;
+}
+
+.chests__list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.chest {
+  flex: 0 0 25%;
+  padding: 16px;
+  margin-bottom: 28px;
+  border-radius: 10px;
+  transition: background-color .3s ease,
+              box-shadow .3s ease;
+  cursor: pointer;
+}
+.chest:hover {
+  background-color: var(--color-bg-lighter);
+  box-shadow: 0 0 30px 2px rgb(22, 22, 22); /* если надо сдлеать тень под цвет редкости, нужно убрать эту строку */
+}
+
+.chest__top {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.chest__img {
+  max-width: 280px;
+}
+
+.chest__name {
+  margin-bottom: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  /* color: var(--color-primary-dark);*/
+  text-align: center;
+}
+
+.chest__price {
+  font-size: 18px;
+  color: var(--color-primary-light);
+  text-align: center;
+}
