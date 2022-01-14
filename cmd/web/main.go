@@ -1,10 +1,8 @@
 package main
 
 import (
-	"context"
 	"goproject/pkg"
 	"log"
-	"time"
 
 	"github.com/ilyakaznacheev/cleanenv"
 )
@@ -24,12 +22,6 @@ func main() {
 	path := cfg.Host + ":" + cfg.Port
 	server := new(pkg.Server)
 	err = server.Run(path, handler.MainHandle())
-	if err != nil {
-		log.Fatal(err)
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	err = server.Shutdown(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
