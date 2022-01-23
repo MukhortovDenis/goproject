@@ -66,7 +66,8 @@
           <div class="header__user user">
             <div class="user__name">Привет, {{ .Block.Firstname }}!</div>
             <div class="user__avatar avatar">
-              <span class="avatar__img"></span>
+              <!-- <span class="avatar__img"></span> -->
+              <img class="avatar__img" src="/static/images/common/avatar.jpg" alt="{{ .Block.Firstname }}">
             </div>
             <button class="arrow btn-reset">
               <svg class=arrow__icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
@@ -90,7 +91,29 @@
         {{ end }}
       </div>
     </header>
+
     <main class="main">
+
+      <div class="advertisig">
+        <div class="advertisig__top">
+          <h4 class="advertising__header">Реклама</h4>
+          <button class="advertisig__close btn-reset" id="advertisigCloseButton">
+            <svg class="close__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+              <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)">
+                <g>
+                  <line x1="13.5" y1="0.5" x2="0.5" y2="13.5"></line>
+                  <line x1="0.5" y1="0.5" x2="13.5" y2="13.5"></line>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div class="advertisig__bottom">
+          <p class="advertisig__text">Хочешь, чтобы перестала болеть жопа? Тогда тебе сюда:</p>
+          <a class="advertisig__link" href="tel:+79009875541">НАЖИМАЙ БЫСТРЕЕ!</a>
+        </div>
+      </div>
+
       <section class="hero">
         <div class="container-xl hero__container">
           <div class="hero__content">
@@ -104,14 +127,24 @@
               </div>
             </div>
           </div>
+          <div class="hero__scroll">
+            <button class="scroll__btn btn-reset">
+              <svg class="scroll__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><path d="M.5,3.85,6.65,10a.48.48,0,0,0,.7,0L13.5,3.85"></path>
+                </g>
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
-      <section class="cards">
+      <section class="cards" id="cards">
         {{ template "stone" .StoneShop }}
       </section>
     </main>
+
     <script src="static/js/index.js"></script>
     <script src="static/js/theme-toggle.js"></script>
     <script src="static/js/player.js"></script>
+    <script src="static/js/ad.js"></script>
   </body>
 </html>
