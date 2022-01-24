@@ -3,3 +3,4 @@ pgadmin
 !.gitignore
 !.github
 !.env
+!.golangci.yml

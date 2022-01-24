@@ -6,14 +6,19 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
 jobs:
-  lint:
-    name: Run linter
+  golangci:
+    name: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run golangci-lint
+      - name: golangci-lint
         uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.43
 
   build:
     name: Run go-action
