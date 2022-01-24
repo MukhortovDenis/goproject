@@ -41,7 +41,7 @@ jobs:
     name: Deploy on Heroku
     runs-on: ubuntu-latest
     needs: 
-      - lint
+      - golangci
       - build
     steps:
       - uses: actions/checkout@v2
