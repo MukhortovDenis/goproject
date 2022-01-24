@@ -20,7 +20,7 @@ type IndexBlock struct {
 	}
 }
 
-func NewIndexBlock(block map[string]interface{}, stoneShop []struct {
+func NewIndexBlock(block map[string]interface{}, stoneShop *[]struct {
 	ID          int
 	Name        string
 	URL         string
@@ -31,7 +31,7 @@ func NewIndexBlock(block map[string]interface{}, stoneShop []struct {
 }) *IndexBlock {
 	return &IndexBlock{
 		Block:     block,
-		StoneShop: stoneShop,
+		StoneShop: *stoneShop,
 	}
 }
 
@@ -53,8 +53,7 @@ func (h *Handler) index(w http.ResponseWriter, r *http.Request) {
 		dirWithHTML + "index.html",
 		dirWithHTML + "stone-temp.html",
 	}
-	stoneShop := stones()
-	indexBlock := NewIndexBlock(block, stoneShop)
+	indexBlock := NewIndexBlock(block, stones())
 	tmp, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err)
@@ -62,28 +61,5 @@ func (h *Handler) index(w http.ResponseWriter, r *http.Request) {
 	err = tmp.Execute(w, *indexBlock)
 	if err != nil {
 		log.Fatal(err)
-	}
-}
-
-func (h *Handler) chests(w http.ResponseWriter, r *http.Request){
-	session, err := store.Get(r, "session")
-	if err != nil {
-		log.Print(err)
-	}
-	firstname := session.Values["firstname"]
-	block := map[string]interface{}{
-		"Firstname":  firstname,
-		"Show_block": true,
-	}
-	if firstname == nil {
-		block["Show_block"] = false
-	}
-	tmp, err := template.ParseFiles(dirWithHTML + "chests.html")
-	if err != nil {
-		fmt.Println(err)
-	}
-	err = tmp.Execute(w, block)
-	if err != nil {
-		fmt.Fprint(w, err)
 	}
 }

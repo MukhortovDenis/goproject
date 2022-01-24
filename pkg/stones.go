@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func stones() []struct {
+func stones() *[]struct {
 	ID          int
 	Name        string
 	URL         string
@@ -21,6 +21,7 @@ func stones() []struct {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
+	defer db.Close()
 	rows, err := db.Query("SELECT * FROM stones ORDER BY price DESC")
 	if err != nil {
 		log.Print(err)
@@ -33,7 +34,7 @@ func stones() []struct {
 		Price       int
 		RareCss     string
 		Rare        string
-	}, 0, 10)
+	}, 0, 50)
 	for rows.Next() {
 		var stone struct {
 			ID          int
@@ -51,5 +52,5 @@ func stones() []struct {
 		stoneStore = append(stoneStore, stone)
 
 	}
-	return stoneStore
+	return &stoneStore
 }

@@ -62,9 +62,9 @@
             <li class="nav__item"><a class="nav__link" href="#">Пока хз что</a></li>
           </ul>
         </nav>
-        {{ if .Show_block }}
+        {{ if .Block.Show_block }}
           <div class="header__user user">
-            <div class="user__name">Привет, {{ .Firstname }}!</div>
+            <div class="user__name">Привет, {{ .Block.Firstname }}!</div>
             <div class="user__avatar avatar">
               <!-- <span class="avatar__img"></span> -->
               <img class="avatar__img" src="/static/images/common/avatar.jpg" alt="{{ .Block.Firstname }}">
@@ -101,22 +101,7 @@
       </div>
 
       <section class="chests">
-        <div class="container-xl chests__container">
-          <h2 class="chests__title title">Сундуки</h2>
-          <ul class="chests__list list-reset">
-            <li class="chests__item chest poop">
-              <div class="chest__top">
-                <img class="chest__img" src="static/images/common/chest.png" alt="Сундук">
-              </div>
-              <div class="chest__bottom">
-                <div class="chest__name">Сундук Говна</div>
-                <div class="chest__buy">
-                  <button class="chest__buy-btn btn-reset">Купить</button>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
+        {{ template "chest" .ChestShop }}
       </section>
     </main>
     <script src="static/js/index.js"></script>
