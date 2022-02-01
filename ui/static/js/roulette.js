@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', function() {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  const roulette = document.querySelector('.roulette');
+  const mainWindow = document.querySelector('.main__window');
   const rouletteBox = document.querySelector('.roulette__box')
   const buyButton = document.querySelector('.chest__buy-btn');
   const rouletteItem = document.querySelector('.roulette__item');
@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function() {
   let numberList = [];
 
   buyButton.addEventListener('click', () => {
-    roulette.classList.remove('display-none');
+    mainWindow.classList.remove('display-none');
     rouletteBox.classList.remove('display-none');
 
     for (let i = 0; i < 100; i++) {

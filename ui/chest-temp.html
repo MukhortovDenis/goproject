@@ -1,20 +1,21 @@
 {{define "chest"}}
 <div class="container-xl chests__container">
-    <h2 class="chests__title title">Сундуки</h2>
-    <ul class="chests__list list-reset">
+  <h2 class="chests__title title">Сундуки</h2>
+  <ul class="chests__list list-reset">
 {{range .}}
-        <li class="chests__item {{.Chest}}">
-        <div class="chest__top">
-          <img class="chest__img" src="{{.URL}}" alt="{{.Name}}">
-        </div>
-        <div class="chest__bottom">
-          <div class="chest__name">{{.Name}}</div>
-          <div class="chest__buy">
-            <button class="chest__buy-btn btn-reset">Купить</button>
-          </div>
-        </div>
-      </li>
+    <li class="chests__item {{.Chest}}">
+      <div class="chest__top">
+        <img class="chest__img" src="{{.URL}}" alt="{{.Name}}">
+      </div>
+      <div class="chest__bottom">
+        <div class="chest__name">{{.Name}}</div>
+        <span class="chest__id display-none">{{.ID}}</span>
+        <!-- <div class="chest__buy">
+          <button class="chest__buy-btn btn-reset" id="buyButton">Купить</button>
+        </div> -->
+      </div>
+    </li>
 {{end}}
-    </ul>
-  </div>
+  </ul>
+</div>
 {{end}}
