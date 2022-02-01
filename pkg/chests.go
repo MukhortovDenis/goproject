@@ -1,13 +1,27 @@
 package pkg
 
 import (
+	"bytes"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"text/template"
 )
+
+type ChestList struct {
+	ChestName    string           `json:"treasureName"`
+	ChestContent []StoneFromChest `json:"treasureContent"`
+}
+
+type StoneFromChest struct {
+	Name string `json:"stoneName"`
+	ID   uint   `json:"stoneID"`
+	URL  string `json:"stoneURL"`
+	Rare string `json:"stoneRare"`
+}
 
 type ChestBlock struct {
 	Block     map[string]interface{}
@@ -76,6 +90,23 @@ func chest() *[]struct {
 		chestShop = append(chestShop, chest)
 	}
 	return &chestShop
+}
+
+func (h *Handler) giveChests(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Query().Get("id") == "1" {
+		chest := ChestList{ChestName: "The Chest of the Legendary Quarry",
+			ChestContent: []StoneFromChest{
+				{Name: "Хуета", ID: 1, URL: "static/images/common/chest.png", Rare: "poop"},
+				{Name: "Залупня", ID: 2, URL: "static/images/common/chest.png", Rare: "poop"}}}
+
+		buf := new(bytes.Buffer)
+		if err := json.NewEncoder(buf).Encode(chest); err != nil {
+			fmt.Fprint(w, err)
+		}
+		w.Write(buf.Bytes())
+	}else{
+		fmt.Fprint(w, "автор pidoras")
+	}
 }
 
 func (h *Handler) chests(w http.ResponseWriter, r *http.Request) {
