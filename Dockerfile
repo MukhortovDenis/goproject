@@ -1,10 +1,15 @@
-FROM golang:1.17.1
+# Stage 1 - Build
+FROM golang:1.17.4 as builder
 
-WORKDIR /goproject/
-ADD ./ /goproject/
+WORKDIR /src
+COPY . .
 
-RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app/ ./cmd/web
 
-RUN go build -o goproj ./cmd/web
 
-CMD [ "./goproj" ]
+# Stage 2 - Run
+FROM alpine:3.15
+
+WORKDIR /root/
+COPY --from=builder /src .
+CMD ["./app/web"]
