@@ -1,6 +1,8 @@
 const chests = document.querySelectorAll('.chest');
-const mainWindow = document.querySelector('.main__window');
+const chestsContent = document.querySelector('.chests__content');
+const chestName = document.querySelector('.chest-content__name');
 const stoneList = document.querySelector('.chest-content__list');
+const mainWindow = document.querySelector('.main__window');
 const closeButton = document.querySelector('.close-popup__button');
 
 function getChestId(chest) {
@@ -18,65 +20,51 @@ function getChestId(chest) {
   return chestId;
 }
 
-function getChestItems(url, chestId) {
-  // const response = await fetch(url, {
-  //   method: 'GET',
-  //   body: chestId,
-  //   headers: {
-  //     'Content-Type': 'application/json;charset=utf-8'
-  //   },
-  // });
+function getChestItems(url) {
+  return fetch(url).then(response => {
+    return response.json()
+  });
 
-  // data = await response.json();
-  
-  let data = {
-    "treasureName": "The Chest of the Legendary Quarry",
-    "treasureId": "1",
-    "treasureContent": {
-      "1": "Rubby",
-      "2": "Emerald",
-      "3": "Diamond",
-      "4": "Amber",
-      "5": "Hatat",
-      "6": "Lapis Lazuli"
-    }
-  }
-
-  return data;
-  /* {
-        "treasureName": "The Chest of the Legendary Quarry",
-        "treasureId": "1",
-        "treasureContent": {
-          "1": "Rubby",
-          "2": "Emerald",
-          "3": "Diamond",
-          "4": "Amber",
-          "5": "Hatat",
-          "6": "Lapis Lazuli"
-        }
-      } */
+  // let data = {
+  //   "treasureName": "The Chest of the Legendary Quarry",
+  //   "treasureContent": [
+  //     {
+  //       "stoneName": "Хуета",
+  //       "stoneID": 1,
+  //       "stoneURL": "static/images/common/chest.png",
+  //       "stoneRare": "poop"
+  //     }, 
+  //     {
+  //       "stoneName": "Залупня",
+  //       "stoneID": 2,
+  //       "stoneURL": "static/images/common/chest.png",
+  //       "stoneRare": "poop"
+  //     }
+  //   ]
+  // }
 }
 
-function showChestContent() {
+function showChestContent(items) {
   mainWindow.classList.remove('display-none');
   stoneList.classList.remove('display-none');
   closeButton.classList.remove('display-none');
+  chestsContent.classList.remove('display-none');
 
   let stones;
-  let items;
 
-  items = getChestItems();
+  chestName.innerHTML = `${items.treasureName}`;
 
   for (let item in items) {
-    console.log( items[item] );
-
     if (typeof items[item] == 'object') {
       stones = items[item];
 
       for (let stone in stones) {
-        stoneList.innerHTML += `<li class="chest-content__item">${stones[stone]}</li>`;
-
-        console.log( stones[stone] );
+        stoneList.innerHTML += `
+          <li class="chest-content__item item">
+            <img class="item__img" src="${stones[stone].stoneURL}" alt="${stones[stone].stoneRare}">
+            <div class="item__name ${stones[stone].stoneRare}">${stones[stone].stoneName}</div>
+          </li>
+        `;
       }
     }
   }
@@ -93,6 +81,7 @@ function closePopup() {
     mainWindow.classList.add('display-none');
     stoneList.classList.add('display-none');
     closeButton.classList.add('display-none');
+    chestsContent.classList.add('display-none');
 
     clearChestContent();
   })
@@ -100,12 +89,9 @@ function closePopup() {
 
 chests.forEach(chest => {
   chest.addEventListener('click', function() {
-    // getChestItems( '/loh', getChestId(chest) );
-    console.log( getChestId(chest) );
-
-    showChestContent();
-    // console.log( getChestId(chest) );
-
+    getChestItems(`/chest?id=${getChestId(chest)}`)
+      .then(data => showChestContent(data))
+      .catch(err => console.log(err))
     closePopup();
   })
-})
+});

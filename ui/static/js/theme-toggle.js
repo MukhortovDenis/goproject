@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', function() {
-  let body = document.querySelector('body');
-  let option1 = document.querySelector('#lightThemeOption');
-  let option2 = document.querySelector('#darkThemeOption');
+  const body = document.querySelector('body');
+  const option1 = document.querySelector('#lightThemeOption');
+  const option2 = document.querySelector('#darkThemeOption');
 
   if (localStorage.getItem('theme') === 'light') {
     body.classList.remove('page__body_theme_dark');

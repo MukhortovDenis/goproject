@@ -103,15 +103,18 @@
           </g>
         </svg>
       </button>
-      <div class="roulette__box display-none">
-        <div class="roulette__item"></div>
-      </div>
-      <div class="roulette__won-text display-none">
-        Поздравляем!!! Ты выиграл: ГОВНО!!!
-      </div>
-
       <section class="chests">
-        <div class="chests__content">
+        <div class="chests__content display-none">
+          <h2 class="chest-content__name poop"></h2>
+          <div class="roulette__box">
+            <div class="roulette__item"></div>
+          </div>
+          <div class="roulette__won-text display-none">
+            Поздравляем!!! Ты выиграл: ГОВНО!!!
+          </div>
+          <div class="chest__buy">
+            <button class="chest__buy-btn btn-reset" id="buyButton">Купить</button>
+          </div>
           <ul class="chest-content__list list-reset display-none"></ul>
         </div>
         {{ template "chest" .ChestShop }}
