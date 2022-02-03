@@ -106,14 +106,23 @@
       <section class="chests">
         <div class="chests__content display-none">
           <h2 class="chest-content__name poop"></h2>
-          <div class="roulette__box">
-            <div class="roulette__item"></div>
-          </div>
-          <div class="roulette__won-text display-none">
-            Поздравляем!!! Ты выиграл: ГОВНО!!!
+          <div class="roulette">
+            <div class="roulette__box">
+              <ul class="roulette__list list-reset">
+                
+              </ul>
+            </div>
+            <div class="roulette__arrow"></div>
           </div>
           <div class="chest__buy">
-            <button class="chest__buy-btn btn-reset" id="buyButton">Купить</button>
+            <button class="chest__buy-btn btn-reset">Крутить</button>
+            <div class="prize__box display-none">
+              <div class="roulette__prize"> 
+                <img class="prize__img" src="static/images/common/avatar.jpg" alt="">
+                <div class="prize__name arcana-text">Жопа</div>
+              </div>
+              <button class="accept__button">Ок</button>
+            </div>
           </div>
           <ul class="chest-content__list list-reset display-none"></ul>
         </div>

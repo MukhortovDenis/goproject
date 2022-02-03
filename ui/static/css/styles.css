@@ -1088,6 +1088,9 @@ img {
 .arcana:hover {
   box-shadow: 0px 0px 32px 1px #ade55c;
 }
+.arcana-text {
+  color: #ade55c;
+}
 
 .immortal {
   color: #daaf55;
@@ -1726,16 +1729,19 @@ img {
 }
 
 .chest__buy-btn {
-  padding: 6px 12px;
+  padding: 8px 24px;
   font-size: 18px;
   color: var(--color-primary-light);
   background-color: var(--color-accent-dark);
   border-radius: 5px;
   transition: background-color .2s ease;
 }
-
 .chest__buy-btn:hover {
+  background-color: var(--color-accent-darker);
+}
+.chest__buy-btn:disabled {
   background-color: var(--color-accent);
+  cursor: not-allowed;
 }
 
 /* .chest__price {
@@ -1775,72 +1781,89 @@ img {
   stroke: var(--color-bg);
 }
 
-.roulette__box {
-  /* position: absolute;
-  top: 50%;
+.roulette {
+  position: relative;
   left: 50%;
-  transform: translate(-50%, -50%); */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transform: translateX(-50%);
   margin-bottom: 20px;
   width: 100%;
-  height: 280px;
+  height: 180px;
   background-color: var(--color-bg-dark);
   border-radius: 5px;
   overflow: hidden;
 }
 
-/* .roulette__arrow {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width:0;
-  height:0;
-  border-top: 80px solid var(--color-accent-darker);
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-bottom: 0;
-  z-index: 2;
+.roulette__box {
+  padding: 10px 0px;
+  overflow: hidden;
 }
 
 .roulette__list {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 2000px;
+  position: relative;
+  list-style-type: none;
   display: flex;
-  padding: 20px;
-  transition: all 5s ease;
-} */
+  transition: transform 16s cubic-bezier(.05,.5,0,1);
+}
 
 .roulette__item {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 240px;
-  height: 240px;
-  font-size: 24px;
-  color: var(--color-primary-lighter);
-  background-color: var(--color-bg);
-  border-radius: 10px;
+  min-width: 160px;
+  height: 160px;
+  margin-right: 10px;
+  background-color: #444;
+  border: 2px solid;
+  border-bottom: 20px solid;
+  pointer-events: none;
 }
 
-.roulette__item:not(:last-child) {
-  margin-right: 20px;
+.stone__img {
+  max-width: 70%;
 }
 
-.roulette__won-text {
+.roulette__arrow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 100%;
+  background-color: var(--color-accent-dark);
+}
+
+.roulette__prize {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
-  font-size: 180px;
-  color: red;
-  text-shadow: 0px 0px 30px red;
+  padding: 20px;
+  background-color: #000;
+}
+
+.prize__img {
+  margin-bottom: 10px;
+  width: 300px;
+  border-radius: 5px;
+}
+
+.prize__name {
+  font-size: 24px;
   text-align: center;
+}
+
+.accept__button {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px 32px;
+  font-size: 18px;
+  color: #fff;
+  border: none;
+  background-color: #000;
+  cursor: pointer;
+  transition: background-color .1s ease;
 }
 
 .display-none {
