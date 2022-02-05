@@ -378,6 +378,15 @@ template {
 
 :root {
   --color-blocks: var(--color-bg-lighter);
+
+  --common: #b4d0f0;
+  --uncommon: #5e98d9;
+  --rare: #4b69ff;
+  --mythical: #8847ff;
+  --legendary: #d32ce6;
+  --immortal: #f3b644;
+  --arcana: #ade55c;
+  --ancient: #eb4b4b;
 }
 
 *,
@@ -1076,63 +1085,63 @@ img {
 }
 
 .ancient {
-  color: #EB4B4B;
+  color: var(--ancient);
 }
-.ancient:hover {
+/* .ancient:hover {
   box-shadow: 0px 0px 40px 1px #EB4B4B;
-}
+} */
 
 .arcana {
-  color: #ade55c;
+  color: var(--arcana);
 }
-.arcana:hover {
+/* .arcana:hover {
   box-shadow: 0px 0px 32px 1px #ade55c;
 }
 .arcana-text {
   color: #ade55c;
-}
+} */
 
 .immortal {
-  color: #daaf55;
+  color: var(--immortal);
 }
-.immortal:hover {
+/* .immortal:hover {
   box-shadow: 0px 0px 30px 1px #daaf55;
-}
+} */
 
 .legendary {
-  color: #d32ce6;
+  color: var(--legendary);
 }
-.legendary:hover {
+/* .legendary:hover {
   box-shadow: 0px 0px 28px 1px #d32ce6;
-}
+} */
 
 .mythical {
-  color: #8847ff;
+  color: var(--mythical);
 }
-.mythical:hover {
+/* .mythical:hover {
   box-shadow: 0px 0px 24px 1px #8847ff;
-}
+} */
 
 .rare {
-  color: #4b69ff;
+  color: var(--rare);
 }
-.rare:hover {
+/* .rare:hover {
   box-shadow: 0px 0px 20px 1px #4b69ff;
-}
+} */
 
 .uncommon {
-  color: #5e98d9;
+  color: var(--uncommon);
 }
-.uncommon:hover {
+/* .uncommon:hover {
   box-shadow: 0px 0px 16px 1px #5e98d9;
-}
+} */
 
 .common {
-  color: #b0c3d9;
+  color: var(--common);
 }
-.common:hover {
+/* .common:hover {
   box-shadow: 0px 0px 12px 1px #b0c3d9;
-}
+} */
 
 .poop {
   color: #574433;
@@ -1641,7 +1650,6 @@ img {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
-  width: 1200px;
   background-color: var(--color-bg);
   border-radius: 5px;
 }
@@ -1781,16 +1789,25 @@ img {
   stroke: var(--color-bg);
 }
 
+
+/* Roulette */
 .roulette {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
   margin-bottom: 20px;
-  width: 100%;
-  height: 180px;
+  width: 1200px;
+  min-height: 180px;
   background-color: var(--color-bg-dark);
-  border-radius: 5px;
-  overflow: hidden;
+}
+.roulette::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0px 0px 20px 3px rgb(17, 17, 17) inset;
 }
 
 .roulette__box {
@@ -1802,7 +1819,6 @@ img {
   position: relative;
   list-style-type: none;
   display: flex;
-  transition: transform 16s cubic-bezier(.05,.5,0,1);
 }
 
 .roulette__item {
@@ -1829,39 +1845,48 @@ img {
   transform: translateX(-50%);
   width: 4px;
   height: 100%;
-  background-color: var(--color-accent-dark);
+  background-color: var(--immortal);
 }
 
 .roulette__prize {
+  z-index: 5;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  width: 280px;
+  height: 280px;
   padding: 20px;
-  background-color: #000;
+  background-color: #111;
 }
 
 .prize__img {
   margin-bottom: 10px;
-  width: 300px;
+  max-width: 70%;
   border-radius: 5px;
 }
 
 .prize__name {
   font-size: 24px;
+  font-weight: 700;
   text-align: center;
 }
 
 .accept__button {
+  z-index: 6;
   position: absolute;
-  top: 90%;
+  top: 82%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 8px 32px;
   font-size: 18px;
   color: #fff;
   border: none;
-  background-color: #000;
+  background-color: #111;
   cursor: pointer;
   transition: background-color .1s ease;
 }
