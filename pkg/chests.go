@@ -17,7 +17,7 @@ import (
 type ChestList struct {
 	ChestName    string           `json:"chestName"`
 	ChestURL     string           `json:"chestURL"`
-	ChestPrice   int           `json:"chestPrice"`
+	ChestPrice   int              `json:"chestPrice"`
 	ChestContent []StoneFromChest `json:"chestContent"`
 }
 
@@ -82,7 +82,6 @@ func chest() *[]struct {
 		URL   string
 		Price int
 		Chest string
-
 	}, 0, 10)
 	for rows.Next() {
 		var chest struct {
@@ -101,11 +100,73 @@ func chest() *[]struct {
 	return &chestShop
 }
 
+// func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
+// 	session, err := store.Get(r, "session")
+// 	if err != nil {
+// 		log.Print(err)
+// 	}
+// 	if session.Values["userID"] == 0{
+// 		Error := new(Error)
+// 		Error.NewErrorMessage("the unauthorized user")
+// 		body := new(bytes.Buffer)
+// 		err = json.NewEncoder(body).Encode(Error)
+// 		if err != nil {
+// 			log.Print(err)
+// 		}
+// 		fmt.Fprint(w, body)
+// 		return
+// 	}
+// 	if r.URL.Query().Get("id") != "" {
+// 		db, err := sql.Open("postgres", dbConn)
+// 		if err != nil {
+// 			fmt.Fprint(w, err)
+// 			return
+// 		}
+// 		defer db.Close()
+// 		var chestInfo chestInfo
+// 		var chestList ChestList
+// 		err = db.QueryRow("SELECT name, url, price, content, chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
+// 			Scan(&chestInfo.chestName, &chestInfo.chestURL, &chestInfo.chestPrice, &chestInfo.chestContent, &chestInfo.chestChance)
+// 		if err != nil {
+// 			fmt.Fprint(w, err)
+// 			return
+// 		}
+// 		chestList.ChestName = chestInfo.chestName
+// 		chestList.ChestURL = chestInfo.chestURL
+// 		chestList.ChestPrice = chestInfo.chestPrice
+// 		sliceChance := strings.Split(chestInfo.chestChance, ",")
+// 		sliceContent := strings.Split(chestInfo.chestContent, ",")
+// 		var wg sync.WaitGroup
+// 		for i := range sliceContent {
+// 			var stone StoneFromChest
+// 			wg.Add(2)
+// 			go func(i int) {
+// 				b, _ := strconv.Atoi(sliceContent[i])
+// 				err = db.QueryRow("SELECT name, url, rare_css FROM stones WHERE id=($1)", b).Scan(&stone.Name, &stone.URL, &stone.Rare)
+// 				if err != nil {
+// 					fmt.Fprint(w, err)
+// 				}
+// 				wg.Done()
+// 			}(i)
+// 			go func(i int) {
+// 				b, _ := strconv.ParseFloat(sliceChance[i], 32)
+// 				c := float32(b)
+// 				stone.StoneChance = c
+// 				wg.Done()
+// 			}(i)
+// 			wg.Wait()
+// 			chestList.ChestContent = append(chestList.ChestContent, stone)
+// 		}
+// 	}
+
+// }
+
 func (h *Handler) giveChests(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Query().Get("id") != "" {
 		db, err := sql.Open("postgres", dbConn)
 		if err != nil {
 			fmt.Fprint(w, err)
+			return
 		}
 		defer db.Close()
 		var chestInfo chestInfo
@@ -114,6 +175,7 @@ func (h *Handler) giveChests(w http.ResponseWriter, r *http.Request) {
 			Scan(&chestInfo.chestName, &chestInfo.chestURL, &chestInfo.chestPrice, &chestInfo.chestContent, &chestInfo.chestChance)
 		if err != nil {
 			fmt.Fprint(w, err)
+			return
 		}
 		chestList.ChestName = chestInfo.chestName
 		chestList.ChestURL = chestInfo.chestURL
