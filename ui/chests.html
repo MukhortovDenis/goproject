@@ -93,16 +93,6 @@
     </header>
     <main class="main">
       <div class="main__window display-none"></div>
-      <button class="close-popup__button btn-reset display-none">
-        <svg class="close-popup__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-          <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)">
-            <g>
-              <line x1="13.5" y1="0.5" x2="0.5" y2="13.5"></line>
-              <line x1="0.5" y1="0.5" x2="13.5" y2="13.5"></line>
-            </g>
-          </g>
-        </svg>
-      </button>
       <section class="chests">
         <div class="chests__content display-none">
           <h2 class="chest-content__name poop"></h2>
@@ -126,6 +116,16 @@
           </div>
           <ul class="chest-content__list list-reset display-none"></ul>
         </div>
+        <button class="close-popup__button btn-reset display-none">
+          <svg class="close-popup__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+            <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)">
+              <g>
+                <line x1="13.5" y1="0.5" x2="0.5" y2="13.5"></line>
+                <line x1="0.5" y1="0.5" x2="13.5" y2="13.5"></line>
+              </g>
+            </g>
+          </svg>
+        </button>
         {{ template "chest" .ChestShop }}
       </section>
     </main>

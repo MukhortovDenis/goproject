@@ -193,6 +193,18 @@ function showPrize(list, id) {
   });
 }
 
+let audio = {};
+
+function startAudio() {
+  let number = getRandomInt(1, 3);
+  let audioSrc = `static/audio/roulette${number}.mp3`;
+
+  if("pause" in audio) audio.pause();
+
+  audio = new Audio(audioSrc);
+  audio.play();
+}
+
 startButton.addEventListener('click', function() {
   let rotate = rotateTo(itemWidth, itemMargin, itemID);
   let createdList;
@@ -200,6 +212,8 @@ startButton.addEventListener('click', function() {
   createdList = createRandomList( chestContent );
 
   pasteElements(createdList);
+
+  startAudio();
 
   animate({
     duration: 8000,
