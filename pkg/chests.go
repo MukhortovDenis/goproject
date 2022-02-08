@@ -44,7 +44,6 @@ type ChestBlock struct {
 		URL   string
 		Price int
 		Chest string
-		Rare  string
 	}
 }
 
@@ -54,7 +53,6 @@ func NewChestBlock(block map[string]interface{}, chestShop *[]struct {
 	URL   string
 	Price int
 	Chest string
-	Rare  string
 }) *ChestBlock {
 	return &ChestBlock{
 		Block:     block,
@@ -67,7 +65,6 @@ func chest() *[]struct {
 	URL   string
 	Price int
 	Chest string
-	Rare  string
 } {
 	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
@@ -75,7 +72,7 @@ func chest() *[]struct {
 		os.Exit(1)
 	}
 	defer db.Close()
-	rows, err := db.Query("SELECT * FROM chests ORDER BY price DESC")
+	rows, err := db.Query("SELECT id, name, url, price, chest FROM chests ORDER BY price DESC")
 	if err != nil {
 		log.Print(err)
 	}
@@ -85,7 +82,7 @@ func chest() *[]struct {
 		URL   string
 		Price int
 		Chest string
-		Rare  string
+
 	}, 0, 10)
 	for rows.Next() {
 		var chest struct {
@@ -94,9 +91,8 @@ func chest() *[]struct {
 			URL   string
 			Price int
 			Chest string
-			Rare  string
 		}
-		err = rows.Scan(&chest.ID, &chest.Name, &chest.URL, &chest.Price, &chest.Chest, &chest.Rare)
+		err = rows.Scan(&chest.ID, &chest.Name, &chest.URL, &chest.Price, &chest.Chest)
 		if err != nil {
 			panic(err)
 		}
