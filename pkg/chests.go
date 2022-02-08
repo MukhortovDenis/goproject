@@ -8,19 +8,32 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
+	"sync"
 	"text/template"
 )
 
 type ChestList struct {
-	ChestName    string           `json:"treasureName"`
-	ChestContent []StoneFromChest `json:"treasureContent"`
+	ChestName    string           `json:"chestName"`
+	ChestURL     string           `json:"chestURL"`
+	ChestPrice   int           `json:"chestPrice"`
+	ChestContent []StoneFromChest `json:"chestContent"`
+}
+
+type chestInfo struct {
+	chestName    string
+	chestURL     string
+	chestPrice   int
+	chestContent string
+	chestChance  string
 }
 
 type StoneFromChest struct {
-	Name string `json:"stoneName"`
-	ID   uint   `json:"stoneID"`
-	URL  string `json:"stoneURL"`
-	Rare string `json:"stoneRare"`
+	Name        string  `json:"stoneName"`
+	StoneChance float32 `json:"stoneChance"`
+	URL         string  `json:"stoneURL"`
+	Rare        string  `json:"stoneRare"`
 }
 
 type ChestBlock struct {
@@ -93,18 +106,51 @@ func chest() *[]struct {
 }
 
 func (h *Handler) giveChests(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Query().Get("id") == "1" {
-		chest := ChestList{ChestName: "The Chest of the Legendary Quarry",
-			ChestContent: []StoneFromChest{
-				{Name: "Хуета", ID: 1, URL: "static/images/common/chest.png", Rare: "poop"},
-				{Name: "Залупня", ID: 2, URL: "static/images/common/chest.png", Rare: "poop"}}}
-
+	if r.URL.Query().Get("id") != "" {
+		db, err := sql.Open("postgres", dbConn)
+		if err != nil {
+			fmt.Fprint(w, err)
+		}
+		defer db.Close()
+		var chestInfo chestInfo
+		var chestList ChestList
+		err = db.QueryRow("SELECT name, url, price, content, chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
+			Scan(&chestInfo.chestName, &chestInfo.chestURL, &chestInfo.chestPrice, &chestInfo.chestContent, &chestInfo.chestChance)
+		if err != nil {
+			fmt.Fprint(w, err)
+		}
+		chestList.ChestName = chestInfo.chestName
+		chestList.ChestURL = chestInfo.chestURL
+		chestList.ChestPrice = chestInfo.chestPrice
+		sliceChance := strings.Split(chestInfo.chestChance, ",")
+		sliceContent := strings.Split(chestInfo.chestContent, ",")
+		var wg sync.WaitGroup
+		for i := range sliceContent {
+			var stone StoneFromChest
+			wg.Add(2)
+			go func(i int) {
+				b, _ := strconv.Atoi(sliceContent[i])
+				err = db.QueryRow("SELECT name, url, rare_css FROM stones WHERE id=($1)", b).Scan(&stone.Name, &stone.URL, &stone.Rare)
+				if err != nil {
+					fmt.Fprint(w, err)
+				}
+				wg.Done()
+			}(i)
+			go func(i int) {
+				b, _ := strconv.ParseFloat(sliceChance[i], 32)
+				c := float32(b)
+				stone.StoneChance = c
+				wg.Done()
+			}(i)
+			wg.Wait()
+			chestList.ChestContent = append(chestList.ChestContent, stone)
+		}
 		buf := new(bytes.Buffer)
-		if err := json.NewEncoder(buf).Encode(chest); err != nil {
+		if err := json.NewEncoder(buf).Encode(chestList); err != nil {
 			fmt.Fprint(w, err)
 		}
 		w.Write(buf.Bytes())
-	}else{
+	} else {
 		fmt.Fprint(w, "автор pidoras")
 	}
 }
