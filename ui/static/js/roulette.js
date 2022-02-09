@@ -71,6 +71,8 @@ function showChestContent(items) {
       }
     }
   }
+  
+  startButton.innerHTML = `Купить за ${items.chestPrice} C`
 } 
 
 function clearChestContent() {
