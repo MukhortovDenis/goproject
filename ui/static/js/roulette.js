@@ -2,7 +2,7 @@ const chests = document.querySelectorAll('.chest');
 const chestsContent = document.querySelector('.chests__content');
 const chestName = document.querySelector('.chest-content__name');
 const chestContentList = document.querySelector('.chest-content__list');
-const mainWindow = document.querySelector('.main__window');
+const chestOverlay = document.querySelector('.chest-content__overlay');
 const closeButton = document.querySelector('.close-popup__button');
 
 const startButton = document.querySelector('.chest__buy-btn');
@@ -48,7 +48,7 @@ function getChestItems(url) {
 }
 
 function showChestContent(items) {
-  mainWindow.classList.remove('display-none');
+  chestOverlay.classList.remove('display-none');
   chestContentList.classList.remove('display-none');
   closeButton.classList.remove('display-none');
   chestsContent.classList.remove('display-none');
@@ -64,15 +64,19 @@ function showChestContent(items) {
       for (let stone in stones) {
         chestContentList.innerHTML += `
           <li class="chest-content__item item">
-            <img class="item__img" src="${stones[stone].stoneURL}" alt="${stones[stone].stoneRare}">
-            <div class="item__name ${stones[stone].stoneRare}">${stones[stone].stoneName}</div>
+            <div class="item__wrapper">
+              <img class="item__img" src="${stones[stone].stoneURL}" alt="${stones[stone].stoneRare}">
+              <div class="item__name ${stones[stone].stoneRare}">${stones[stone].stoneName}</div>
+            </div>
           </li>
         `;
       }
     }
   }
-  
-  startButton.innerHTML = `Купить за ${items.chestPrice} C`
+
+
+  let chestPrice = items.chestPrice.toLocaleString();
+  startButton.innerHTML = `Купить за ${chestPrice.replace(/\s/g, '.')} C`
 } 
 
 function clearChestContent() {
@@ -83,7 +87,7 @@ function clearChestContent() {
 
 function closePopup() {
   closeButton.addEventListener('click', function() {
-    mainWindow.classList.add('display-none');
+    chestOverlay.classList.add('display-none');
     chestContentList.classList.add('display-none');
     closeButton.classList.add('display-none');
     chestsContent.classList.add('display-none');

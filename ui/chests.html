@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,10 +56,9 @@
         </div>
         <nav class="header__nav nav">
           <ul class="nav__list list-reset">
-            <li class="nav__item"><a class="nav__link" href="#">Сундуки</a></li>
+            <li class="nav__item"><a class="nav__link" href="/chests">Сундуки</a></li>
             <li class="nav__item"><a class="nav__link" href="#">Информация</a></li>
             <li class="nav__item"><a class="nav__link" href="#">Ещё что-то</a></li>
-            <li class="nav__item"><a class="nav__link" href="#">Пока хз что</a></li>
           </ul>
         </nav>
         {{ if .Block.Show_block }}
@@ -89,45 +88,75 @@
             <a class="sign-in__link" href="/signin">Войти</a>
           </div>
         {{ end }}
+        <div class="header__burger">
+          <button class="burger-button btn-reset">
+            <svg class="burger-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+              <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)">
+                <g>
+                  <line x1="13.5" y1="2" x2="0.5" y2="2"></line>
+                  <line x1="13.5" y1="7" x2="0.5" y2="7"></line>
+                  <line x1="13.5" y1="12" x2="0.5" y2="12"></line>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+
+        <div class="burger__menu">
+          <ul class="nav__list list-reset">
+            <a class="sign-in__link" href="/signin">Войти</a>
+            <li class="nav__item"><a class="nav__link" href="/chests">Сундуки</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">Информация</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">Ещё что-то</a></li>
+          </ul>
+        </div>
+        
       </div>
     </header>
     <main class="main">
       <div class="main__window display-none"></div>
       <section class="chests">
+        {{ template "chest" .ChestShop }}
+      </section>
+
+
+      <div class="chest-content__overlay display-none">
         <div class="chests__content display-none">
+
           <h2 class="chest-content__name poop"></h2>
+
           <div class="roulette">
             <div class="roulette__box">
-              <ul class="roulette__list list-reset">
-                
-              </ul>
+              <ul class="roulette__list list-reset"></ul>
             </div>
             <div class="roulette__arrow"></div>
           </div>
+
           <div class="chest__buy">
-            <button class="chest__buy-btn btn-reset">Крутить</button>
+            <button class="chest__buy-btn btn-reset"></button>
             <div class="prize__box display-none">
-              <div class="roulette__prize"> 
-                <img class="prize__img" src="static/images/common/avatar.jpg" alt="">
-                <div class="prize__name arcana-text">Жопа</div>
-              </div>
-              <button class="accept__button">Ок</button>
+              <div class="roulette__prize"></div>
+              <button class="accept__button">Принять</button>
             </div>
           </div>
+
           <ul class="chest-content__list list-reset display-none"></ul>
-        </div>
-        <button class="close-popup__button btn-reset display-none">
-          <svg class="close-popup__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-            <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)">
-              <g>
-                <line x1="13.5" y1="0.5" x2="0.5" y2="13.5"></line>
-                <line x1="0.5" y1="0.5" x2="13.5" y2="13.5"></line>
+
+          <button class="close-popup__button btn-reset display-none">
+            <svg class="close-popup__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+              <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)">
+                <g>
+                  <line x1="13.5" y1="0.5" x2="0.5" y2="13.5"></line>
+                  <line x1="0.5" y1="0.5" x2="13.5" y2="13.5"></line>
+                </g>
               </g>
-            </g>
-          </svg>
-        </button>
-        {{ template "chest" .ChestShop }}
-      </section>
+            </svg>
+          </button>
+
+        </div>
+      </div>
+
+
     </main>
     <script src="static/js/index.js"></script>
     <script src="static/js/theme-toggle.js"></script>

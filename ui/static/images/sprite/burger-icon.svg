@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)">
+    <g>
+      <line x1="13.5" y1="2" x2="0.5" y2="2" style="fill: none;stroke: #000000;stroke-linecap: round;stroke-linejoin: round"></line>
+      <line x1="13.5" y1="7" x2="0.5" y2="7" style="fill: none;stroke: #000000;stroke-linecap: round;stroke-linejoin: round"></line>
+      <line x1="13.5" y1="12" x2="0.5" y2="12" style="fill: none;stroke: #000000;stroke-linecap: round;stroke-linejoin: round"></line>
+    </g>
+  </g>
+</svg>
