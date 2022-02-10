@@ -104,21 +104,6 @@ func chest() *[]struct {
 }
 
 func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, "session")
-	if err != nil {
-		log.Print(err)
-	}
-	if session.Values["userID"] == nil {
-		Error := new(Error)
-		Error.NewErrorMessage("Не авторизированный пользователь")
-		body := new(bytes.Buffer)
-		err = json.NewEncoder(body).Encode(Error)
-		if err != nil {
-			log.Print(err)
-		}
-		fmt.Fprint(w, body)
-		return
-	}
 	if r.URL.Query().Get("id") != "" {
 		db, err := sql.Open("postgres", dbConn)
 		if err != nil {
@@ -147,28 +132,29 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 		}
 		sliceFloatsModified = append(sliceFloatsModified, sliceFloatsLegacy...)
 		sort.Float64s(sliceFloatsModified)
-		var winner *int
+		for i, j := 0, len(sliceFloatsModified)-1; i < j; i, j = i+1, j-1 {
+			sliceFloatsModified[i], sliceFloatsModified[j] = sliceFloatsModified[j], sliceFloatsModified[i]
+		}
+		var winner int
+		a := &winner
+		var summary float32 = 1.0
+		b := &summary
 		rand.Seed(time.Now().UnixNano())
 		rnd := rand.Float32()
+		log.Println(rnd)
 		for i, j := range sliceFloatsModified {
-			if i == len(sliceFloatsModified)-1 && float32(j) <= rnd && rnd <= 1 {
-				*winner = i
+			if rnd <= *b && rnd >= *b-float32(j) {
+				*a = i
 				break
-			}
-			if rnd <= float32(sliceFloatsModified[0]) {
-				*winner = 0
-				break
-			}
-			if rnd >= float32(j) && rnd <= float32(sliceFloatsModified[i+1]) {
-				*winner = i
-				break
+			} else {
+				*b = *b - float32(j)
 			}
 		}
-		chance := sliceFloatsModified[*winner]
+		chance := sliceFloatsModified[winner]
 		var stoneWinner StoneFromChest
 		for i, j := range sliceFloatsLegacy {
 			if chance == j {
-				if err = db.QueryRow("SELECT name, url, rare_css FROM stones WHERE id=($1)", i).Scan(&stoneWinner.Name, &stoneWinner.URL, &stoneWinner.Rare); err != nil {
+				if err = db.QueryRow("SELECT name, url, rare_css FROM stones WHERE id=($1)", i+1).Scan(&stoneWinner.Name, &stoneWinner.URL, &stoneWinner.Rare); err != nil {
 					fmt.Fprint(w, err)
 				}
 				buf := new(bytes.Buffer)
@@ -182,7 +168,6 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "Хуйня какая то")
 
 	}
-
 }
 
 func (h *Handler) giveChests(w http.ResponseWriter, r *http.Request) {
