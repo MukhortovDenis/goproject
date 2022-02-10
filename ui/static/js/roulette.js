@@ -204,8 +204,11 @@ function showPrize(list, id) {
   let formatWinStoneName = stoneName.charAt(0).toUpperCase() + stoneName.slice(1);
 
   prizeWindow.innerHTML = `
-    <img class="prize__img" src="${list[id][2]}" alt="">
+    <div class="prize__top">
+      <img class="prize__img" src="${list[id][2]}" alt="${formatWinStoneName}">
+    </div>
     <div class="prize__name ${list[id][3]}">${formatWinStoneName}</div>
+    <div class="prize__description">Здесь должно быть описание камня</div>
   `;
 
   prizeBox.classList.remove('display-none');
@@ -224,7 +227,7 @@ function showPrize(list, id) {
 let audio = {};
 
 function startAudio() {
-  let number = getRandomInt(1, 3);
+  let number = getRandomInt(1, 5);
   let audioSrc = `static/audio/roulette${number}.mp3`;
 
   if("pause" in audio) audio.pause();
@@ -244,25 +247,25 @@ startButton.addEventListener('click', function() {
         createdList[50] = [data.stoneName, '', data.stoneURL, data.stoneRare ]
 
         pasteElements(createdList);
+
+        startAudio();
+
+        animate({
+          duration: 8000,
+          timing: function easeOut(timeFraction) {
+            return 1 - Math.pow(1 - timeFraction, 3)
+          },
+          draw: function(progress) {
+            stoneList.style.right = progress * rotate + 'px';
+          }
+        });
+      
+        setTimeout(function() {
+          showPrize(createdList, itemID)
+        }, 8200)
       }
     )
     .catch(err => console.log(err))
-
-  startAudio();
-
-  animate({
-    duration: 8000,
-    timing: function easeOut(timeFraction) {
-      return 1 - Math.pow(1 - timeFraction, 3)
-    },
-    draw: function(progress) {
-      stoneList.style.right = progress * rotate + 'px';
-    }
-  });
-
-  setTimeout(function() {
-    showPrize(createdList, itemID)
-  }, 8200)
 
   // console.log( createdList );
 
