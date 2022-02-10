@@ -11,10 +11,15 @@ const prizeBox = document.querySelector('.prize__box');
 const prizeWindow = document.querySelector('.roulette__prize');
 const acceptButton = document.querySelector('.accept__button');
 
+const modal = document.querySelector('.modal');
+const modalMessage = document.querySelector('.modal__message');
+const confirmModalButton = document.querySelector('.modal__button');
+
 const itemID = 50;
 const itemWidth = 160;
 const itemMargin = 10;
 
+let chestID;
 let chestContent;
 
 function getRandomInt(min, max) {
@@ -79,6 +84,11 @@ function showChestContent(items) {
   startButton.innerHTML = `Купить за ${chestPrice.replace(/\s/g, '.')} C`
 } 
 
+function showUserError(errorMessage) {
+  modal.classList.remove('display-none');
+  modalMessage.innerHTML = `${errorMessage}`;
+}
+
 function clearChestContent() {
   if (chestContentList.innerHTML != '') {
     chestContentList.innerHTML = '';
@@ -98,11 +108,16 @@ function closePopup() {
 
 chests.forEach(chest => {
   chest.addEventListener('click', function() {
-    getChestItems(`/chest?id=${getChestId(chest)}`)
+    chestID = getChestId(chest);
+    getChestItems(`/chest?id=${chestID}`)
       .then(function(data) {
-        showChestContent(data);
+        if (data.msg != 'Не авторизированный пользователь') {
+          showChestContent(data);
 
-        chestContent = data.chestContent;
+          chestContent = data.chestContent;
+        } else {
+            showUserError(data);
+        }
       })     
       .catch(err => console.log(err))
 
@@ -148,6 +163,13 @@ function pasteElements(list) {
   for (let i = 0; i < list.length; i++) { 
     stoneList.innerHTML += `<li class="roulette__item ${list[i][3]}"><img class="stone__img" src="${list[i][2]}" alt=""></li>` 
   }
+}
+
+function getPrize(url) {
+  return fetch(url).
+    then(response => {
+      return response.json()
+  });
 }
 
 function rotateTo(width, margin, id) {
@@ -217,7 +239,14 @@ startButton.addEventListener('click', function() {
 
   createdList = createRandomList( chestContent );
 
-  pasteElements(createdList);
+  getPrize(`/open-chest?id=${chestID}`)
+    .then(data => { 
+        createdList[50] = [data.stoneName, '', data.stoneURL, data.stoneRare ]
+
+        pasteElements(createdList);
+      }
+    )
+    .catch(err => console.log(err))
 
   startAudio();
 
@@ -248,4 +277,9 @@ acceptButton.addEventListener('click', function() {
 
   startButton.removeAttribute('disabled', 'disabled');
   closeButton.classList.remove('display-none');
+})
+
+confirmModalButton.addEventListener('click', function() {
+  modal.classList.add('display-none');
+  modalMessage.innerHTML = '';
 })
