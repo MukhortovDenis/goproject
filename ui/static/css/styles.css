@@ -1721,7 +1721,7 @@ img {
 }
 
 .item__img {
-  max-width: 100px;
+  /* max-width: 100px; */
   height: 100px;
   margin-bottom: 8px;
 }
@@ -1928,13 +1928,23 @@ img {
   background-color: var(--immortal);
 }
 
-.prize__box {
+.prize__overlay {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   background-color: var(--color-overlay);
+}
+
+.prize__box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* @keyframes radiance {
@@ -1951,26 +1961,25 @@ img {
 
 .roulette__prize {
   z-index: 5;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 10px;
   padding: 20px;
   background-color: #111;
   border-radius: 5px;
-  /* animation: jopa 3s linear infinite; */
+  /* animation: radiance 3s linear infinite; */
 }
 
 .prize__top {
   margin-bottom: 10px;
-  max-width: 220px;
+  max-width: 270px;
 }
 
 .prize__img {
-  padding: 40px;
+  padding: 50px;
+  width: 280px;
+  max-height: 230px;
   border-radius: 5px;
   background-color: var(--color-bg);
 }
@@ -1982,17 +1991,17 @@ img {
 }
 
 .prize__description {
-  width: 220px;
+  width: 270px;
   font-size: 18px;
   color: var(--color-primary);
 }
 
 .accept__button {
   z-index: 6;
-  position: absolute;
-  top: 78%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  /* top: 80%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
   padding: 8px 32px;
   font-size: 18px;
   color: #fff;

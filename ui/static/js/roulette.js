@@ -7,6 +7,7 @@ const closeButton = document.querySelector('.close-popup__button');
 
 const startButton = document.querySelector('.chest__buy-btn');
 const stoneList = document.querySelector('.roulette__list');
+const prize = document.querySelector('.prize');
 const prizeBox = document.querySelector('.prize__box');
 const prizeWindow = document.querySelector('.roulette__prize');
 const acceptButton = document.querySelector('.accept__button');
@@ -70,7 +71,7 @@ function showChestContent(items) {
         chestContentList.innerHTML += `
           <li class="chest-content__item item">
             <div class="item__wrapper">
-              <img class="item__img" src="${stones[stone].stoneURL}" alt="${stones[stone].stoneRare}">
+              <img class="item__img" src="${stones[stone].stoneURL}" alt="${stones[stone].stoneName}">
               <div class="item__name ${stones[stone].stoneRare}">${stones[stone].stoneName}</div>
             </div>
           </li>
@@ -161,7 +162,7 @@ function createRandomList(chestContent) {
 
 function pasteElements(list) {
   for (let i = 0; i < list.length; i++) { 
-    stoneList.innerHTML += `<li class="roulette__item ${list[i][3]}"><img class="stone__img" src="${list[i][2]}" alt=""></li>` 
+    stoneList.innerHTML += `<li class="roulette__item ${list[i][3]}"><img class="stone__img" src="${list[i][2]}" alt="${list[i][0]}"></li>` 
   }
 }
 
@@ -208,10 +209,10 @@ function showPrize(list, id) {
       <img class="prize__img" src="${list[id][2]}" alt="${formatWinStoneName}">
     </div>
     <div class="prize__name ${list[id][3]}">${formatWinStoneName}</div>
-    <div class="prize__description">Здесь должно быть описание камня</div>
+    <div class="prize__description">${list[id][4]}</div>
   `;
 
-  prizeBox.classList.remove('display-none');
+  prize.classList.remove('display-none');
 
   animate({
     duration: 400,
@@ -244,7 +245,7 @@ startButton.addEventListener('click', function() {
 
   getPrize(`/open-chest?id=${chestID}`)
     .then(data => { 
-        createdList[50] = [data.stoneName, '', data.stoneURL, data.stoneRare ]
+        createdList[50] = [data.stoneName, '', data.stoneURL, data.stoneRare, data.stoneDescription ]
 
         pasteElements(createdList);
 
@@ -274,7 +275,7 @@ startButton.addEventListener('click', function() {
 })
 
 acceptButton.addEventListener('click', function() {
-  prizeBox.classList.add('display-none');
+  prize.classList.add('display-none');
   
   clearStoneList();
 

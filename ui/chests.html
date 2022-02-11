@@ -58,7 +58,7 @@
           <ul class="nav__list list-reset">
             <li class="nav__item"><a class="nav__link" href="/chests">Сундуки</a></li>
             <li class="nav__item"><a class="nav__link" href="#">Информация</a></li>
-            <li class="nav__item"><a class="nav__link" href="#">Ещё что-то</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">Инвентарь</a></li>
           </ul>
         </nav>
         {{ if .Block.Show_block }}
@@ -107,7 +107,7 @@
             <a class="sign-in__link" href="/signin">Войти</a>
             <li class="nav__item"><a class="nav__link" href="/chests">Сундуки</a></li>
             <li class="nav__item"><a class="nav__link" href="#">Информация</a></li>
-            <li class="nav__item"><a class="nav__link" href="#">Ещё что-то</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">Инвентарь</a></li>
           </ul>
         </div>
 
@@ -128,13 +128,7 @@
             <div class="roulette__arrow"></div>
           </div>
           <div class="chest__buy">
-            <button class="chest__buy-btn btn-reset"></button>
-
-            <div class="prize__box display-none">
-              <div class="roulette__prize"></div>
-              <button class="accept__button">Принять</button>
-            </div>
-            
+            <button class="chest__buy-btn btn-reset"></button>       
           </div>
           <ul class="chest-content__list list-reset display-none"></ul>
           <button class="close-popup__button btn-reset display-none">
@@ -167,6 +161,14 @@
                 Ладно
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="prize display-none">
+        <div class="prize__overlay">
+          <div class="prize__box">
+            <div class="roulette__prize"></div>
+            <button class="accept__button">Принять</button>
           </div>
         </div>
       </div>
