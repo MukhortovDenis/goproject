@@ -37,7 +37,7 @@ type StoneFromChest struct {
 	StoneChance float32 `json:"stoneChance,omitempty"`
 	URL         string  `json:"stoneURL"`
 	Rare        string  `json:"stoneRare"`
-	Description string  `json:"stoneDescription"`
+	Description string  `json:"stoneDescription,omitempty"`
 }
 
 type ChestBlock struct {
