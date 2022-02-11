@@ -37,6 +37,7 @@ type StoneFromChest struct {
 	StoneChance float32 `json:"stoneChance,omitempty"`
 	URL         string  `json:"stoneURL"`
 	Rare        string  `json:"stoneRare"`
+	Description string  `json:"stoneDescription"`
 }
 
 type ChestBlock struct {
@@ -111,18 +112,20 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		defer db.Close()
+		var chance string
 		var content string
-		err = db.QueryRow("SELECT chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
-			Scan(&content)
+		err = db.QueryRow("SELECT content ,chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
+			Scan(&content, &chance)
 		if err != nil {
 			fmt.Fprint(w, err)
 			return
 		}
-		sliceChance := strings.Split(content, ",")
+		sliceChance := strings.Split(chance, ",")
+		sliceContent := strings.Split(content, ",")
 		sliceFloatsLegacy := make([]float64, 0, 8)
 		sliceFloatsModified := make([]float64, 0, 8)
 		for _, i := range sliceChance {
-			num, err := strconv.ParseFloat(i, 32)
+			num, err := strconv.ParseFloat(i, 64)
 			if err != nil {
 				fmt.Fprint(w, err)
 				return
@@ -137,24 +140,23 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 		}
 		var winner int
 		a := &winner
-		var summary float32 = 1.0
+		var summary float64 = 1.0
 		b := &summary
 		rand.Seed(time.Now().UnixNano())
-		rnd := rand.Float32()
-		log.Println(rnd)
+		rnd := rand.Float64()
 		for i, j := range sliceFloatsModified {
-			if rnd <= *b && rnd >= *b-float32(j) {
+			if rnd <= *b && rnd >= *b-j {
 				*a = i
 				break
 			} else {
-				*b = *b - float32(j)
+				*b = *b - j
 			}
 		}
-		chance := sliceFloatsModified[winner]
+		winChance := sliceFloatsModified[winner]
 		var stoneWinner StoneFromChest
 		for i, j := range sliceFloatsLegacy {
-			if chance == j {
-				if err = db.QueryRow("SELECT name, url, rare_css FROM stones WHERE id=($1)", i+1).Scan(&stoneWinner.Name, &stoneWinner.URL, &stoneWinner.Rare); err != nil {
+			if winChance == j {
+				if err = db.QueryRow("SELECT name, url, rare_css, description FROM stones WHERE id=($1)", sliceContent[i]).Scan(&stoneWinner.Name, &stoneWinner.URL, &stoneWinner.Rare, &stoneWinner.Description); err != nil {
 					fmt.Fprint(w, err)
 				}
 				buf := new(bytes.Buffer)
