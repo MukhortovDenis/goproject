@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"sort"
@@ -14,7 +13,6 @@ import (
 	"strings"
 	"sync"
 	"text/template"
-	"time"
 )
 
 type ChestList struct {
@@ -141,17 +139,23 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 		a := &winner
 		var summary float64 = 100.0
 		b := &summary
-		rand.Seed(time.Now().UnixNano())
-		rnd := rand.Float64() * 100
+		// rand.Seed(time.Now().UnixNano())
+		// rnd := rand.Float64() * 100
+		rnd := 0.004
 		for i, j := range sliceFloatsModified {
+			log.Println("iterations")
 			if rnd <= *b && rnd >= *b-j {
 				*a = i
 				break
+			} else if rnd <= sliceFloatsModified[len(sliceFloatsModified)-1]{
+				*a = len(sliceFloatsModified)-1
+				break	
 			} else {
 				*b = *b - j
 			}
 		}
 		winChance := sliceFloatsModified[winner]
+		log.Println(winChance)
 		var stoneWinner StoneFromChest
 		log.Println(sliceFloatsModified)
 		for i, j := range sliceFloatsLegacy {
