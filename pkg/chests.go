@@ -130,7 +130,6 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprint(w, err)
 				return
 			}
-			num = num * 0.01
 			sliceFloatsLegacy = append(sliceFloatsLegacy, num)
 		}
 		sliceFloatsModified = append(sliceFloatsModified, sliceFloatsLegacy...)
@@ -140,10 +139,10 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 		}
 		var winner int
 		a := &winner
-		var summary float64 = 1.0
+		var summary float64 = 100.0
 		b := &summary
 		rand.Seed(time.Now().UnixNano())
-		rnd := rand.Float64()
+		rnd := rand.Float64() * 100
 		for i, j := range sliceFloatsModified {
 			if rnd <= *b && rnd >= *b-j {
 				*a = i
@@ -154,6 +153,7 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 		}
 		winChance := sliceFloatsModified[winner]
 		var stoneWinner StoneFromChest
+		log.Println(sliceFloatsModified)
 		for i, j := range sliceFloatsLegacy {
 			if winChance == j {
 				if err = db.QueryRow("SELECT name, url, rare_css, description FROM stones WHERE id=($1)", sliceContent[i]).Scan(&stoneWinner.Name, &stoneWinner.URL, &stoneWinner.Rare, &stoneWinner.Description); err != nil {
