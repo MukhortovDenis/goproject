@@ -1,10 +1,10 @@
 package pkg
 
 import (
+	"database/sql"
 	"fmt"
 
 	"github.com/go-chi/chi"
-	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 )
 
@@ -15,12 +15,11 @@ var dirWithHTML string = "./ui/"
 var configEnv = init_env()
 
 // URI к бд
-var dbConn string = fmt.Sprintf("%s://%s:%s@%s:%s/%s?sslmode=require", configEnv.Dialect, configEnv.DataUser, configEnv.DataPass, configEnv.DataHost, configEnv.DataPort, configEnv.DataName)
-
-//Создание хранилища куки с рандомным ключом
-var store = sessions.NewCookieStore([]byte(securecookie.GenerateRandomKey(32)))
+var DBConn string = fmt.Sprintf("%s://%s:%s@%s:%s/%s?sslmode=require", configEnv.Dialect, configEnv.DataUser, configEnv.DataPass, configEnv.DataHost, configEnv.DataPort, configEnv.DataName)
 
 type Handler struct {
+	Store   *sessions.CookieStore
+	Storage *sql.DB
 }
 
 func (h *Handler) MainHandle() *chi.Mux {

@@ -19,7 +19,7 @@ func (h *Handler) cabinet(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) cabinetInfo(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, "session")
+	session, err := h.Store.Get(r, "session")
 	if err != nil {
 		log.Print(err)
 	}

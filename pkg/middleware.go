@@ -29,13 +29,8 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprint(w, body)
 	}
-	db, err := sql.Open("postgres", dbConn)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
 	var checkLogin string
-	row, err := db.Query("SELECT login FROM users WHERE login = $1", newUser.Login)
+	row, err := h.Storage.Query("SELECT login FROM users WHERE login = $1", newUser.Login)
 	if err != nil {
 		fmt.Fprint(w, err)
 	}
@@ -57,14 +52,13 @@ func (h *Handler) save(w http.ResponseWriter, r *http.Request) {
 
 	} else {
 		var userid int
-		err = db.QueryRow(`INSERT INTO users (firstname, login, password) VALUES ($1, $2, $3) RETURNING id`, newUser.First_name, newUser.Login, newUser.Password).Scan(&userid)
+		err = h.Storage.QueryRow(`INSERT INTO users (firstname, login, password) VALUES ($1, $2, $3) RETURNING id`, newUser.First_name, newUser.Login, newUser.Password).Scan(&userid)
 		if err != nil {
 			fmt.Fprint(w, err)
 		}
 		fmt.Fprint(w, "{}")
 	}
 	defer row.Close()
-	defer db.Close()
 	defer r.Body.Close()
 }
 
@@ -76,12 +70,7 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	db, err := sql.Open("postgres", dbConn)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-	rows, err := db.Query("SELECT * FROM users WHERE login = $1", CheckUser.Login)
+	rows, err := h.Storage.Query("SELECT * FROM users WHERE login = $1", CheckUser.Login)
 	if err != nil {
 		fmt.Fprint(w, "Неправильный логин")
 	}
@@ -93,7 +82,7 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if CheckUser.Password == user.Password {
-		session, err := store.Get(r, "session")
+		session, err := h.Store.Get(r, "session")
 		if err != nil {
 			log.Print(err)
 		}
@@ -116,12 +105,11 @@ func (h *Handler) check(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, body)
 	}
 	defer rows.Close()
-	defer db.Close()
 	defer r.Body.Close()
 }
 
 func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, "session")
+	session, err := h.Store.Get(r, "session")
 	if err != nil {
 		log.Print(err)
 	}
@@ -137,7 +125,7 @@ func (h *Handler) quit(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) changeCabinetInfo(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	session, err := store.Get(r, "session")
+	session, err := h.Store.Get(r, "session")
 	if err != nil {
 		log.Print(err)
 	}
@@ -148,12 +136,7 @@ func (h *Handler) changeCabinetInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var checkLogin string
-	db, err := sql.Open("postgres", dbConn)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-	row, err := db.Query("SELECT login, id FROM users WHERE login = $1", data.NewEmail)
+	row, err := h.Storage.Query("SELECT login, id FROM users WHERE login = $1", data.NewEmail)
 	if err != nil {
 		fmt.Fprint(w, err)
 	}
@@ -167,7 +150,7 @@ func (h *Handler) changeCabinetInfo(w http.ResponseWriter, r *http.Request) {
 	if data.NewEmail == checkLogin {
 		if id == session.Values["userID"] {
 			oldEmail := session.Values["email"]
-			row, err = db.Query("UPDATE users SET firstname = $1 WHERE login = $2", data.NewFirstName, oldEmail)
+			row, err = h.Storage.Query("UPDATE users SET firstname = $1 WHERE login = $2", data.NewFirstName, oldEmail)
 			if err != nil {
 				log.Println(err)
 			}
@@ -192,7 +175,7 @@ func (h *Handler) changeCabinetInfo(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		oldEmail := session.Values["email"]
-		row, err = db.Query("UPDATE users SET firstname = $1 , login = $2 WHERE login = $3", data.NewFirstName, data.NewEmail, oldEmail)
+		row, err = h.Storage.Query("UPDATE users SET firstname = $1 , login = $2 WHERE login = $3", data.NewFirstName, data.NewEmail, oldEmail)
 		if err != nil {
 			log.Println(err)
 		}
@@ -203,7 +186,6 @@ func (h *Handler) changeCabinetInfo(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 		}
 		fmt.Fprint(w, "{}")
-		defer db.Close()
 		defer row.Close()
 		defer r.Body.Close()
 		return
@@ -212,7 +194,7 @@ func (h *Handler) changeCabinetInfo(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) changeCabinetPassword(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	session, err := store.Get(r, "session")
+	session, err := h.Store.Get(r, "session")
 	if err != nil {
 		log.Print(err)
 	}
@@ -222,7 +204,7 @@ func (h *Handler) changeCabinetPassword(w http.ResponseWriter, r *http.Request) 
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	db, err := sql.Open("postgres", dbConn)
+	db, err := sql.Open("postgres", DBConn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)

@@ -2,12 +2,10 @@ package pkg
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
-	"os"
 )
 
-func stones() *[]struct {
+func stones(db *sql.DB) *[]struct {
 	ID          int
 	Name        string
 	URL         string
@@ -16,12 +14,6 @@ func stones() *[]struct {
 	RareCss     string
 	Rare        string
 } {
-	db, err := sql.Open("postgres", dbConn)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-	defer db.Close()
 	rows, err := db.Query("SELECT * FROM stones ORDER BY price DESC")
 	if err != nil {
 		log.Print(err)

@@ -8,7 +8,6 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
-	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -63,19 +62,13 @@ func NewChestBlock(block map[string]interface{}, chestShop *[]struct {
 		ChestShop: *chestShop}
 }
 
-func chest() *[]struct {
+func chest(db *sql.DB) *[]struct {
 	ID    int
 	Name  string
 	URL   string
 	Price int
 	Chest string
 } {
-	db, err := sql.Open("postgres", dbConn)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-	defer db.Close()
 	rows, err := db.Query("SELECT id, name, url, price, chest FROM chests ORDER BY price DESC")
 	if err != nil {
 		log.Print(err)
@@ -106,15 +99,9 @@ func chest() *[]struct {
 
 func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Query().Get("id") != "" {
-		db, err := sql.Open("postgres", dbConn)
-		if err != nil {
-			fmt.Fprint(w, err)
-			return
-		}
-		defer db.Close()
 		var chance string
 		var content string
-		err = db.QueryRow("SELECT content ,chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
+		err := h.Storage.QueryRow("SELECT content ,chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
 			Scan(&content, &chance)
 		if err != nil {
 			fmt.Fprint(w, err)
@@ -144,7 +131,6 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 		rand.Seed(time.Now().UnixNano())
 		rnd := rand.Float64() * 100
 		for i, j := range sliceFloatsModified {
-			log.Println("iterations")
 			if rnd <= *b && rnd >= *b-j {
 				*a = i
 				break
@@ -156,12 +142,10 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		winChance := sliceFloatsModified[winner]
-		log.Println(winChance)
 		var stoneWinner StoneFromChest
-		log.Println(sliceFloatsModified)
 		for i, j := range sliceFloatsLegacy {
 			if winChance == j {
-				if err = db.QueryRow("SELECT name, url, rare_css, description FROM stones WHERE id=($1)", sliceContent[i]).Scan(&stoneWinner.Name, &stoneWinner.URL, &stoneWinner.Rare, &stoneWinner.Description); err != nil {
+				if err = h.Storage.QueryRow("SELECT name, url, rare_css, description FROM stones WHERE id=($1)", sliceContent[i]).Scan(&stoneWinner.Name, &stoneWinner.URL, &stoneWinner.Rare, &stoneWinner.Description); err != nil {
 					fmt.Fprint(w, err)
 				}
 				buf := new(bytes.Buffer)
@@ -179,15 +163,9 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) giveChests(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Query().Get("id") != "" {
-		db, err := sql.Open("postgres", dbConn)
-		if err != nil {
-			fmt.Fprint(w, err)
-			return
-		}
-		defer db.Close()
 		var chestInfo chestInfo
 		var chestList ChestList
-		err = db.QueryRow("SELECT name, url, price, content, chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
+		err := h.Storage.QueryRow("SELECT name, url, price, content, chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
 			Scan(&chestInfo.chestName, &chestInfo.chestURL, &chestInfo.chestPrice, &chestInfo.chestContent, &chestInfo.chestChance)
 		if err != nil {
 			fmt.Fprint(w, err)
@@ -204,7 +182,7 @@ func (h *Handler) giveChests(w http.ResponseWriter, r *http.Request) {
 			wg.Add(2)
 			go func(i int) {
 				b, _ := strconv.Atoi(sliceContent[i])
-				err = db.QueryRow("SELECT name, url, rare_css FROM stones WHERE id=($1)", b).Scan(&stone.Name, &stone.URL, &stone.Rare)
+				err = h.Storage.QueryRow("SELECT name, url, rare_css FROM stones WHERE id=($1)", b).Scan(&stone.Name, &stone.URL, &stone.Rare)
 				if err != nil {
 					fmt.Fprint(w, err)
 				}
@@ -230,7 +208,7 @@ func (h *Handler) giveChests(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) chests(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, "session")
+	session, err := h.Store.Get(r, "session")
 	if err != nil {
 		log.Print(err)
 	}
@@ -246,7 +224,7 @@ func (h *Handler) chests(w http.ResponseWriter, r *http.Request) {
 		dirWithHTML + "chests.html",
 		dirWithHTML + "chest-temp.html",
 	}
-	ChestBlock := NewChestBlock(block, chest())
+	ChestBlock := NewChestBlock(block, chest(h.Storage))
 	tmp, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err)

@@ -36,7 +36,7 @@ func NewIndexBlock(block map[string]interface{}, stoneShop *[]struct {
 }
 
 func (h *Handler) index(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, "session")
+	session, err := h.Store.Get(r, "session")
 	if err != nil {
 		log.Print(err)
 	}
@@ -53,7 +53,7 @@ func (h *Handler) index(w http.ResponseWriter, r *http.Request) {
 		dirWithHTML + "index.html",
 		dirWithHTML + "stone-temp.html",
 	}
-	indexBlock := NewIndexBlock(block, stones())
+	indexBlock := NewIndexBlock(block, stones(h.Storage))
 	tmp, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err)
