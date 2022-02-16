@@ -399,7 +399,14 @@ template {
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
 body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100%;
   background-color: var(--color-bg);
   font-family: 'Rubik', sans-serif;
 }
@@ -589,7 +596,7 @@ img {
 }
 
 .header__nav {
-  width: 30%;
+  width: 40%;
 }
 
 .nav__link {
@@ -2054,6 +2061,158 @@ img {
   display: none;
 }
 
+/* Inventory */
+.inventory__wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.inventory__content {
+  margin-right: auto;
+  padding: 10px;
+  width: 75%;
+  min-height: 280px;
+  background-color: var(--color-bg-lighter);
+  border-radius: 10px;
+}
+
+.inventory__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, auto));
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.inventory__item {
+  width: 100%;
+  height: 140px;
+  background-color: var(--color-bg);
+  border: 2px solid;
+  border-bottom: 20px solid;
+}
+
+.inventory__img {
+  width: 100%;
+  height: 100%;
+}
+
+.inventory__info {
+  position: relative;
+  padding: 10px;
+  width: 24%;
+  background-color: var(--color-bg-lighter);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.inventory-info__top {
+  /* border: 2px solid; */
+  margin-bottom: 5px;
+}
+
+.inventory-info__img {
+  object-fit: contain;
+}
+
+.inventory-info__stone-name {
+  font-weight: 600;
+  color: var(--color-accent-lighter);
+  margin-bottom: 5px;
+}
+
+.inventory-info__stone-descr {
+  color: var(--color-accent-light);
+  margin-bottom: 5px;
+}
+
+.inventory-info__stone-rare {
+  font-weight: 600;
+}
+
+.inventory-info__stone-count {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent-lighter);
+  background-color: var(--ancient);
+  border-radius: 100%;
+}
+
+/* Footer */
+.footer {
+  flex: 0 0 auto;
+  height: 100px;
+  background-color: var(--color-bg-dark);
+}
+
+.footer__container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer__left {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.copyrights {
+  display: flex;
+  align-items: center;
+}
+
+.copyrights__logo {
+  margin-right: 10px;
+  color: var(--color-accent-darker);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -4px;
+}
+
+.copyrights__date {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.footer__right {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.contacts {
+  display: flex;
+}
+
+.contacts__item:not(:last-child) {
+  margin-right: 10px;
+}
+
+.contacts__icon {
+  width: 24px;
+  height: 24px;
+  transition: fill .1s ease;
+  fill: var(--color-accent);
+}
+
+.contacts__link:hover .contacts__icon-odnoklassniki {
+  fill: #ed812b; 
+}
+
+.contacts__link:hover .contacts__icon-isq {
+  fill: #45d340; 
+}
+
+
+/* Media */
 @media (max-width: 1366px) {
   .cards__list {
     grid-template-columns: repeat(3, 1fr);

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Настройки | StoneMarket</title>
+  <title>StoneMarket | Инвентарь</title>
   <link rel="icon" href="static/images/common/sm-icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="static/css/styles.css">
 </head>
@@ -17,33 +17,42 @@
     </div>
   </header>
   <main class="main">
-    <section class="settings">
-      <div class="container-m settings__container">
-        <div class="page__title">
-          Настройки
-        </div>
-        <div class="settings__wrapper">
-          <nav class="settings__nav">
-            <div class="nav-settings">
-              <ul class="nav-settings__list list-reset">
-                <li class="nav-settings__item">
-                  <a class="nav-settings__link" href="/settings-appearance">
-                    <svg class="nav-settings__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-                      <g transform="matrix(3.4285714285714284,0,0,3.4285714285714284,0,0)"><g>
-                        <path d="M11.5,8.5h-9l-.76,3.8a1,1,0,0,0,.21.83,1,1,0,0,0,.77.37h8.56a1,1,0,0,0,.77-.37,1,1,0,0,0,.21-.83Z"></path>
-                        <path d="M11.5,5.5a1,1,0,0,1,1,1v2H1.5v-2a1,1,0,0,1,1-1H4a1,1,0,0,0,1-1v-2a2,2,0,0,1,4,0v2a1,1,0,0,0,1,1Z"></path>
-                        <line x1="8.5" y1="13.5" x2="8.5" y2="11"></line>
-                      </g></g>
-                    </svg>
-                    Оформление
-                  </a>
-                </li>
-              </ul>
+    <section class="inventory">
+      <div class="container-m inventory__container">
+        <h2 class="page__title">Инвентарь</h2>
+        <div class="inventory__wrapper">
+          <div class="inventory__content">
+            <ul class="inventory__list list-reset">
+              <li class="inventory__item ancient">
+                <img class="inventory__img" src="static/images/common/black-hole.jpg" alt="">
+              </li>
+              <li class="inventory__item arcana">
+                <img class="inventory__img" src="static/images/common/black-hole.jpg" alt="">
+              </li>
+              <li class="inventory__item immortal">
+                <img class="inventory__img" src="static/images/common/black-hole.jpg" alt="">
+              </li>
+              <li class="inventory__item legendary">
+                <img class="inventory__img" src="static/images/common/black-hole.jpg" alt="">
+              </li>
+              <li class="inventory__item mythical">
+                <img class="inventory__img" src="static/images/common/black-hole.jpg" alt="">
+              </li>
+              <li class="inventory__item rare">
+                <img class="inventory__img" src="static/images/common/black-hole.jpg" alt="">
+              </li>
+            </ul>
+          </div>
+          <div class="inventory__info ancient">
+            <div class="inventory-info__stone-count">x12</div>
+            <div class="inventory-info__top">
+              <img class="inventory-info__img" src="static/images/common/black-hole.jpg" alt="">
             </div>
-          </nav>
-          <div class="settings__content">
-            <p class="settings__tagline">Настройки</p>
-            <div class="coming-soon">Факт дня: если попытаться произнести фразу "камень в поле" 23 раза подряд, выяснится, что ты долбаёб</div>
+            <div class="inventory-info__bottom">
+              <h3 class="inventory-info__stone-name">Чёрная дыра</h3>
+              <p class="inventory-info__stone-descr">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+              <div class="inventory-info__stone-rare">Ancient</div>
+            </div>
           </div>
         </div>
       </div>
@@ -122,6 +131,5 @@
       </div>
     </div>
   </footer>
-  <script src="static/js/theme-toggle.js"></script>
 </body>
 </html>
