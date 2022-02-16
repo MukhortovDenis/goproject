@@ -15,6 +15,7 @@ const acceptButton = document.querySelector('.accept__button');
 const modal = document.querySelector('.modal');
 const modalMessage = document.querySelector('.modal__message');
 const confirmModalButton = document.querySelector('.modal__button');
+const closeModalButton = document.querySelector('.close-modal__button')
 
 const itemID = 50;
 const itemWidth = 160;
@@ -61,6 +62,8 @@ function showChestContent(items) {
 
   let stones;
 
+  // <h2 class="chest-content__name poop"></h2>
+  chestName.classList.add(`${items.chestRare}`);
   chestName.innerHTML = `${items.chestName}`;
 
   for (let item in items) {
@@ -102,8 +105,15 @@ function closePopup() {
     chestContentList.classList.add('display-none');
     closeButton.classList.add('display-none');
     chestsContent.classList.add('display-none');
+    chestName.className = 'chest-content__name';
 
     clearChestContent();
+  })
+}
+
+function closeModal() {
+  closeModalButton.addEventListener('click', function() {
+    modal.classList.add('display-none');
   })
 }
 
@@ -119,6 +129,7 @@ chests.forEach(chest => {
       .catch(err => console.log(err))
 
     closePopup();
+    closeModal();
   })
 });
 
@@ -223,15 +234,22 @@ function showPrize(list, id) {
 
 let audio = {};
 
-function startAudio() {
+function getAudio() {
   let number = getRandomInt(1, 5);
   let audioSrc = `static/audio/roulette${number}.mp3`;
-
-  if("pause" in audio) audio.pause();
-
   audio = new Audio(audioSrc);
+
+  return audioSrc;
+}
+
+function startAudio() {
   audio.play();
 }
+
+function stopAudio() {
+  audio.pause();
+}
+
 
 startButton.addEventListener('click', function() {
   let rotate = rotateTo(itemWidth, itemMargin, itemID);
@@ -247,11 +265,9 @@ startButton.addEventListener('click', function() {
 
           createdList[50] = [data.stoneName, '', data.stoneURL, data.stoneRare, data.stoneDescription ]
 
-          console.log( data );
-
           pasteElements(createdList);
 
-          startAudio();
+          startAudio( getAudio() );
 
           animate({
             duration: 8000,
@@ -280,6 +296,8 @@ acceptButton.addEventListener('click', function() {
   prize.classList.add('display-none');
   
   clearStoneList();
+
+  stopAudio();
 
   startButton.removeAttribute('disabled', 'disabled');
   closeButton.classList.remove('display-none');
