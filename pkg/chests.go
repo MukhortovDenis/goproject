@@ -19,6 +19,7 @@ import (
 type ChestList struct {
 	ChestName    string           `json:"chestName"`
 	ChestURL     string           `json:"chestURL"`
+	ChestRare    string           `json:"chestRare"`
 	ChestPrice   int              `json:"chestPrice"`
 	ChestContent []StoneFromChest `json:"chestContent"`
 }
@@ -27,6 +28,7 @@ type chestInfo struct {
 	chestName    string
 	chestURL     string
 	chestPrice   int
+	chestRare    string
 	chestContent string
 	chestChance  string
 }
@@ -102,7 +104,7 @@ func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Print(err)
 	}
-	if session.Values["userID"] == nil{
+	if session.Values["userID"] == nil {
 		Error := new(Error)
 		Error.NewErrorMessage("Не авторизированный пользователь")
 		body := new(bytes.Buffer)
@@ -181,14 +183,15 @@ func (h *Handler) giveChests(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Query().Get("id") != "" {
 		var chestInfo chestInfo
 		var chestList ChestList
-		err := h.Storage.QueryRow("SELECT name, url, price, content, chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
-			Scan(&chestInfo.chestName, &chestInfo.chestURL, &chestInfo.chestPrice, &chestInfo.chestContent, &chestInfo.chestChance)
+		err := h.Storage.QueryRow("SELECT name, url, price, chest, content, chance FROM chests WHERE id=($1)", r.URL.Query().Get("id")).
+			Scan(&chestInfo.chestName, &chestInfo.chestURL, &chestInfo.chestPrice, &chestInfo.chestRare, &chestInfo.chestContent, &chestInfo.chestChance)
 		if err != nil {
 			fmt.Fprint(w, err)
 			return
 		}
 		chestList.ChestName = chestInfo.chestName
 		chestList.ChestURL = chestInfo.chestURL
+		chestList.ChestRare = chestInfo.chestRare
 		chestList.ChestPrice = chestInfo.chestPrice
 		sliceChance := strings.Split(chestInfo.chestChance, ",")
 		sliceContent := strings.Split(chestInfo.chestContent, ",")
