@@ -98,6 +98,22 @@ func chest(db *sql.DB) *[]struct {
 }
 
 func (h *Handler) openChest(w http.ResponseWriter, r *http.Request) {
+	session, err := h.Store.Get(r, "session")
+	if err != nil {
+		log.Print(err)
+	}
+	if session.Values["userID"] == nil{
+		Error := new(Error)
+		Error.NewErrorMessage("Не авторизированный пользователь")
+		body := new(bytes.Buffer)
+		err = json.NewEncoder(body).Encode(Error)
+		if err != nil {
+			log.Print(err)
+			return
+		}
+		fmt.Fprint(w, body)
+		return
+	}
 	if r.URL.Query().Get("id") != "" {
 		var chance string
 		var content string
