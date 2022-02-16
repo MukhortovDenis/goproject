@@ -112,13 +112,9 @@ chests.forEach(chest => {
     chestID = getChestId(chest);
     getChestItems(`/chest?id=${chestID}`)
       .then(function(data) {
-        if (data.msg != 'Не авторизированный пользователь') {
-          showChestContent(data);
+        showChestContent(data);
 
-          chestContent = data.chestContent;
-        } else {
-            showUserError(data);
-        }
+        chestContent = data.chestContent; 
       })     
       .catch(err => console.log(err))
 
@@ -220,7 +216,7 @@ function showPrize(list, id) {
       return 1 - Math.pow(1 - timeFraction, 3)
     },
     draw: function(progress) {
-      prizeWindow.style.boxShadow = `0px 0px ${progress * 90}px 10px var(--${list[id][3]})`;
+      prizeWindow.style.boxShadow = `0px 0px ${progress * 130}px 30px var(--${list[id][3]})`;
     }
   });
 }
@@ -245,33 +241,39 @@ startButton.addEventListener('click', function() {
 
   getPrize(`/open-chest?id=${chestID}`)
     .then(data => { 
-        createdList[50] = [data.stoneName, '', data.stoneURL, data.stoneRare, data.stoneDescription ]
+        if (data.msg != 'Не авторизированный пользователь') {
+          startButton.setAttribute('disabled', 'disabled');
+          closeButton.classList.add('display-none');
 
-        pasteElements(createdList);
+          createdList[50] = [data.stoneName, '', data.stoneURL, data.stoneRare, data.stoneDescription ]
 
-        startAudio();
+          console.log( data );
 
-        animate({
-          duration: 8000,
-          timing: function easeOut(timeFraction) {
-            return 1 - Math.pow(1 - timeFraction, 3)
-          },
-          draw: function(progress) {
-            stoneList.style.right = progress * rotate + 'px';
-          }
-        });
-      
-        setTimeout(function() {
-          showPrize(createdList, itemID)
-        }, 8200)
+          pasteElements(createdList);
+
+          startAudio();
+
+          animate({
+            duration: 8000,
+            timing: function easeOut(timeFraction) {
+              return 1 - Math.pow(1 - timeFraction, 3)
+            },
+            draw: function(progress) {
+              stoneList.style.right = progress * rotate + 'px';
+            }
+          });
+        
+          setTimeout(function() {
+            showPrize(createdList, itemID)
+          }, 8200)
+        } else {
+          showUserError(data.msg);
+        }
       }
     )
     .catch(err => console.log(err))
 
   // console.log( createdList );
-
-  startButton.setAttribute('disabled', 'disabled');
-  closeButton.classList.add('display-none');
 })
 
 acceptButton.addEventListener('click', function() {
