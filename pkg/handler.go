@@ -38,6 +38,7 @@ func (h *Handler) MainHandle() *chi.Mux {
 	router.Get("/chests", h.chests)
 	router.Get("/chest", h.giveChests)
 	router.Get("/open-chest", h.openChest)
+	router.Get("/inventory", h.inventory)
 	router.Post("/save_user", h.save)
 	router.Post("/check_user", h.check)
 
